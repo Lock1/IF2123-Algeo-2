@@ -1,6 +1,7 @@
 import React from 'react';
 import "../Styles/bootstrap.min.css"
 import { makeStyles } from '@material-ui/core/styles';
+import Picture from '../Images/HomeBackground.jpg'
 
 const useStyles = makeStyles({
     root: {
@@ -19,11 +20,38 @@ const useStyles = makeStyles({
   });
 
 function Home(){
-    const classes = useStyles();
+    var classes = useStyles();
         return (
-            <div className="container">
-                <h1 className={classes.title}>JUDUL</h1>
-                <input type="file"/>
+            <div>
+                <div class="site-wrapper">
+                    <div class="site-wrapper-inner">
+                        <div class="container" style={{color: "white", textAlign: "center"}}>    
+                            {/*<div class="masthead clearfix">
+                                <div class="container-inner">
+                                    {/*<nav>
+                                        <ul class="nav masthead-nav">
+                                            <li class="active"><a href="/">Home</a></li>
+                                            <li><a href="/">Features</a></li>
+                                            <li><a href="/">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>*/}
+                            <div class="inner cover">
+                                <h1 class="cover-heading">Tugas Besar 2 Aljabar Linear dan Geometri</h1>
+                                <p class="lead">Aplikasi Dot Product pada Sistem Temu-balik Informasi</p>
+                                <p class="lead">
+                                    <a href="/" class="btn btn-lg btn-default" style={{color: "white"}}>Tentang Kami</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+          
+                <div className="container">
+                    <h1 className={classes.title}>JUDUL</h1>
+                    <input type="file"/>
+                </div>
             </div>
         );
     

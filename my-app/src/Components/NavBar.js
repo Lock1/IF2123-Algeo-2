@@ -3,7 +3,7 @@ import "../Styles/bootstrap.min.css"
 function navBar(){
     return (
         <div>
-            <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style={{display: "flex", flexDirection: "row", justifyContent: "space-around"}}>
+            <nav class="navbar navbar-expand-lg navbar-dark bg-primary" style={{display: "flex", flexDirection: "row", justifyContent: "space-around", backgroundColor: "#444444"}}>
                 <div>
                     <a class="navbar-brand" href="/">JONG JAVA</a>
                 </div>
@@ -16,10 +16,10 @@ function navBar(){
                         <a className="nav-link" href="/Home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a className="nav-link" href="/about">About</a>
+                        <a className="nav-link" href="/About">About</a>
                     </li>
                     <li class="nav-item">
-                        <a className="nav-link" href="/about">Segmen</a>
+                        <a className="nav-link" href="/Search-Engine">Search Engine</a>
                     </li>
                   </ul>
                 </div>
