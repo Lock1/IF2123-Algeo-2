@@ -23,6 +23,7 @@ const useStyles = makeStyles({
 function SearchEngine(){
     const [data, setData] = React.useState(null)
     const [text, setText] = React.useState("")
+    const [query, setQuery] = React.useState("")
 
     axios.get(`https://tubes-algeo-02.firebaseio.com/document.json`)
     .then(res => {
@@ -31,41 +32,31 @@ function SearchEngine(){
         setData(tampung)
     })
 
-    console.log(data)
 
-    function ubahText(e){
-        console.log(e)
+    function setQueryText(e){
         setText(e.target.value)
-        let string = "Makan orang"
-        console.log(string.substring(1,3))
     }
 
-    function ubahRadio(e){
-        console.log(e.target.value)
+    function writeQuery(e){
+        setQuery("Query: ".concat(text))
     }
 
-    function jumlah (a,b,c){
-        console.log(a+b+c)
-    }
+    var splitText=text.split(" ")
+    console.log(splitText)
 
-    function tulis(){
-        console.log("makan")
-    }
-
-    React.useEffect(() =>{
-        console.log(text)
-    },[text])
+    //fungsi yang mencari query di database
+    //fungsi yang nge split dokumen terus ditaruh term database
 
     var classes = useStyles();
-    let a = 3;
         return (
             <div>
                 <div className="container">
                     <h1 className={classes.title}>JUDUL</h1>
-                    <input type="text" onChange={(e) => ubahText(e)}/>
-                    <input type="checkbox" onChange={(e) => ubahRadio(e)}/>
-                    <button type="button" class="btn btn-primary" onClick={() => alert("Test Doang Gan")}>Alert</button>
-                    <button type="button" class="btn btn-primary" onClick={() => tulis()}>jumlah</button>
+                    <input type="text" onChange={(e) => setQueryText(e)}/>
+                    <button type="button" class="btn btn-primary" onClick={(e) => writeQuery(e)}>Search</button>
+                    <div></div>
+                    <input type="file"/>
+                    <h5>{query}</h5>
                 </div>
             </div>
         );
