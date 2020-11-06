@@ -18,19 +18,47 @@ const useStyles = makeStyles({
         marginTop: "2%",
         textAlign: "center"
     }
-  });
+});
 
 function SearchEngine(){
     const [data, setData] = React.useState(null)
     const [text, setText] = React.useState("")
     const [query, setQuery] = React.useState("")
+    
+    const [file, setFile] = React.useState("")
+    const sB = React.createRef(null)
+    const fileInput = React.createRef(null)
+    var stringFile = file
+    var rText = file.replace(/(,|\.|\/|\\|\"|\'|\-|\:|\(|\)|\*)/gi," ")
+    
+    function dbg(obj) {
+        for (var i in obj) {
+            alert(obj[i].value)
+        }
+        alert(rText)
+    }
 
-    axios.get(`https://tubes-algeo-02.firebaseio.com/document.json`)
-    .then(res => {
-        let tampung = res.data
-        console.log(tampung)
-        setData(tampung)
-    })
+    function getDocumentDatabase() {
+        // Get from firebase and save to data
+        axios.get(`https://tubes-algeo-02.firebaseio.com/document.json`)
+        .then(res => {
+            let temp = res.data
+            console.log(temp) // DEBUG
+            setData(temp)
+        })
+    }
+
+    // function get tlist
+
+    function uploadFileToFirebase(){
+        // TODO process to tlist
+        const newDocument = {
+            title: document.getElementById("fileUpload").value.substring(12),
+            value: stringFile
+        }
+        axios.post(`https://tubes-algeo-02.firebaseio.com/document.json`, newDocument)
+        alert("posted")
+    }
 
 
     function setQueryText(e){
@@ -41,26 +69,42 @@ function SearchEngine(){
         setQuery("Query: ".concat(text))
     }
 
-    var splitText=text.split(" ")
-    console.log(splitText)
+    
 
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        fileInput.current.files[0].text().then((fileContent) => {
+            setFile(fileContent)
+        }).catch((err) => {console.log(err)})
+    }
+    
+    // DEBUG
+    function altex() {
+        alert(stringFile)
+    }
     //fungsi yang mencari query di database
     //fungsi yang nge split dokumen terus ditaruh term database
 
     var classes = useStyles();
-        return (
-            <div>
-                <div className="container">
-                    <h1 className={classes.title}>JUDUL</h1>
-                    <input type="text" onChange={(e) => setQueryText(e)}/>
-                    <button type="button" class="btn btn-primary" onClick={(e) => writeQuery(e)}>Search</button>
-                    <div></div>
-                    <input type="file"/>
-                    <h5>{query}</h5>
-                </div>
+    return (
+        <div>
+            <div className="container">
+                <h1 className={classes.title}>JUDUL</h1>
+                <input type="text" onChange={(e) => setQueryText(e)}/>
+                <button type="button" class="btn btn-primary" onClick={(e) => writeQuery(e)}>Search</button>
+                <div></div>
+                <form onSubmit={(e) => {handleSubmit(e)}}>
+                    <input type="file" id="fileUpload" ref={fileInput} accept=".txt"/>
+                    <button type="submit" ref={sB}>Upload</button>
+                </form>
+                <button type="button" onClick={() => altex()}>Cek</button>
+                <button type="button" onClick={() => uploadFileToFirebase()}>Firebase</button>
+                <button type="button" onClick={() => getDocumentDatabase()}>Get Firebase</button>
+                <button type="button" onClick={() => dbg(data)}>Trav</button>
+                <h5>{query}</h5>
             </div>
-        );
-    
+        </div>
+    );
 }
 
 export default SearchEngine
