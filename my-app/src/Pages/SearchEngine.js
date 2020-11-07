@@ -116,7 +116,7 @@ function SearchEngine(){
     
     function querySearch() {
         writeQueryText()
-        getDocumentDatabase()
+        getDocumentDatabase() // FIXME : force get
         let queryHashTable = stringToHashTable(searchtext)
 
         // Dot product
@@ -133,7 +133,7 @@ function SearchEngine(){
             queryRank[key] = rank / (queryNorm*docNorm)
         }
         console.log(queryRank)
-        alert("success")
+        alert("check console")
     }
 
     
