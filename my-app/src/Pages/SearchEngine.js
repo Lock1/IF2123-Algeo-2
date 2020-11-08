@@ -50,7 +50,7 @@ function SearchEngine(){
         let tpstr = String(str).toLowerCase(), temp = 0
         // FIXME: Beware with non alphanumeric
         for (let i = 0; i < tpstr.length; i++)
-            temp += tpstr.charCodeAt(i) * 37
+            temp += (tpstr.charCodeAt(i) * 37 + 3) * tpstr.charCodeAt(i)
         return temp
     }    
 
@@ -136,11 +136,24 @@ function SearchEngine(){
         alert("check console")
     }
 
+
+    function hashStopWords(htable){ //Removing stopwords from document
+        let hasTableStopWords=database['-MLdJ6O-AElcleOMI9ES'].term
+
+        for (var sWords in hasTableStopWords){
+            if (htable[sWords]!==undefined)
+                htable[sWords]=undefined
+        }
+
+        return htable
+    }
+
     
     
     // DEBUG
     function altex() {
-        alert(stringFile)
+        console.log(hashStopWords(stringToHashTable(stringFile)))
+        // console.log(database['-MLdFJGB9v7GV-r8qAtq'])
     }
 
 
