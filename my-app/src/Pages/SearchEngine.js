@@ -29,6 +29,7 @@ function SearchEngine(){
 
     // Variable and constant initialization
     const [database, setDatabase] = React.useState(null)
+    const [queryRankState, setQueryRankState] = React.useState(null)
     const [searchtext, setSearchText] = React.useState("")
     const [query, setQuery] = React.useState("")
     const [file, setFile] = React.useState("")
@@ -111,10 +112,16 @@ function SearchEngine(){
         axios.post(firebaseLink, newDocument)
     }
     
+    // DEBUG
+    var [getData, setGetData] = React.useState(0)
+    React.useEffect(() => {getDocumentDatabase()}, [getData])
     // Query search from database
     function querySearch() {
         writeQueryText()
-        getDocumentDatabase() // FIME : force get
+        // DEBUG
+        setGetData(getData => ++getData)
+
+        // getDocumentDatabase() // FIME : force get
         let queryHashTable = stringToHashTable(searchtext)
         
         // -> Specification requirement
@@ -127,27 +134,32 @@ function SearchEngine(){
         // Similarity calculation
         let queryRank = {}
         for (var key in database) {
-            let dotProduct = 0, document = database[key]
+            let dotProduct = 0, doc = database[key]
             // Q & D Norm calculation
-            let queryNorm = hashTableNorm(document.term)
+            let queryNorm = hashTableNorm(doc.term)
             let docNorm = hashTableNorm(queryHashTable)
             
             // Dot product
-            for (var qHash in queryHashTable)
-                if ((document.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
-                    dotProduct += document.term[qHash]*queryHashTable[qHash]
+            for (let qHash in queryHashTable)
+                if ((doc.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
+                    dotProduct += doc.term[qHash]*queryHashTable[qHash]
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
-            queryRank[document.title] = dotProduct / (queryNorm*docNorm)
+            queryRank[doc.title] = dotProduct / (queryNorm*docNorm)
             
             // -> Specification requirement
-            console.log(document.title)
-            console.log(hashTableToString(document.term, querystr))
+            console.log(doc.title)
+            console.log(hashTableToString(doc.term, querystr))
             // <---------------------------
         }
         // DEBUG
         console.log("---- Raw query rank ----")
-        console.log(queryRank)
+        let sortedRank = []
+        for (let doc in queryRank)
+            sortedRank.push([doc, queryRank[doc]])
+        sortedRank.sort(function(a,b) {return b[1] - a[1]})
+        setQueryRankState(sortedRank)
+        console.log(queryRankState)
         console.log("----------------------------------------------")
         alert("check console")
     }
@@ -206,7 +218,7 @@ function SearchEngine(){
     // DEBUG
     function dbg(obj) {
         // Traverse object
-        for (var i in obj) {
+        for (let i in obj) {
             alert(obj[i].title)
             console.log(obj[i].term)
         }
@@ -214,7 +226,7 @@ function SearchEngine(){
     
     // DEBUG
     function altex() {
-        console.log(stripStopword(stringToHashTable(stringFile)))
+        console.log(stringFile)
         // console.log(database['-MLdFJGB9v7GV-r8qAtq'])
     }
     // ------------------------------------------------------------------------------------------------------
