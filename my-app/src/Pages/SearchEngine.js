@@ -28,22 +28,21 @@ function SearchEngine(){
     // ------------------------------------------------
 
     // Variable and constant initialization
-    const [database, setDatabase] = React.useState(null)
-    const [queryRankState, setQueryRankState] = React.useState(null)
+    var database = {}
+    var file = {}, batchFile = {}
     const [searchtext, setSearchText] = React.useState("")
     const [query, setQuery] = React.useState("")
-    const [file, setFile] = React.useState("")
     
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
-    var stringFile = file
 
     // Handler for uploading file
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        fileInput.current.files[0].text().then((fileContent) => {
-            setFile(fileContent)
-        }).catch((err) => { console.log(err) })
+    function handleSubmit() {
+        // batchFile = await fileInput
+        // for (let i = 0 ; i < batchFile.current.files.length ; i++) {
+        //     console.log(batchFile.current.files[i].text())
+        // }
+            //     uploadFileToFirebase()
     }
 
     // ----------------------------------------- Core functionality -----------------------------------------
@@ -60,6 +59,8 @@ function SearchEngine(){
     
     // Taking string and output as hashtable with word count as entry
     function stringToHashTable(str) {
+        // Note : Due stripStopword() using database, 
+        // every stringToHashTable() call need handler for null database
         // Replace non-alphanumeric
         let tpstr = String(str).replace(/[\W_]/gim, " ").split(" ") 
         // Delete whitespace on array
@@ -94,34 +95,32 @@ function SearchEngine(){
     
     // Get from firebase and save to data
     function getDocumentDatabase() {
-        axios.get(firebaseLink)
-        .then(resource => {setDatabase(resource.data)})
+        axios.get(firebaseLink).then(resource => {database = resource.data})
+        return new Promise(function (rs) { axios.get(firebaseLink).then((response) => { rs(response.data) }) })
     }
     
     // Upload user document to firebase
-    function uploadFileToFirebase(){
+    async function uploadFileToFirebase(){
+        database = await getDocumentDatabase()
         let hashTable = stringToHashTable(file)
         
         // Upload to firebase
         const newDocument = {
             // First 12 char on fileUpload are placeholder for security reasons
             title: document.getElementById("fileUpload").value.substring(12), 
-            value: stringFile,
+            value: file.text(),
             term: hashTable
         }
         axios.post(firebaseLink, newDocument)
     }
     
-    // DEBUG
-    var [getData, setGetData] = React.useState(0)
-    React.useEffect(() => {getDocumentDatabase()}, [getData])
     // Query search from database
-    function querySearch() {
+    // FIME : force set
+    async function querySearch() {
+        // Draw query text
         writeQueryText()
-        // DEBUG
-        setGetData(getData => ++getData)
-
-        // getDocumentDatabase() // FIME : force get
+        // Force wait for update and convert query to hashtable
+        database = await getDocumentDatabase()
         let queryHashTable = stringToHashTable(searchtext)
         
         // -> Specification requirement
@@ -158,8 +157,7 @@ function SearchEngine(){
         for (let doc in queryRank)
             sortedRank.push([doc, queryRank[doc]])
         sortedRank.sort(function(a,b) {return b[1] - a[1]})
-        setQueryRankState(sortedRank)
-        console.log(queryRankState)
+        console.log(sortedRank)
         console.log("----------------------------------------------")
         alert("check console")
     }
@@ -226,7 +224,6 @@ function SearchEngine(){
     
     // DEBUG
     function altex() {
-        console.log(stringFile)
         // console.log(database['-MLdFJGB9v7GV-r8qAtq'])
     }
     // ------------------------------------------------------------------------------------------------------
@@ -243,8 +240,8 @@ function SearchEngine(){
                 <button type="button" class="btn btn-primary" onClick={() => querySearch()}>Search</button>
                 <div></div>
                 {/* User file upload */}
-                <form onSubmit={(e) => {handleSubmit(e)}}>
-                    <input type="file" id="fileUpload" ref={fileInput} accept=".txt"/>
+                <form onSubmit={() => {handleSubmit()}}>
+                    <input type="file" id="fileUpload" ref={fileInput} accept=".txt" multiple/>
                     <button type="submit" ref={uploadSubmitButton}>Upload</button>
                 </form>
                 {/* DEBUG */}
