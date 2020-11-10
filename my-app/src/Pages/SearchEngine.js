@@ -3,6 +3,7 @@ import "../Styles/bootstrap.min.css"
 import { makeStyles } from '@material-ui/core/styles';
 import Picture from '../Images/HomeBackground.jpg'
 import axios from 'axios'
+import sastrawijs from 'sastrawijs'
 
 const useStyles = makeStyles({
     root: {
@@ -28,21 +29,24 @@ function SearchEngine(){
     // ------------------------------------------------
 
     // Variable and constant initialization
-    var database = {}
-    var file = {}, batchFile = {}
+    var database = {}, batchFile = {}
     const [searchtext, setSearchText] = React.useState("")
     const [query, setQuery] = React.useState("")
     
+    // React references
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
 
     // Handler for uploading file
-    function handleSubmit() {
-        // batchFile = await fileInput
-        // for (let i = 0 ; i < batchFile.current.files.length ; i++) {
-        //     console.log(batchFile.current.files[i].text())
-        // }
-            //     uploadFileToFirebase()
+    async function handleSubmit(event) {
+        event.preventDefault()
+        batchFile = await fileInput
+        for (let i = 0 ; i < fileInput.current.files.length ; i++) {
+            // TODO : HTML scrap
+            let textFile = await fileInput.current.files[i].text()
+            let titleFile = await fileInput.current.files[i].name
+            uploadFileToFirebase(titleFile, textFile)
+        }
     }
 
     // ----------------------------------------- Core functionality -----------------------------------------
@@ -100,15 +104,15 @@ function SearchEngine(){
     }
     
     // Upload user document to firebase
-    async function uploadFileToFirebase(){
+    async function uploadFileToFirebase(docTitle,textFile){
         database = await getDocumentDatabase()
-        let hashTable = stringToHashTable(file)
+        let hashTable = stringToHashTable(textFile)
         
         // Upload to firebase
         const newDocument = {
             // First 12 char on fileUpload are placeholder for security reasons
-            title: document.getElementById("fileUpload").value.substring(12), 
-            value: file.text(),
+            title: docTitle, 
+            value: textFile,
             term: hashTable
         }
         axios.post(firebaseLink, newDocument)
@@ -116,6 +120,7 @@ function SearchEngine(){
     
     // Query search from database
     // FIME : force set
+    // TODO : Stemmer
     async function querySearch() {
         // Draw query text
         writeQueryText()
@@ -195,13 +200,30 @@ function SearchEngine(){
     function stripStopword(htable){ 
         // stopwordKey must be configured properly
         let hashTableStopWords = database[stopwordKey].term
-
+    
         for (var stopword in hashTableStopWords)
             if (htable[stopword] !== undefined)
                 htable[stopword] = undefined
         
         return htable
     }
+
+    // EXPERIMENTAL
+    function stemStringArray() {
+        var sentence = "Perekonomian Indonesia sedang dalam pertumbuhan yang membanggakan"
+        var stemmed = []
+        var stemmer = new sastrawijs.Stemmer()
+        var tokenizer = new sastrawijs.Tokenizer()
+        var words = tokenizer.tokenize(sentence)
+        for (var word of words)
+            stemmed.push(stemmer.stem(word))
+
+            console.log(stemmed)
+        var haha = stripStopword(stringToHashTable(stemmed.join(" ")))
+        console.log(hashTableToString(haha,stemmed))
+
+    }
+
 
     // Update search text into new value
     function setSearchTextBox(event) {
@@ -224,6 +246,7 @@ function SearchEngine(){
     
     // DEBUG
     function altex() {
+        stemStringArray()
         // console.log(database['-MLdFJGB9v7GV-r8qAtq'])
     }
     // ------------------------------------------------------------------------------------------------------
@@ -240,7 +263,7 @@ function SearchEngine(){
                 <button type="button" class="btn btn-primary" onClick={() => querySearch()}>Search</button>
                 <div></div>
                 {/* User file upload */}
-                <form onSubmit={() => {handleSubmit()}}>
+                <form onSubmit={(e) => {handleSubmit(e)}}>
                     <input type="file" id="fileUpload" ref={fileInput} accept=".txt" multiple/>
                     <button type="submit" ref={uploadSubmitButton}>Upload</button>
                 </form>
