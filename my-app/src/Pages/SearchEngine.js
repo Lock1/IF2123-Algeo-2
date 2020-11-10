@@ -21,6 +21,7 @@ const useStyles = makeStyles({
 });
 
 function SearchEngine(){
+    // TODO : HTML Scrapping
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLdJ6O-AElcleOMI9ES"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/document.json"
@@ -117,6 +118,8 @@ function SearchEngine(){
         let queryHashTable = stringToHashTable(searchtext)
         
         // -> Specification requirement
+        console.log(`---- Query : ${searchtext} ----`)
+        console.log("---- Document vectors ----")
         let querystr = String(searchtext).replace(/[\W_]/gim, " ").split(" ")
         querystr = querystr.filter(function(str) { return /\S+/.test(str) })
         // <---------------------------
@@ -131,24 +134,21 @@ function SearchEngine(){
             
             // Dot product
             for (var qHash in queryHashTable)
-            if ((document.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
-            dotProduct += document.term[qHash]*queryHashTable[qHash]
+                if ((document.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
+                    dotProduct += document.term[qHash]*queryHashTable[qHash]
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
-            queryRank[key] = dotProduct / (queryNorm*docNorm)
+            queryRank[document.title] = dotProduct / (queryNorm*docNorm)
             
             // -> Specification requirement
-            if (key === stopwordKey) {
-                console.log("-- Stopword database --")
-                console.log(hashTableToString(document.term,querystr))
-                console.log("-----------------------")
-            }
+            console.log(document.title)
             console.log(hashTableToString(document.term, querystr))
             // <---------------------------
         }
         // DEBUG
-        console.log("-- Raw query rank --")
+        console.log("---- Raw query rank ----")
         console.log(queryRank)
+        console.log("----------------------------------------------")
         alert("check console")
     }
     // ------------------------------------------------------------------------------------------------------
