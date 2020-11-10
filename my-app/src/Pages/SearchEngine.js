@@ -66,7 +66,8 @@ function SearchEngine(){
         // Note : Due stripStopword() using database, 
         // every stringToHashTable() call need handler for null database
         // Replace non-alphanumeric
-        let tpstr = String(str).replace(/[\W_]/gim, " ").split(" ") 
+        let tpstr = String(str).replace(/[\W_]/gim, " ")
+        tpstr = stemStringArray(tpstr)
         // Delete whitespace on array
         tpstr = tpstr.filter(function(str) {return /\S+/.test(str)})
         
@@ -197,6 +198,7 @@ function SearchEngine(){
     }
     // <---------------------------
 
+    // -------------------------------------- SPEK --------------------------------------
     // Removing stopwords from a hashtable
     function stripStopword(htable){ 
         // stopwordKey must be configured properly
@@ -217,7 +219,7 @@ function SearchEngine(){
         var words = tokenizer.tokenize(stringDoc)
         for (var word of words)
             stemmed.push(stemmer.stem(word))
-        return stemmed.push(stemmer.stem(word))
+        return stemmed
     }
 
 
