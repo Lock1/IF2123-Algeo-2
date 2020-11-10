@@ -22,33 +22,43 @@ const useStyles = makeStyles({
 });
 
 function SearchEngine(){
+    // FIME : force set
     // TODO : HTML Scrapping
+    // TODO : enter to search
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLdJ6O-AElcleOMI9ES"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/document.json"
     // ------------------------------------------------
 
     // Variable and constant initialization
-    var database = {}, batchFile = {}
-    const [searchtext, setSearchText] = React.useState("")
+    var database = {}
+    const [queryRankState, setQueryRankState] = React.useState(null) // DEBUG
+    const [searchText, setSearchText] = React.useState("")
     const [query, setQuery] = React.useState("")
     
+    // DEBUG
+    const searchHandler = async () => {
+        let rankAndTerm = await querySearch()
+        await setQueryRankState(rankAndTerm.rank)
+        setQueryRankState(rankAndTerm.rank)
+        // // DEBUG
+        // console.log(rankAndTerm)
+        // if (queryRankState !== null)
+        //     console.log(queryRankState)
+        // else {
+        //     alert(queryRankState)
+        // }
+    }
+    
+
+
+    
+
     // React references
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
 
-    // Handler for uploading file
-    async function handleSubmit(event) {
-        event.preventDefault()
-        batchFile = await fileInput
-        for (let i = 0 ; i < fileInput.current.files.length ; i++) {
-            // TODO : HTML scrap
-            let textFile = await fileInput.current.files[i].text()
-            let titleFile = await fileInput.current.files[i].name
-            uploadFileToFirebase(titleFile, textFile)
-        }
-    }
-
+    
     // ----------------------------------------- Core functionality -----------------------------------------
     // Simple hash function, taking string and output a number
     function hash(str) {
@@ -61,6 +71,31 @@ function SearchEngine(){
         return hash
     }    
     
+    // Removing stopwords from a hashtable
+    function stripStopword(htable) {
+        // stopwordKey must be configured properly
+        let hashTableStopWords = database[stopwordKey].term
+
+        for (var stopword in hashTableStopWords)
+            if (htable[stopword] !== undefined)
+                htable[stopword] = undefined
+
+        return htable
+    }
+
+    /* -- Stemmer function --
+    Input raw string, output as array of string.
+    Word stemming using sastrawi library */
+    function stemStringArray(stringDoc) {
+        var tokenizer = new sastrawijs.Tokenizer()
+        var stemmer = new sastrawijs.Stemmer()
+        var stemmed = []
+        var words = tokenizer.tokenize(stringDoc)
+        for (var word of words)
+            stemmed.push(stemmer.stem(word))
+        return stemmed
+    }
+
     // Taking string and output as hashtable with word count as entry
     function stringToHashTable(str) {
         // Note : Due stripStopword() using database, 
@@ -78,9 +113,9 @@ function SearchEngine(){
         else hashTable["index"]++           */
         for (let i = 0; i < tpstr.length; i++) {
             if (hashTable[hash(tpstr[i])] === undefined)
-            hashTable[hash(tpstr[i])] = 1
+                hashTable[hash(tpstr[i])] = 1
             else
-            hashTable[hash(tpstr[i])]++
+                hashTable[hash(tpstr[i])]++
         }
         
         // Strip any stopword in hashtable
@@ -93,8 +128,8 @@ function SearchEngine(){
     function hashTableNorm(htable) {
         let quadraticSum = 0
         for (let i in htable)
-        if (htable[i] !== undefined)
-        quadraticSum += Math.pow(htable[i], 2)
+            if (htable[i] !== undefined)
+                quadraticSum += Math.pow(htable[i], 2)
         return Math.sqrt(quadraticSum)
     }
     
@@ -105,40 +140,44 @@ function SearchEngine(){
     }
     
     // Upload user document to firebase
-    async function uploadFileToFirebase(docTitle,textFile){
+    async function uploadFileToFirebase(docTitle,textFile) {
         database = await getDocumentDatabase()
         let hashTable = stringToHashTable(textFile)
-        
+        let wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
+        let firstSentence = textFile.replace(/(\.com|\.co\.id)/, " ").split(".")[0]
         // Upload to firebase
         const newDocument = {
             // First 12 char on fileUpload are placeholder for security reasons
             title: docTitle, 
             value: textFile,
+            wordcount: wCount,
+            description: firstSentence,
             term: hashTable
         }
+
         axios.post(firebaseLink, newDocument)
     }
     
     // Query search from database
-    // FIME : force set
-    // TODO : Stemmer
     async function querySearch() {
         // Draw query text
         writeQueryText()
         // Force wait for update and convert query to hashtable
         database = await getDocumentDatabase()
-        let queryHashTable = stringToHashTable(searchtext)
+        let queryHashTable = stringToHashTable(searchText)
         
         // -> Specification requirement
-        console.log(`---- Query : ${searchtext} ----`)
+        console.log(`---- Query : ${searchText} ----`)
         console.log("---- Document vectors ----")
-        let querystr = String(searchtext).replace(/[\W_]/gim, " ").split(" ")
+        let querystr = String(searchText).replace(/[\W_]/gim, " ").split(" ")
         querystr = querystr.filter(function(str) { return /\S+/.test(str) })
         // <---------------------------
         
         // Similarity calculation
-        let queryRank = {}
+        let sortedQueryRank = [], termTable = []
         for (var key in database) {
+            if (String(key) === stopwordKey)
+                continue
             let dotProduct = 0, doc = database[key]
             // Q & D Norm calculation
             let queryNorm = hashTableNorm(doc.term)
@@ -150,22 +189,23 @@ function SearchEngine(){
                     dotProduct += doc.term[qHash]*queryHashTable[qHash]
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
-            queryRank[doc.title] = dotProduct / (queryNorm*docNorm)
-            
+            sortedQueryRank.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description])
+
             // -> Specification requirement
             console.log(doc.title)
             console.log(hashTableToString(doc.term, querystr))
+            termTable.push([doc.title, hashTableToString(doc.term, querystr)])
             // <---------------------------
         }
+        // Sorting according similiarity rank
+        sortedQueryRank.sort(function(a,b) {return b[2] - a[2]})
         // DEBUG
         console.log("---- Raw query rank ----")
-        let sortedRank = []
-        for (let doc in queryRank)
-            sortedRank.push([doc, queryRank[doc]])
-        sortedRank.sort(function(a,b) {return b[1] - a[1]})
-        console.log(sortedRank)
+        console.log("[Title, wordcount, similiarity, first sentence]")
+        console.log(sortedQueryRank)
         console.log("----------------------------------------------")
-        alert("check console")
+
+        return await {rank:sortedQueryRank,term:termTable}
     }
     // ------------------------------------------------------------------------------------------------------
     
@@ -198,30 +238,16 @@ function SearchEngine(){
     }
     // <---------------------------
 
-    // -------------------------------------- SPEK --------------------------------------
-    // Removing stopwords from a hashtable
-    function stripStopword(htable){ 
-        // stopwordKey must be configured properly
-        let hashTableStopWords = database[stopwordKey].term
-    
-        for (var stopword in hashTableStopWords)
-            if (htable[stopword] !== undefined)
-                htable[stopword] = undefined
-        
-        return htable
+    // Handler for uploading file
+    async function handleSubmit(event) {
+        event.preventDefault()
+        for (let i = 0; i < fileInput.current.files.length; i++) {
+            // TODO : HTML scrap
+            let textFile = await fileInput.current.files[i].text()
+            let titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
+            uploadFileToFirebase(titleFile, textFile)
+        }
     }
-
-    // Stemming Using sastrawi library
-    function stemStringArray(stringDoc) {
-        var stemmed = []
-        var stemmer = new sastrawijs.Stemmer()
-        var tokenizer = new sastrawijs.Tokenizer()
-        var words = tokenizer.tokenize(stringDoc)
-        for (var word of words)
-            stemmed.push(stemmer.stem(word))
-        return stemmed
-    }
-
 
     // Update search text into new value
     function setSearchTextBox(event) {
@@ -230,23 +256,9 @@ function SearchEngine(){
 
     // Draw / print query text
     function writeQueryText() {
-        setQuery("Query: ".concat(searchtext))
+        setQuery("Query: ".concat(searchText))
     }
     
-    // DEBUG
-    function dbg(obj) {
-        // Traverse object
-        for (let i in obj) {
-            alert(obj[i].title)
-            console.log(obj[i].term)
-        }
-    }
-    
-    // DEBUG
-    function altex() {
-        stemStringArray()
-        // console.log(database['-MLdFJGB9v7GV-r8qAtq'])
-    }
     // ------------------------------------------------------------------------------------------------------
 
 
@@ -257,20 +269,14 @@ function SearchEngine(){
             <div className="container">
                 <h1 className={classes.title}>JUDUL</h1>
                 {/* Query search */}
-                <input type="text" onChange={(e) => setSearchTextBox(e)}/>
-                <button type="button" class="btn btn-primary" onClick={() => querySearch()}>Search</button>
+                <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') searchHandler()}} onChange={(e) => setSearchTextBox(e)}/>
+                <button type="button" id="searchButton" class="btn btn-primary" onClick={searchHandler}>Search</button>
                 <div></div>
                 {/* User file upload */}
                 <form onSubmit={(e) => {handleSubmit(e)}}>
                     <input type="file" id="fileUpload" ref={fileInput} accept=".txt" multiple/>
                     <button type="submit" ref={uploadSubmitButton}>Upload</button>
                 </form>
-                {/* DEBUG */}
-                <button type="button" onClick={() => altex()}>Read Uploaded</button>
-                <div></div>
-                <button type="button" onClick={() => uploadFileToFirebase()}>Post Firebase</button>
-                <button type="button" onClick={() => getDocumentDatabase()}>Get Firebase</button>
-                <button type="button" onClick={() => dbg(database)}>Read Database</button>
                 <h5>{query}</h5>
             </div>
         </div>
