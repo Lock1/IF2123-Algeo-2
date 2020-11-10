@@ -1,0 +1,48 @@
+Pengertian Information Retrieval (IR)
+Information Retrieval (IR) atau sering disebut “temu kembali infromasi” adalah ilmu yang mempelajari prosedur-prosedur dan metode-metode untuk menemukan kembali informasi yang tersimpan dari berbagai sumber (resources) yang relevan atau koleksi sumber informasi yang dicari atau dibutuhkan. Dengan tindakan  index (indexing), panggilan (searching), pemanggilan data kembali (recalling).
+
+Dalam pencarian data, beberapa jenis data dapat ditemukan diantaranya texts, table, gambar (image), video, audio. Adapun tujuan dari Infromation Retrieval ialah untuk memenuhi informasi pengguna dengan cara meretrieve dokumen yang relevan atau menguragi dokumen pencarian yang tidak relevean.
+
+Definisi Information Retrieval
+
+Secara Konsep sederhana IR merupakan proses mencari, dan kemudain mendapatkan apa yang dicari. Jika kita titik beratkan kepada prosesnya maka didalamnya akan terungkap bagaimana perjalanan informasi yang diminta,  menjadi infrormasi yang diberikan. Menurut beberapa ahli IR didefinisikan sebagai berikut:
+
+1. Menurut Kowalaski
+
+Informasi Retrieval adalah konsep sederhana dalam pencarian yang dilakukan oleh seseorang. seperti contoh ketika user akan mencari informasi yang dia butuhkan, maka sistem menerjemahakan kepada bentuk statment yang kemudian di eksekusi oleh sistem pencari.
+
+2. William Hersh Menyatakan :
+
+Information Retrieval adalah “bidang di persimpangan ilmu informasi dan ilmu komputer. Berkutat dengan pengindeksan dan pengambilan informasi dari sumber informasi heterogen dan sebagian besar-tekstual. Istilah ini diciptakan oleh Mooers pada tahun 1951, yang menganjurkan bahwa diterapkan ke “aspek intelektual” deskripsi informasi dan sistem untuk pencarian (Mooers, 1951). “
+
+3. Kutipan Dari Wikipedia 
+
+Wikipedia menjelaskan Information Retrieval (IR) adalah seni dan ilmu mencari informasi dalam dokumen, mencari dokumen itu sendiri, mencari metadata yang menjelaskan dokumen, atau mencari dalam database, apakah relasional database itu berdiri sendiri atau database hypertext jaringan seperti Internet atau intranet, untuk teks , suara, gambar, video atau data.
+
+Dari ketiga rujukan definisi diatas, sudah jelas dimaksudkan bahwa information retrevial adalah bidang keilmuan dalam Teknologi informasi yang menjelaskan tentang “Pencarian dan Pengambilan Kembali Informasi”.
+
+Keilmuan ini mengungkapkan bagaimana metode metode pencarian informasi yang dilakukan oleh end user dari gudang gudang penyimpanan yang bersekala besar, contoh sederhananya adalah media penyimpanan kita sendiri.
+
+Terkadang ketika semakin banyak data yang kita simpan dalam sebuah media penyimpanan tak jarang kita akan lupa dimana kita meletakan data yang kita simpan tadi, sehingga kita melakukan proses pencarian data yang kita lupa tadi, bisa dengan menggunakan tools pencarian atau bisa dengan memeriksa satu persatu tempat penyimpanan data kita.
+
+Dalam studi kasus yang lebih kompleks, penerapan IR adalah Search Engine (Mesin Pencari) seperti google, yahoo, bing dll. SE merupakan implementasi yang sangat kompleks dari IR
+
+Peranan Information Retrieval (IR)
+Information Retrieval (IR) memiliki kegunaan yang banyak untuk user. Kita bisa melihat fungsinya di mesin pencari untuk mencari informasi, atau di perpustakaan, di apotik dan lain sebagainya. Itu semua adalah karena jasa IR. Information Retrieval mempunyai peran untuk:
+
+1. Menganalisis isi sumber informasi dan pertanyaan pengguna.
+
+2. Mempertemukan pertanyaan pengguna dengan sumber informasi untuk mendapatkan dokumen yang relevan.
+
+Contoh-contoh Information Retrieval (IR)
+1. Searching Text melalui Web Search Engine
+
+Keyword dimasukkan oleh user untuk pencarian informasi yang diinginkan pada Search Engine, yang mana informasi yang didapatkan mengandung relevansi/keterkaitan dengan yang diharapkan.
+
+2. Information retrieval di Perpustakaan
+
+Perpustakaan adalah salah satu institusi pertama yang mengadopsi sistem IR untuk mendapatkan informasi. Pada umumnya, sistem yang digunakan di perpustakaan pada awalnya dikembangkan oleh institusi akademis dan kemudian oleh produsen komersil. Pada generasi pertama, sistem pada dasarnya terdiri dari suatu otomatisasi dari teknologi sebelumnya (seperti kartu katalog) dan memungkinkan pencarian berdasar judul dan nama pengarang. Pada generasi kedua , kemampuan pencarian ditambahkan dengan pencarian berdasarkan  pokok utama, dengan kata kunci, dan tambahan lagi fasilitas kueri kompleks. Pada generasi ketiga, yang sekarang ini yang sedang menyebar, fokusnya adalah meningkatkan antarmuka grafis, format elektronik, fitur hypertext, dan sistem arsitektur terbuka.
+
+3.  CBIR(Content Based Image Retrieval) Technology
+
+Retrieval berdasarkan kategori konten dan warna. Dimana user mendeskripsikan image apa yang akan dicari  dengan cara memilih kategori misalnya jenis image, Negara, tahun pembuatan dsb.

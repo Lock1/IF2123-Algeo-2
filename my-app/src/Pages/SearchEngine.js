@@ -178,6 +178,7 @@ function SearchEngine(){
     process and convert hash indexes 
     into original non-hashed string then
     return as string indexed object     */
+    
     function hashTableToString(htable, strorigin) {
         let strtable = {}
         for (let i = 0; i < strorigin.length; i++) {
@@ -208,20 +209,15 @@ function SearchEngine(){
         return htable
     }
 
-    // EXPERIMENTAL
-    function stemStringArray() {
-        var sentence = "Perekonomian Indonesia sedang dalam pertumbuhan yang membanggakan"
+    // Stemming Using sastrawi library
+    function stemStringArray(stringDoc) {
         var stemmed = []
         var stemmer = new sastrawijs.Stemmer()
         var tokenizer = new sastrawijs.Tokenizer()
-        var words = tokenizer.tokenize(sentence)
+        var words = tokenizer.tokenize(stringDoc)
         for (var word of words)
             stemmed.push(stemmer.stem(word))
-
-            console.log(stemmed)
-        var haha = stripStopword(stringToHashTable(stemmed.join(" ")))
-        console.log(hashTableToString(haha,stemmed))
-
+        return stemmed.push(stemmer.stem(word))
     }
 
 
