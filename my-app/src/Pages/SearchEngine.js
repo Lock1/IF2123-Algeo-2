@@ -23,16 +23,19 @@ const useStyles = makeStyles({
 
 function SearchEngine(){
     // TODO : HTML Scrapping
+    // TODO : Sim check, narkoba
     // ------------ Configuration constant ------------
-    const stopwordKey = "-MLdJ6O-AElcleOMI9ES"
-    const firebaseLink = "https://tubes-algeo-02.firebaseio.com/document.json"
+    const stopwordKey = "-MLonniE4V-PfxvTHTHi"
+    const firebaseLink = "https://tubes-algeo-02.firebaseio.com/"
+    const firebaseStopwordLink = firebaseLink.concat("stopword.json")
+    const firebaseDocumentLink = firebaseLink.concat("document.json")
     // ------------------------------------------------
 
     // ----- Variable and constant initialization -----
     const [rankAndTermState, setRankAndTermState] = React.useState(null) // DEBUG
     const [searchText, setSearchText] = React.useState("")
     const [query, setQuery] = React.useState("")
-    var database = {}
+    var database = {}, stopwords = {}
     
     // -- React references --
     const uploadSubmitButton = React.createRef(null)
@@ -54,7 +57,7 @@ function SearchEngine(){
     // Removing stopwords from a hashtable
     function stripStopword(htable) {
         // stopwordKey must be configured properly
-        let hashTableStopWords = database[stopwordKey].term
+        let hashTableStopWords = stopwords[stopwordKey].term
 
         for (var stopword in hashTableStopWords)
             if (htable[stopword] !== undefined)
@@ -66,7 +69,7 @@ function SearchEngine(){
     /* -- Stemmer function --
     Input raw string, output as array of string.
     Word stemming using sastrawi library */
-    function stemStringArray(stringDoc) {
+    function stemString(stringDoc) {
         var tokenizer = new sastrawijs.Tokenizer()
         var stemmer = new sastrawijs.Stemmer()
         var stemmed = []
@@ -80,12 +83,15 @@ function SearchEngine(){
     function stringToHashTable(str) {
         // Note : Due stripStopword() using database, 
         // every stringToHashTable() call need handler for null database
+
         // Replace non-alphanumeric
         let tpstr = String(str).replace(/[\W_]/gim, " ")
-        tpstr = stemStringArray(tpstr)
+        // Stem string
+        tpstr = stemString(tpstr)
+
         // Delete whitespace on array
         tpstr = tpstr.filter(function(str) {return /\S+/.test(str)})
-        
+
         var hashTable = {}
         /* -- Hashtable counting loop --
         Check whether hashTable["index"] exist,
@@ -100,7 +106,6 @@ function SearchEngine(){
         
         // Strip any stopword in hashtable
         hashTable = stripStopword(hashTable)
-        
         return hashTable
     }
     
@@ -113,17 +118,23 @@ function SearchEngine(){
         return Math.sqrt(quadraticSum)
     }
     
-    // Get from firebase and save to data
+    // Get from firebase and return it
     function getDocumentDatabase() {
-        return new Promise(function (rs) { axios.get(firebaseLink).then((response) => { rs(response.data) }) })
+        return new Promise(function (rs) { axios.get(firebaseDocumentLink).then((response) => { rs(response.data) }) })
+    }
+
+    // Get from firebase and return it
+    function getStopwordsDatabase() {
+        return new Promise(function (rs) { axios.get(firebaseStopwordLink).then((response) => { rs(response.data) }) })
     }
     
     // Upload user document to firebase
     async function uploadFileToFirebase(docTitle,textFile) {
         database = await getDocumentDatabase()
+        stopwords = await getStopwordsDatabase()
         let hashTable = stringToHashTable(textFile)
         let wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
-        let firstSentence = textFile.replace(/(\.com|\.co\.id)/, " ").split(".")[0]
+        let firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
         // Upload to firebase
         const newDocument = {
             // First 12 char on fileUpload are placeholder for security reasons
@@ -134,7 +145,7 @@ function SearchEngine(){
             term: hashTable
         }
 
-        await axios.post(firebaseLink, newDocument)
+        await axios.post(firebaseDocumentLink, newDocument)
     }
     
     // Query search from database
@@ -143,6 +154,7 @@ function SearchEngine(){
         writeQueryText()
         // Force wait for update and convert query to hashtable
         database = await getDocumentDatabase()
+        stopwords = await getStopwordsDatabase()
         let queryHashTable = stringToHashTable(searchText)
         
         // DEBUG
@@ -153,16 +165,14 @@ function SearchEngine(){
         let querystr = String(searchText).replace(/[\W_]/gim, " ").split(" ")
         querystr = querystr.filter(function(str) { return /\S+/.test(str) })
         // <---------------------------
-        
+
         // Similarity calculation
-        let sortedQueryRank = [], termTable = []
+        let queryResult = []
         for (var key in database) {
-            if (String(key) === stopwordKey)
-                continue
             let dotProduct = 0, doc = database[key]
             // Q & D Norm calculation
-            let queryNorm = hashTableNorm(doc.term)
-            let docNorm = hashTableNorm(queryHashTable)
+            let queryNorm = hashTableNorm(queryHashTable)
+            let docNorm = hashTableNorm(doc.term)
             
             // Dot product
             for (let qHash in queryHashTable)
@@ -170,9 +180,8 @@ function SearchEngine(){
                     dotProduct += doc.term[qHash]*queryHashTable[qHash]
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
-            sortedQueryRank.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description])
+            queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr)])
 
-            termTable.push([doc.title, hashTableToString(doc.term, querystr)])
             // DEBUG
             // -> Specification requirement
             console.log(doc.title)
@@ -180,14 +189,15 @@ function SearchEngine(){
             // <---------------------------
         }
         // Sorting according similiarity rank
-        sortedQueryRank.sort(function(a,b) {return b[2] - a[2]})
+        queryResult.sort(function(a,b) {return b[2] - a[2]})
+
         // DEBUG
         console.log("---- Raw query rank ----")
-        console.log("[Title, wordcount, similiarity, first sentence]")
-        console.log(sortedQueryRank)
+        console.log("[Title, wordcount, similiarity, first sentence, termcount]")
+        console.log(queryResult)
         console.log("----------------------------------------------")
 
-        return await {rank:sortedQueryRank,term:termTable}
+        return queryResult
     }
     // ------------------------------------------------------------------------------------------------------
     
@@ -204,10 +214,11 @@ function SearchEngine(){
     
     function hashTableToString(htable, strorigin) {
         let strtable = {}
-        for (let i = 0; i < strorigin.length; i++) {
+        let strstem = stemString(strorigin.join(" "))
+        for (let i = 0; i < strstem.length; i++) {
             // Find any matching hashed text in htable entries
             for (let x in htable)
-                if (String(hash(strorigin[i])) === String(x)) {
+                if (String(hash(strstem[i])) === String(x)) {
                     strtable[strorigin[i]] = htable[x]
                     // Break to reduce amount of loop
                     break
@@ -234,7 +245,7 @@ function SearchEngine(){
     }
 
     // Handler for search
-    const handleSearch = async () => {
+    async function handleSearch() {
         let rankAndTerm = await querySearch()
         setRankAndTermState(rankAndTerm)
     }
@@ -249,7 +260,29 @@ function SearchEngine(){
         setQuery("Query: ".concat(searchText))
     }
     
+    // --- Stopword uploader ---
+    // async function dbupload() {
+    //     let textha = await fileInput.current.files[0].text()
+    //     let tpstr = String(textha).replace(/[\W_]/gim, " ").split(" ")
+    //     tpstr = tpstr.filter(function (str) { return /\S+/.test(str) })
+    //     var hashTable = {}
+    //     for (let i = 0; i < tpstr.length; i++) {
+    //         if (hashTable[hash(tpstr[i])] === undefined)
+    //             hashTable[hash(tpstr[i])] = 1
+    //         else
+    //             hashTable[hash(tpstr[i])]++
+    //     }
+    //     const stopword = {
+    //         title:"stopword",
+    //         value: textha,
+    //         term: hashTable
+    //     }
+    //     await axios.post(firebaseStopwordLink,stopword)
+    // }
+
     // ------------------------------------------------------------------------------------------------------
+
+
 
 
 
@@ -260,7 +293,7 @@ function SearchEngine(){
                 <h1 className={classes.title}>JUDUL</h1>
                 {/* Query search */}
                 <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
-                <button type="button" id="searchButton" class="btn btn-primary" onClick={handleSearch}>Search</button>
+                <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {handleSearch()}}>Search</button>
                 <div></div>
                 {/* User file upload */}
                 <form onSubmit={(e) => {handleUpload(e)}}>
