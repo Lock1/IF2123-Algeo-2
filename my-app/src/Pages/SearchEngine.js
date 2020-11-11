@@ -79,6 +79,17 @@ function SearchEngine(){
         return stemmed
     }
 
+    function scrapeWords(stringHTML){
+        var content=stringHTML.match(/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/gi)
+        var result=content.join("").replace(/<\s*\/*p[^>]*>/gi," ")
+        return result
+    }
+
+    function debogg(){
+        var isi="<p test=asu>Aku jancok</p> <p>okee</p> <p>COKKKKKKKKK</p>"
+        console.log(scrapeWords(isi))
+    }
+
     // Taking string and output as hashtable with word count as entry
     function stringToHashTable(str) {
         // Note : Due stripStopword() using database, 
@@ -294,6 +305,7 @@ function SearchEngine(){
                 {/* Query search */}
                 <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
                 <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {handleSearch()}}>Search</button>
+                <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>
                 <div></div>
                 {/* User file upload */}
                 <form onSubmit={(e) => {handleUpload(e)}}>
