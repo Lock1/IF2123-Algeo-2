@@ -5,7 +5,8 @@ import Picture from '../Images/HomeBackground.jpg'
 import axios from 'axios'
 import sastrawijs from 'sastrawijs'
 import PublishIcon from '@material-ui/icons/Publish';
-import { Button } from "@material-ui/core";
+import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton, Dialog, Tooltip } from "@material-ui/core";
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles({
     root: {
@@ -38,6 +39,11 @@ const useStyles = makeStyles({
             backgroundColor: "#2384c6",
             borderColor: "#217dbb",
         },
+    },
+    searchResultFlex: {
+        marginBottom: "0.8%",
+        paddingLeft: "3%",
+        padding: "1%"
     }
 });
 
@@ -61,7 +67,16 @@ function SearchEngine(){
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
 
-    
+    // ---- Dialog ----
+    const [open, setOpen] = React.useState(false)
+
+    function HandleOpenDialog(){
+        setOpen(true)
+    }
+      
+    function handleCloseDialog(){
+        setOpen(false)
+    }
     // ----------------------------------------- Core functionality -----------------------------------------
     // Simple hash function, taking string and output a number
     function hash(str) {
@@ -279,6 +294,7 @@ function SearchEngine(){
     async function handleSearch() {
         let rankAndTerm = await querySearch()
         setRankAndTermState(rankAndTerm)
+        console.log(rankAndTerm)
     }
 
     // Update search text into new value
@@ -326,14 +342,56 @@ function SearchEngine(){
                 <div className={classes.flex_center}>
                     <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
                     <button type="button" id="searchButton" class="btn-success" onClick={() => {handleSearch()}}>Search</button>
-                    <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>
+                    {/*<button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>*/}
+                    <Tooltip title="Upload Dokumen">
+                        <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialog}>
+                            <PublishIcon/>
+                        </IconButton>
+                    </Tooltip>
                 </div>
                 {/* User file upload */}
-                <form onSubmit={(e) => {handleUpload(e)}}>
-                    <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
-                    <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} class="btn-info" className={classes.uploadButton} size='medium'>Upload</Button>
-                    <button type="submit" ref={uploadSubmitButton}>Upload</button>
-                </form>
+                <Dialog
+                    open={open}
+                    onClose={handleCloseDialog}
+                    aria-labelledby="responsive-dialog-title"
+                    classes={{ paper: classes.paper}}
+                >
+                    <div style={{padding: "5%"}}>
+                        <form onSubmit={(e) => {handleUpload(e)}}>  
+                            <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
+                            <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} class="btn-info" className={classes.uploadButton} size='medium'>Upload</Button>
+                            {/*<button type="submit" ref={uploadSubmitButton}>Upload</button>*/}
+                        </form>
+                    </div>
+                </Dialog>
+                
+                {(rankAndTermState !== null) ?
+                    rankAndTermState.map((value,index) => {
+                        return(
+                            <div className={classes.searchResultFlex}>
+                                <Accordion>
+                                    <AccordionSummary
+                                        expandIcon={<ExpandMoreIcon />}
+                                        aria-controls="panel1a-content"
+                                        id="panel1a-header"
+                                    >
+                                        <Typography className={classes.heading}>{value[0].toUpperCase()}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                        <div>
+                                            <Typography>Jumlah Kata : {value[1]}</Typography>
+                                            <Typography>Tingkat Kemiripan : {value[2]} %</Typography>
+                                            <Typography>Kalimat Pertama : {value[3]}</Typography>
+                                            {/*<Typography>Jumlah Kemunculan Terms Query Pada Dokumen : {value[4]}</Typography>*/}
+                                        </div>
+                                    </AccordionDetails>
+                                </Accordion>
+                            </div>
+                        )
+                    })
+                    :
+                        null
+                }
                 {/* 
                 <button type="button" onClick={() => altex()}>Read Uploaded</button>
                 <div></div>

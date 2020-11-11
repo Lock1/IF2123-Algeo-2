@@ -37,7 +37,7 @@ const useStyles = makeStyles({
     paper: { minWidth: "38%" },
   });
 
-function About(){
+function HowtoUse(){
     const classes = useStyles();
     const [open, setOpen] = React.useState(false)
     const [nama, setNama] = React.useState(null) // Me-set data diri yang akan ditampilkan pada Dialog
@@ -174,4 +174,4 @@ function About(){
     
 }
 
-export default About
+export default HowtoUse

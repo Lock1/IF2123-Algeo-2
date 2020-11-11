@@ -19,6 +19,9 @@ function navBar(){
                         <a className="nav-link" href="/About">About</a>
                     </li>
                     <li class="nav-item">
+                        <a className="nav-link" href="/How-to-Use">How To Use</a>
+                    </li>
+                    <li class="nav-item">
                         <a className="nav-link" href="/Search-Engine">Search Engine</a>
                     </li>
                   </ul>
