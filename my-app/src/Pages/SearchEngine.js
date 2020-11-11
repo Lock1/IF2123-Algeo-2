@@ -380,7 +380,7 @@ function SearchEngine(){
                                     <AccordionDetails>
                                         <div>
                                             <Typography>Jumlah Kata : {value[1]}</Typography>
-                                            <Typography>Tingkat Kemiripan : {value[2]} %</Typography>
+                                            <Typography>Tingkat Kemiripan : {value[2].toPrecision(4)} %</Typography>
                                             <Typography>Kalimat Pertama : {value[3]}</Typography>
                                             {/*<Typography>Jumlah Kemunculan Terms Query Pada Dokumen : {value[4]}</Typography>*/}
                                         </div>
