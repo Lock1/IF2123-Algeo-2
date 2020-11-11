@@ -22,39 +22,19 @@ const useStyles = makeStyles({
 });
 
 function SearchEngine(){
-    // FIME : force set
     // TODO : HTML Scrapping
-    // TODO : enter to search
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLdJ6O-AElcleOMI9ES"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/document.json"
     // ------------------------------------------------
 
-    // Variable and constant initialization
-    var database = {}
-    const [queryRankState, setQueryRankState] = React.useState(null) // DEBUG
+    // ----- Variable and constant initialization -----
+    const [rankAndTermState, setRankAndTermState] = React.useState(null) // DEBUG
     const [searchText, setSearchText] = React.useState("")
     const [query, setQuery] = React.useState("")
+    var database = {}
     
-    // DEBUG
-    const searchHandler = async () => {
-        let rankAndTerm = await querySearch()
-        await setQueryRankState(rankAndTerm.rank)
-        setQueryRankState(rankAndTerm.rank)
-        // // DEBUG
-        // console.log(rankAndTerm)
-        // if (queryRankState !== null)
-        //     console.log(queryRankState)
-        // else {
-        //     alert(queryRankState)
-        // }
-    }
-    
-
-
-    
-
-    // React references
+    // -- React references --
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
 
@@ -135,7 +115,6 @@ function SearchEngine(){
     
     // Get from firebase and save to data
     function getDocumentDatabase() {
-        axios.get(firebaseLink).then(resource => {database = resource.data})
         return new Promise(function (rs) { axios.get(firebaseLink).then((response) => { rs(response.data) }) })
     }
     
@@ -155,7 +134,7 @@ function SearchEngine(){
             term: hashTable
         }
 
-        axios.post(firebaseLink, newDocument)
+        await axios.post(firebaseLink, newDocument)
     }
     
     // Query search from database
@@ -166,7 +145,9 @@ function SearchEngine(){
         database = await getDocumentDatabase()
         let queryHashTable = stringToHashTable(searchText)
         
+        // DEBUG
         // -> Specification requirement
+        console.clear()
         console.log(`---- Query : ${searchText} ----`)
         console.log("---- Document vectors ----")
         let querystr = String(searchText).replace(/[\W_]/gim, " ").split(" ")
@@ -191,10 +172,11 @@ function SearchEngine(){
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
             sortedQueryRank.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description])
 
+            termTable.push([doc.title, hashTableToString(doc.term, querystr)])
+            // DEBUG
             // -> Specification requirement
             console.log(doc.title)
             console.log(hashTableToString(doc.term, querystr))
-            termTable.push([doc.title, hashTableToString(doc.term, querystr)])
             // <---------------------------
         }
         // Sorting according similiarity rank
@@ -239,14 +221,22 @@ function SearchEngine(){
     // <---------------------------
 
     // Handler for uploading file
-    async function handleSubmit(event) {
+    async function handleUpload(event) {
         event.preventDefault()
         for (let i = 0; i < fileInput.current.files.length; i++) {
             // TODO : HTML scrap
             let textFile = await fileInput.current.files[i].text()
             let titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
-            uploadFileToFirebase(titleFile, textFile)
+            await uploadFileToFirebase(titleFile, textFile)
         }
+        // TODO: Add loading animation?
+        window.location.reload()
+    }
+
+    // Handler for search
+    const handleSearch = async () => {
+        let rankAndTerm = await querySearch()
+        setRankAndTermState(rankAndTerm)
     }
 
     // Update search text into new value
@@ -269,12 +259,12 @@ function SearchEngine(){
             <div className="container">
                 <h1 className={classes.title}>JUDUL</h1>
                 {/* Query search */}
-                <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') searchHandler()}} onChange={(e) => setSearchTextBox(e)}/>
-                <button type="button" id="searchButton" class="btn btn-primary" onClick={searchHandler}>Search</button>
+                <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
+                <button type="button" id="searchButton" class="btn btn-primary" onClick={handleSearch}>Search</button>
                 <div></div>
                 {/* User file upload */}
-                <form onSubmit={(e) => {handleSubmit(e)}}>
-                    <input type="file" id="fileUpload" ref={fileInput} accept=".txt" multiple/>
+                <form onSubmit={(e) => {handleUpload(e)}}>
+                    <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
                     <button type="submit" ref={uploadSubmitButton}>Upload</button>
                 </form>
                 <h5>{query}</h5>
