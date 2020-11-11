@@ -23,6 +23,7 @@ function Home(){
     var classes = useStyles();
         return (
             <div>
+                <div class="body_home">
                 <div class="site-wrapper">
                     <div class="site-wrapper-inner">
                         <div class="container" style={{color: "white", textAlign: "center"}}>    
@@ -38,19 +39,24 @@ function Home(){
                                 </div>
                             </div>*/}
                             <div class="inner cover">
-                                <h1 class="cover-heading">Tugas Besar 2 Aljabar Linear dan Geometri</h1>
-                                <p class="lead">Aplikasi Dot Product pada Sistem Temu-balik Informasi</p>
-                                <p class="lead">
-                                    <a href="/" class="btn btn-lg btn-default" style={{color: "white"}}>Tentang Kami</a>
-                                </p>
+                                <div class="blurred-box">
+                                    <div class="elevated">
+                                        <h1 class="cover-heading">Tugas Besar 2 Aljabar Linear dan Geometri</h1>
+                                        <p class="lead">Aplikasi Dot Product pada Sistem Temu-balik Informasi</p>
+                                        <p class="lead">
+                                            <a href="/About" class="btn btn-lg hover-button">Tentang Kami</a>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-          
+                {/*
                 <div className="container">
                     <h1 className={classes.title}>JUDUL</h1>
                     <input type="file"/>
+                </div>*/}
                 </div>
             </div>
         );

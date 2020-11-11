@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Picture from '../Images/HomeBackground.jpg'
 import axios from 'axios'
 import sastrawijs from 'sastrawijs'
+import PublishIcon from '@material-ui/icons/Publish';
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles({
     root: {
@@ -18,6 +20,24 @@ const useStyles = makeStyles({
     title: {
         marginTop: "2%",
         textAlign: "center"
+    },
+    flex_center: {
+        display: "flex",
+        flexDirection: "row",
+        justifyContent: "center",
+        marginTop: "3%"
+    },
+    uploadButton: {
+        padding: "0.5%",
+        paddingLeft: "1%",
+        paddingRight: "1%",
+        backgroundColor: "#3498db",
+        color: "white",
+        "&:focus, &:hover": {
+            color: "#fff",
+            backgroundColor: "#2384c6",
+            borderColor: "#217dbb",
+        },
     }
 });
 
@@ -297,22 +317,31 @@ function SearchEngine(){
 
 
 
-    var classes = useStyles();
+    const classes = useStyles();
     return (
         <div>
             <div className="container">
-                <h1 className={classes.title}>JUDUL</h1>
+                <h1 className={classes.title}>SEARCH ENGINE</h1>
                 {/* Query search */}
-                <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
-                <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {handleSearch()}}>Search</button>
-                <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>
-                <div></div>
+                <div className={classes.flex_center}>
+                    <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
+                    <button type="button" id="searchButton" class="btn-success" onClick={() => {handleSearch()}}>Search</button>
+                    <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>
+                </div>
                 {/* User file upload */}
                 <form onSubmit={(e) => {handleUpload(e)}}>
                     <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
+                    <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} class="btn-info" className={classes.uploadButton} size='medium'>Upload</Button>
                     <button type="submit" ref={uploadSubmitButton}>Upload</button>
                 </form>
+                {/* 
+                <button type="button" onClick={() => altex()}>Read Uploaded</button>
+                <div></div>
+                <button type="button" onClick={() => uploadFileToFirebase()}>Post Firebase</button>
+                <button type="button" onClick={() => getDocumentDatabase()}>Get Firebase</button>
+                <button type="button" onClick={() => dbg(database)}>Read Database</button>
                 <h5>{query}</h5>
+                DEBUG */}
             </div>
         </div>
     );

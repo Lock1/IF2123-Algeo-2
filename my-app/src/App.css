@@ -63,15 +63,44 @@ a:hover {
  * Base structure
  */
 
-html,
-body {
+
+.body_home{
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: top;
+  background-image:url(http://bit.ly/2gPLxZ4);
+  width: 100%;
   height: 100%;
-  background-color: #fff;
+  font-family: Arial, Helvetica;
+  letter-spacing: 0.02em;
+   font-weight: 400;
+  -webkit-font-smoothing: antialiased; 
+ }
+
+.blurred-box {
+ position: relative;
+ width: 100%;
+ height: 100%;
+ background: inherit;
+ border-radius: 2px;
+ overflow: hidden;
 }
-body {
-  color: #fff;
-  text-align: center;
+
+.blurred-box:after{
+content: '';
+width: 100%;
+height: 300px;
+background: inherit; 
+position: absolute;
+left: -25px;
+right: 0;
+top: -25px;  
+bottom: 0;
+box-shadow: inset 0 0 0 200px rgba(255,255,255,0.05);
+filter: blur(10px);
 }
+
 
 .container-inner {
   margin-top: 30%;
@@ -82,7 +111,7 @@ body {
   display: table;
   width: 100%;
   height: 60rem;
-  background: linear-gradient(180deg, #09203f,#29323c);
+  background: linear-gradient(180deg, rgba(9, 32, 63, 0.8),rgba(41, 50, 60, 0.8));
   /*height: 100%; */
   /*min-height: 100%;*/
 }
@@ -107,6 +136,11 @@ body {
   padding: 30px;
 }
 
+.elevated {
+  position: relative;
+  z-index: 1;
+  padding: 2%;
+}
 
 /*
  * Header
@@ -191,4 +225,14 @@ body {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.hover-button {
+  color: white;
+}
+
+.hover-button:hover {
+  color: black;
+  background-color: white;
+  opacity: 0.4;
 }
