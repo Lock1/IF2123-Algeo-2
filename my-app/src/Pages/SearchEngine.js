@@ -118,7 +118,7 @@ function SearchEngine(){
         var HTMLtitle = String(stringHTML).match(/<\s*title[^>]*>(.*?)<\s*\/\s*title\s*>/gi)
         var content = String(stringHTML).match(/<\s*p[^>]*>([^<]*)<\s*\/\s*p\s*>/gi)
         if (content && HTMLtitle)
-            return [HTMLtitle.[0].replace(/<\s*\/*title[^>]*>/gi, " "), content.replace(/\s+/gi, " ").join("").replace(/<\s*\/*p[^>]*>/gi, " ")]
+            return [HTMLtitle[0].replace(/<\s*\/*title[^>]*>/gi, " "), content.join("").replace(/\s+/gi, " ").replace(/<\s*\/*p[^>]*>/gi, " ")]
     }
 
     // Taking string and output as hashtable with word count as entry
