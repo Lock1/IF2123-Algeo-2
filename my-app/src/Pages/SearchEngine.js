@@ -55,6 +55,7 @@ const useStyles = makeStyles({
 
 function SearchEngine(){
     // TODO : Bugfix
+    // FIXME : null
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLonniE4V-PfxvTHTHi"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/"
@@ -273,7 +274,7 @@ function SearchEngine(){
                 hashTable = stringToHashTable(textFile)
                 wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
                 firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
-                textFile = await fileInput.current.files[i].text()
+                // textFile = await fileInput.current.files[i].text() // Raw HTML String
             }
             // Text file branch
             else {
