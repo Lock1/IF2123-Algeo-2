@@ -2,6 +2,7 @@ import React from 'react';
 import "../Styles/bootstrap.min.css"
 import { makeStyles } from '@material-ui/core/styles';
 import DimasPicture from '../Images/Dimas.jpg'
+import FadelPicture from '../Images/Fadel.jpg'
 import { Button, Dialog, Grid, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -34,7 +35,7 @@ const useStyles = makeStyles({
         color: "#18bc9c",
         fontSize: "1.1em"
     },
-    paper: { minWidth: "38%" },
+    paper: { minWidth: "37%" },
   });
 
 function About(){
@@ -49,7 +50,7 @@ function About(){
             hobi: "Bermain Musik dan Rebahan",
             unit: "ITB Jazz & ITB Student Orchestra",
             kesibukan: "Web Development Intern Startup",
-            image: DimasPicture
+            image: FadelPicture
         },
         dimas: {
             nama: "Gregorius Dimas Baskara",
@@ -65,9 +66,9 @@ function About(){
             jurusan: "Teknik Informatika",
             institusi: "Institut Teknologi Bandung",
             hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz & ITB Student Orchestra",
-            kesibukan: "Web Development Intern Startup",
-            image: DimasPicture
+            unit: "ITB Jazz",
+            kesibukan: "Intern Eksternal KM ITB",
+            image: FadelPicture
         },
     }
 
@@ -96,14 +97,14 @@ function About(){
                                         <Grid item md={4}>
                                             {(nama !== null) ?
                                                 <div style={{backgroundColor: "#2c3e50", width: "80%"}}>
-                                                    <img src={DimasPicture} alt="error" style={{opacity: 0.8}}/>
+                                                    <img src={data[nama].image} alt="error" style={{opacity: 0.8, width: "275px", height: "400px", objectFit: "cover"}}/>
                                                 </div>
                                                 :
                                                 null
                                             }
                                         </Grid>
                                         <Grid item md={7}>
-                                            <div style={{marginLeft: "15%", display: "flex", justifyContent: "space-between", flexDirection: "column"}}>
+                                            <div style={{marginLeft: "19%", display: "flex", justifyContent: "space-between", flexDirection: "column"}}>
                                                 <div style={{display:"flex", justifyContent: "flex-end", flexDirection: "column"}}>
                                                     {(nama !== null) ?
                                                         <div>
