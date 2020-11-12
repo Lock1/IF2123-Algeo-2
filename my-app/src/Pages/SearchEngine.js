@@ -48,7 +48,6 @@ const useStyles = makeStyles({
 });
 
 function SearchEngine(){
-    // TODO : Refactor
     // TODO : Bugfix
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLonniE4V-PfxvTHTHi"
@@ -61,7 +60,6 @@ function SearchEngine(){
     const [rankAndTermState, setRankAndTermState] = React.useState(null) // DEBUG
     const [searchText, setSearchText] = React.useState("")
     const [databaseState, setDatabaseState] = React.useState(null)
-    const [query, setQuery] = React.useState("")
     var database = {}, stopwords = {}
     
     // -- React references --
@@ -115,19 +113,12 @@ function SearchEngine(){
         return stemmed
     }
 
-    function scrapeWords(stringHTML){
-        console.log(stringHTML);
-        var tittle=String(stringHTML).match(/<\s*title[^>]*>(.*?)<\s*\/\s*title\s*>/gi)
-        var content=String(stringHTML).match(/<\s*p[^>]*>([^<]*)<\s*\/\s*p\s*>/gi)
-        if (content && tittle){
-            var result=[tittle.[0].replace(/<\s*\/*title[^>]*>/gi," "), content.join("").replace(/<\s*\/*p[^>]*>/gi," ").replace(/\s+/gi," ")]
-            return result
-        }
-    }
-
-    function debogg(){
-        var isi="<p test=asu>Aku jancok</p> <p>okee</p> <p>COKKKKKKKKK</p> <h1> PERKONTOLAN </h1>"
-        console.log(scrapeWords(isi))
+    // HTML Scrapper, taking raw string and output as tuple [title,content]
+    function htmlScrapper(stringHTML){
+        var HTMLtitle = String(stringHTML).match(/<\s*title[^>]*>(.*?)<\s*\/\s*title\s*>/gi)
+        var content = String(stringHTML).match(/<\s*p[^>]*>([^<]*)<\s*\/\s*p\s*>/gi)
+        if (content && HTMLtitle)
+            return [HTMLtitle.[0].replace(/<\s*\/*title[^>]*>/gi, " "), content.replace(/\s+/gi, " ").join("").replace(/<\s*\/*p[^>]*>/gi, " ")]
     }
 
     // Taking string and output as hashtable with word count as entry
@@ -198,7 +189,6 @@ function SearchEngine(){
     // Query search from database
     async function querySearch() {
         // Draw query text
-        writeQueryText()
         // Force wait for update and convert query to hashtable
         database = await getDocumentDatabase()
         stopwords = await getStopwordsDatabase()
@@ -283,20 +273,19 @@ function SearchEngine(){
         event.preventDefault()
         database = await getDocumentDatabase()
         stopwords = await getStopwordsDatabase()
-        setDatabaseState(database)
         
         for (let i = 0; i < fileInput.current.files.length; i++) {
             let textFile, titleFile, hashTable, wCount, firstSentence
-
+            // HTML file branch
             if (await fileInput.current.files[i].name.match(/\.html/)){
-                [titleFile, textFile]=scrapeWords(await fileInput.current.files[i].text())
+                [titleFile, textFile] = htmlScrapper(await fileInput.current.files[i].text())
                 hashTable = stringToHashTable(textFile)
-                // console.log(textFile)
                 wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
                 firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
-                textFile=await fileInput.current.files[i].text()
+                textFile = await fileInput.current.files[i].text()
             }
-            else{
+            // Text file branch
+            else {
                 textFile = await fileInput.current.files[i].text()
                 titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
                 hashTable = stringToHashTable(textFile)
@@ -304,30 +293,25 @@ function SearchEngine(){
                 firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
             }
             await uploadFileToFirebase(titleFile, textFile, wCount, firstSentence, hashTable)
-            // await console.log(fileInput.current.files[i].text())
         }
-        // TODO: Add loading animation?
-        // window.location.reload()
+
+        window.location.reload()
     }
 
     // Handler for search
     async function handleSearch() {
         let rankAndTerm = await querySearch()
+        setDatabaseState(database)
         setRankAndTermState(rankAndTerm)
-        console.log(rankAndTerm)
     }
 
     // Update search text into new value
     function setSearchTextBox(event) {
         setSearchText(event.target.value)
     }
-
-    // Draw / print query text
-    function writeQueryText() {
-        setQuery("Query: ".concat(searchText))
-    }
     
     // --- Stopword uploader ---
+    // DEBUG Purpose
     // async function dbupload() {
     //     let textha = await fileInput.current.files[0].text()
     //     let tpstr = String(textha).replace(/[\W_]/gim, " ").split(" ")
@@ -348,8 +332,6 @@ function SearchEngine(){
     // }
 
     // ------------------------------------------------------------------------------------------------------
-
-
 
 
 
@@ -412,14 +394,6 @@ function SearchEngine(){
                     :
                         null
                 }
-                {/* 
-                <button type="button" onClick={() => altex()}>Read Uploaded</button>
-                <div></div>
-                <button type="button" onClick={() => uploadFileToFirebase()}>Post Firebase</button>
-                <button type="button" onClick={() => getDocumentDatabase()}>Get Firebase</button>
-                <button type="button" onClick={() => dbg(database)}>Read Database</button>
-                <h5>{query}</h5>
-                DEBUG */}
             </div>
         </div>
     );
