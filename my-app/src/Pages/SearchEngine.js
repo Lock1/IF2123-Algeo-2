@@ -194,11 +194,8 @@ function SearchEngine(){
         stopwords = await getStopwordsDatabase()
         let queryHashTable = stringToHashTable(searchText)
         
-        // DEBUG
+
         // -> Specification requirement
-        console.clear()
-        console.log(`---- Query : ${searchText} ----`)
-        console.log("---- Document vectors ----")
         let querystr = String(searchText).replace(/[\W_]/gim, " ").split(" ")
         querystr = querystr.filter(function(str) { return /\S+/.test(str) })
         // <---------------------------
@@ -218,21 +215,9 @@ function SearchEngine(){
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
             queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr)])
-
-            // DEBUG
-            // -> Specification requirement
-            console.log(doc.title)
-            console.log(hashTableToString(doc.term, querystr))
-            // <---------------------------
         }
         // Sorting according similiarity rank
         queryResult.sort(function(a,b) {return b[2] - a[2]})
-
-        // DEBUG
-        console.log("---- Raw query rank ----")
-        console.log("[Title, wordcount, similiarity, first sentence, termcount]")
-        console.log(queryResult)
-        console.log("----------------------------------------------")
 
         return queryResult
     }
@@ -344,7 +329,6 @@ function SearchEngine(){
                 <div className={classes.flex_center}>
                     <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
                     <button type="button" id="searchButton" class="btn-success" onClick={() => {handleSearch()}}>Search</button>
-                    <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>
                     <Tooltip title="Upload Dokumen">
                         <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialog}>
                             <PublishIcon/>
