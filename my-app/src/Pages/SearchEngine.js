@@ -220,7 +220,7 @@ function SearchEngine(){
                     dotProduct += doc.term[qHash]*queryHashTable[qHash]
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
-            queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr)])
+            queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr), String(key)])
         }
         // Sorting according similiarity rank
         queryResult.sort(function(a,b) {return b[2] - a[2]})
