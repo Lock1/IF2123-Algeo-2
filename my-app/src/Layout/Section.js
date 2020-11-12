@@ -9,6 +9,7 @@ import Home from "../Pages/Home";
 import About from "../Pages/About";
 import SearchEngine from "../Pages/SearchEngine"
 import HowtoUse from "../Pages/HowtoUse"
+import Display from "../Pages/DisplayDocument"
 
 
 const Section = () =>{
@@ -20,6 +21,7 @@ const Section = () =>{
         <Route exact path="/About" component={About}/>
         <Route exact path="/How-to-Use" component={HowtoUse}/>
         <Route exact path="/Search-Engine" component={SearchEngine}/>
+        <Route exact path="/Display-Dokumen" component={Display}/>
       </Switch>
     </section>
   )

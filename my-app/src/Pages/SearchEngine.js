@@ -7,6 +7,7 @@ import sastrawijs from 'sastrawijs'
 import PublishIcon from '@material-ui/icons/Publish';
 import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton, Dialog, Tooltip } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
     root: {
@@ -26,7 +27,8 @@ const useStyles = makeStyles({
         display: "flex",
         flexDirection: "row",
         justifyContent: "center",
-        marginTop: "3%"
+        marginTop: "3%",
+        marginBottom: "2%"
     },
     uploadButton: {
         padding: "0.5%",
@@ -41,9 +43,13 @@ const useStyles = makeStyles({
         },
     },
     searchResultFlex: {
-        marginBottom: "0.8%",
-        paddingLeft: "3%",
-        padding: "1%"
+        paddingLeft: "3%",   
+    },
+    heading: {
+        color: "black",
+        "&:focus, &:hover": {
+            color: "#18bc9c",
+        },
     }
 });
 
@@ -320,6 +326,8 @@ function SearchEngine(){
 
 
 
+    console.log(databaseState)
+
     const classes = useStyles();
     return (
         <div>
@@ -359,9 +367,17 @@ function SearchEngine(){
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel1a-content"
-                                        id="panel1a-header"
+                                        id="panel1a-header"   
                                     >
-                                        <Typography className={classes.heading}>{value[0].toUpperCase()}</Typography>
+                                        <Link to={{
+                                            pathname:"/Display-Dokumen",
+                                            state: {
+                                                document: databaseState,
+                                                title: value[0]
+                                            }
+                                        }}>
+                                            <Typography variant="h6" className={classes.heading}>{value[0].toUpperCase()}</Typography>
+                                        </Link>   
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <div>

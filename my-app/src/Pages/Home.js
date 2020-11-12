@@ -38,7 +38,7 @@ function Home(){
 
         return (
             <div>
-                <Carousel showThumbs={false} showStatus={false}>
+                <Carousel showThumbs={false} showStatus={false} infiniteLoop autoPlay interval={3000} transitionTime={500}>
                     <div className={classes.coba}>
                         <div class="site-wrapper">
                             <div class="site-wrapper-inner">
@@ -59,9 +59,7 @@ function Home(){
                                             <div class="elevated">
                                                 <h1 class="cover-heading">Tugas Besar 2 Aljabar Linear dan Geometri</h1>
                                                 <p class="lead">Aplikasi Dot Product pada Sistem Temu-balik Informasi</p>
-                                                <p class="lead">
-                                                    <a href="/About" class="btn btn-lg hover-button">Tentang Kami</a>
-                                                </p>
+                                                <p class="lead">Teknik Informatika 2019</p>
                                             </div>
                                         </div>
                                     </div>
@@ -70,8 +68,8 @@ function Home(){
                         </div>
                     </div>
                     <div className={classes.coba}>
-                        <div class="site-wrapper">
-                            <div class="site-wrapper-inner">
+                        <div class="site-wrapper-aboutus">
+                            <div class="site-wrapper-inner-aboutus">
                                 <div class="container" style={{color: "white", textAlign: "center"}}>    
                                     {/*<div class="masthead clearfix">
                                         <div class="container-inner">
@@ -84,11 +82,11 @@ function Home(){
                                             </nav>
                                         </div>
                                     </div>*/}
-                                    <div class="inner cover">
+                                    <div style={{marginTop: "42%"}}>
                                         <div class="blurred-box">
                                             <div class="elevated">
-                                                <h1 class="cover-heading">Tugas Besar 2 Aljabar Linear dan Geometri</h1>
-                                                <p class="lead">Aplikasi Dot Product pada Sistem Temu-balik Informasi</p>
+                                                <h1 class="cover-heading">Ingin Mengenal Pembuat Web Lebih Lanjut?</h1>
+                                                <p class="lead">Klik Untuk Mengenal Kami Lebih Lanjut</p>
                                                 <p class="lead">
                                                     <a href="/About" class="btn btn-lg hover-button">Tentang Kami</a>
                                                 </p>
@@ -99,9 +97,35 @@ function Home(){
                             </div>
                         </div>
                     </div>
-                    <div>
-                        <img src="http://bit.ly/2gPLxZ4" alt="error"/>
-                        <p className="legend">Legend 3</p>
+                    <div className={classes.coba}>
+                        <div class="site-wrapper-howtouse">
+                            <div class="site-wrapper-inner-howtouse">
+                                <div class="container" style={{color: "white", textAlign: "center"}}>    
+                                    {/*<div class="masthead clearfix">
+                                        <div class="container-inner">
+                                            {/*<nav>
+                                                <ul class="nav masthead-nav">
+                                                    <li class="active"><a href="/">Home</a></li>
+                                                    <li><a href="/">Features</a></li>
+                                                    <li><a href="/">Contact</a></li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>*/}
+                                    <div style={{marginTop: "42%"}}>
+                                        <div class="blurred-box">
+                                            <div class="elevated">
+                                                <h1 class="cover-heading">Bingung Bagaimana Menggunakan Aplikasi Ini?</h1>
+                                                <p class="lead">Tekan Untuk Melihat Panduan Penggunaan</p>
+                                                <p class="lead">
+                                                    <a href="/How-to-Use" class="btn btn-lg hover-button">Panduan Aplikasi</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </Carousel>
                 {/*<div class="body_home">
