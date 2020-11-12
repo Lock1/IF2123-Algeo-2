@@ -115,13 +115,17 @@ function SearchEngine(){
     }
 
     function scrapeWords(stringHTML){
-        var content=stringHTML.match(/<\s*p[^>]*>(.*?)<\s*\/\s*p\s*>/gi)
-        var result=content.join("").replace(/<\s*\/*p[^>]*>/gi," ")
-        return result
+        console.log(stringHTML);
+        var tittle=String(stringHTML).match(/<\s*title[^>]*>(.*?)<\s*\/\s*title\s*>/gi)
+        var content=String(stringHTML).match(/<\s*p[^>]*>([^<]*)<\s*\/\s*p\s*>/gi)
+        if (content && tittle){
+            var result=[tittle.[0].replace(/<\s*\/*title[^>]*>/gi," "), content.join("").replace(/<\s*\/*p[^>]*>/gi," ").replace(/\s+/gi," ")]
+            return result
+        }
     }
 
     function debogg(){
-        var isi="<p test=asu>Aku jancok</p> <p>okee</p> <p>COKKKKKKKKK</p>"
+        var isi="<p test=asu>Aku jancok</p> <p>okee</p> <p>COKKKKKKKKK</p> <h1> PERKONTOLAN </h1>"
         console.log(scrapeWords(isi))
     }
 
@@ -175,17 +179,13 @@ function SearchEngine(){
     }
     
     // Upload user document to firebase
-    async function uploadFileToFirebase(docTitle,textFile) {
-        database = await getDocumentDatabase()
-        stopwords = await getStopwordsDatabase()
-        let hashTable = stringToHashTable(textFile)
-        let wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
-        let firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
+    async function uploadFileToFirebase(docTitle, docValue, wCount, firstSentence,  hashTable) {
+        
         // Upload to firebase
         const newDocument = {
             // First 12 char on fileUpload are placeholder for security reasons
             title: docTitle, 
-            value: textFile,
+            value: docValue,
             wordcount: wCount,
             description: firstSentence,
             term: hashTable
@@ -280,14 +280,32 @@ function SearchEngine(){
     // Handler for uploading file
     async function handleUpload(event) {
         event.preventDefault()
+        database = await getDocumentDatabase()
+        stopwords = await getStopwordsDatabase()
+        
         for (let i = 0; i < fileInput.current.files.length; i++) {
-            // TODO : HTML scrap
-            let textFile = await fileInput.current.files[i].text()
-            let titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
-            await uploadFileToFirebase(titleFile, textFile)
+            let textFile, titleFile, hashTable, wCount, firstSentence
+
+            if (await fileInput.current.files[i].name.match(/\.html/)){
+                [titleFile, textFile]=scrapeWords(await fileInput.current.files[i].text())
+                hashTable = stringToHashTable(textFile)
+                // console.log(textFile)
+                wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
+                firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
+                textFile=await fileInput.current.files[i].text()
+            }
+            else{
+                textFile = await fileInput.current.files[i].text()
+                titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
+                hashTable = stringToHashTable(textFile)
+                wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
+                firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
+            }
+            await uploadFileToFirebase(titleFile, textFile, wCount, firstSentence, hashTable)
+            // await console.log(fileInput.current.files[i].text())
         }
         // TODO: Add loading animation?
-        window.location.reload()
+        // window.location.reload()
     }
 
     // Handler for search
@@ -342,7 +360,7 @@ function SearchEngine(){
                 <div className={classes.flex_center}>
                     <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
                     <button type="button" id="searchButton" class="btn-success" onClick={() => {handleSearch()}}>Search</button>
-                    {/*<button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>*/}
+                    <button type="button" id="searchButton" class="btn btn-primary" onClick={() => {debogg()}}>Debug</button>
                     <Tooltip title="Upload Dokumen">
                         <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialog}>
                             <PublishIcon/>
