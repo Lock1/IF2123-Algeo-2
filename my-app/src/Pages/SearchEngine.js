@@ -48,8 +48,8 @@ const useStyles = makeStyles({
 });
 
 function SearchEngine(){
-    // TODO : HTML Scrapping
-    // TODO : Sim check, narkoba
+    // TODO : Refactor
+    // TODO : Bugfix
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLonniE4V-PfxvTHTHi"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/"
@@ -60,6 +60,7 @@ function SearchEngine(){
     // ----- Variable and constant initialization -----
     const [rankAndTermState, setRankAndTermState] = React.useState(null) // DEBUG
     const [searchText, setSearchText] = React.useState("")
+    const [databaseState, setDatabaseState] = React.useState(null)
     const [query, setQuery] = React.useState("")
     var database = {}, stopwords = {}
     
@@ -282,6 +283,7 @@ function SearchEngine(){
         event.preventDefault()
         database = await getDocumentDatabase()
         stopwords = await getStopwordsDatabase()
+        setDatabaseState(database)
         
         for (let i = 0; i < fileInput.current.files.length; i++) {
             let textFile, titleFile, hashTable, wCount, firstSentence
