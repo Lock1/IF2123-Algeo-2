@@ -55,7 +55,7 @@ const useStyles = makeStyles({
 
 function SearchEngine(){
     // TODO : Bugfix
-    // FIXME : null
+    // TODO : Fetch from URL
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLonniE4V-PfxvTHTHi"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/"
@@ -141,7 +141,7 @@ function SearchEngine(){
         // Delete whitespace on array
         tpstr = tpstr.filter(function(str) {return /\S+/.test(str)})
 
-        var hashTable = {}
+        var hashTable = {count:0}
         /* -- Hashtable counting loop --
         Check whether hashTable["index"] exist,
         if not exist then set hashTable["index"] = 1,
@@ -151,6 +151,7 @@ function SearchEngine(){
                 hashTable[hash(tpstr[i])] = 1
             else
                 hashTable[hash(tpstr[i])]++
+            hashTable.count++;
         }
         
         // Strip any stopword in hashtable
@@ -221,7 +222,10 @@ function SearchEngine(){
                     dotProduct += doc.term[qHash]*queryHashTable[qHash]
             
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
-            queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr), String(key)])
+            if (queryNorm && docNorm)
+                queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr), String(key)])
+            else
+                queryResult.push([doc.title, doc.wordcount, 0.0, doc.description, hashTableToString(doc.term, querystr), String(key)])
         }
         // Sorting according similiarity rank
         queryResult.sort(function(a,b) {return b[2] - a[2]})
@@ -326,8 +330,6 @@ function SearchEngine(){
     // ------------------------------------------------------------------------------------------------------
 
 
-
-    console.log(databaseState)
 
     const classes = useStyles();
     return (
