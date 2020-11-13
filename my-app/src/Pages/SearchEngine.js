@@ -5,9 +5,12 @@ import Picture from '../Images/HomeBackground.jpg'
 import axios from 'axios'
 import sastrawijs from 'sastrawijs'
 import PublishIcon from '@material-ui/icons/Publish';
-import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton, Dialog, Tooltip } from "@material-ui/core";
+import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton, 
+    Dialog, Tooltip, Snackbar, Table, TableRow, TableHead, TableBody, TableCell, TableContainer } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TableChartIcon from '@material-ui/icons/TableChart';
 import { Link } from "react-router-dom";
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles({
     root: {
@@ -73,9 +76,12 @@ function SearchEngine(){
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
 
-    // ---- Dialog ----
+    // --- Dialog Variable and States initialization ---
     const [open, setOpen] = React.useState(false)
+    const [openTable, setOpenTable] = React.useState(false)
+    const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false)
 
+    // ---- Dialog Upload ----
     function HandleOpenDialog(){
         setOpen(true)
     }
@@ -83,6 +89,32 @@ function SearchEngine(){
     function handleCloseDialog(){
         setOpen(false)
     }
+
+    // ---- Dialog Tabel ----
+    function HandleOpenDialogTable(){
+        if(rankAndTermState !== null){
+            setOpenTable(true)
+        }
+        else {
+            handleOpenErrorSnackbar()
+            alert("Masukin Query Dulu!")
+        }
+    }
+      
+    function handleCloseDialogTable(){
+        setOpenTable(false)
+    }
+
+    // ---- Snackbar Error Open Table ----
+    function handleOpenErrorSnackbar(){
+        setOpenErrorSnackbar(true)
+    }
+
+    function handleCloseErrorSnackbar(){
+        setOpenErrorSnackbar(false)
+    }
+
+
     // ----------------------------------------- Core functionality -----------------------------------------
     // Simple hash function, taking string and output a number
     function hash(str) {
@@ -345,6 +377,16 @@ function SearchEngine(){
                             <PublishIcon/>
                         </IconButton>
                     </Tooltip>
+                    <Tooltip title="Lihat Tabel Terms">
+                        <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialogTable}>
+                            <TableChartIcon/>
+                        </IconButton>
+                    </Tooltip>
+                    <Snackbar open={openErrorSnackbar} autoHideDuration={6000} onClose={handleCloseErrorSnackbar}>
+                        <MuiAlert onClose={handleCloseErrorSnackbar} severity="error">
+                            Harap Masukkan Query dan Tekan Tombol Search Terlebih Dahulu!
+                        </MuiAlert>
+                    </Snackbar>
                 </div>
                 {/* User file upload */}
                 <Dialog
@@ -361,6 +403,52 @@ function SearchEngine(){
                         </form>
                     </div>
                 </Dialog>
+                {/* Table Terms */}
+                <Dialog
+                    open={openTable}
+                    onClose={handleCloseDialogTable}
+                    aria-labelledby="responsive-dialog-title"
+                    classes={{ paper: classes.paper}}
+                >
+                    <div style={{padding: "5%"}}>
+                    <TableContainer component={Paper}>
+                        <Table className={classes.table} aria-label="simple table">
+                            <TableHead>
+                            <TableRow>
+                                <TableCell>Nama Dokumen</TableCell>
+                                {(rankAndTermState !== null) ? 
+                                    Object.keys(rankAndTermState[0][4]).map((value,index) => (
+                                        <TableCell component="th" scope="row">
+                                            {value}
+                                        </TableCell>
+                                    )) : 
+                                    null
+                                }
+                            </TableRow>
+                            </TableHead>
+                            <TableBody>
+                            {(rankAndTermState !== null) ? 
+                                rankAndTermState.map((value,index) => (
+                                    <TableRow>
+                                        <TableCell component="th" scope="row">
+                                            {value[0]}
+                                        </TableCell>
+                                        {
+                                            Object.values(value[4]).map((value,index) => (
+                                                <TableCell component="th" scope="row">
+                                                    {value}
+                                                </TableCell>
+                                            ))
+                                        }
+                                    </TableRow>
+                                )) : 
+                                null
+                            }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    </div>
+                </Dialog>
                 
                 {(rankAndTermState !== null) ?
                     rankAndTermState.map((value,index) => {
@@ -375,7 +463,7 @@ function SearchEngine(){
                                         <Link to={{
                                             pathname:"/Display-Dokumen",
                                             state: {
-                                                document: databaseState,
+                                                document: databaseState[value[5]],
                                                 title: value[0]
                                             }
                                         }}>

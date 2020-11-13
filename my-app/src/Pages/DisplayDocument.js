@@ -40,31 +40,24 @@ const useStyles = makeStyles({
 
 function Display(){
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false)
-    const [nama, setNama] = React.useState(null) // Me-set data diri yang akan ditampilkan pada Dialog
 
     const location = useLocation();
     const { document, title } = location.state;
 
     console.log(document)
-    for(let data in document){
-        console.log(data.title)
-    }
-
-    function searchDokumen(){
-        for(let data in document){
-            if(data.title === title){
-                return <p style={{color: "black"}}>{data.description}</p>
-            }
-        }
-        return <p style={{color: "black"}}>haha</p>
-    }
     
+    function stringToHTML(str){
+        var parser = new DOMParser();
+        var doc = parser.parseFromString(str, 'text/html');
+        console.log(doc.body)
+        return <div>{doc.body}</div>;
+    }
     
         return (
             <div>
                 <div className="container">
-                    {() => searchDokumen()}
+                    <h2 style={{textAlign: "center", marginTop:"2%", marginBottom: "2%"}}>{document.title.toUpperCase()}</h2>
+                    <p>{document.value}</p>
                 </div>
             </div>
         );
