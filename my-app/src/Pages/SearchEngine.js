@@ -9,6 +9,7 @@ import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typograph
     Dialog, Tooltip, Snackbar, Table, TableRow, TableHead, TableBody, TableCell, TableContainer } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TableChartIcon from '@material-ui/icons/TableChart';
+import CancelIcon from '@material-ui/icons/Cancel';
 import { Link } from "react-router-dom";
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -23,7 +24,7 @@ const useStyles = makeStyles({
       padding: '0 30px',
     },
     title: {
-        marginTop: "2%",
+        marginTop: "3%",
         textAlign: "center"
     },
     flex_center: {
@@ -35,8 +36,11 @@ const useStyles = makeStyles({
     },
     uploadButton: {
         padding: "0.5%",
-        paddingLeft: "1%",
-        paddingRight: "1%",
+        paddingLeft: "2%",
+        paddingRight: "2%",
+        marginLeft: "2%",
+        marginTop: "5%",
+        minWidth: "20%",
         backgroundColor: "#3498db",
         color: "white",
         "&:focus, &:hover": {
@@ -44,6 +48,21 @@ const useStyles = makeStyles({
             backgroundColor: "#2384c6",
             borderColor: "#217dbb",
         },
+    },
+    cancelButton: {
+        padding: "0.5%",
+        paddingLeft: "2%",
+        paddingRight: "2%",
+        marginLeft: "2%",
+        marginTop: "5%",
+        minWidth: "20%",
+        backgroundColor: "#e74c3c",
+        color: "white",
+        "&:focus, &:hover": {
+            color: "#fff",
+            backgroundColor: "#d62c1a",
+            borderColor: "#e74c3c",
+        }, 
     },
     searchResultFlex: {
         paddingLeft: "3%",   
@@ -79,7 +98,7 @@ function SearchEngine(){
     // --- Dialog Variable and States initialization ---
     const [open, setOpen] = React.useState(false)
     const [openTable, setOpenTable] = React.useState(false)
-    const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false)
+    const [openSnackbar, setOpenSnackbar] = React.useState(false)
 
     // ---- Dialog Upload ----
     function HandleOpenDialog(){
@@ -97,7 +116,6 @@ function SearchEngine(){
         }
         else {
             handleOpenErrorSnackbar()
-            alert("Masukin Query Dulu!")
         }
     }
       
@@ -106,12 +124,16 @@ function SearchEngine(){
     }
 
     // ---- Snackbar Error Open Table ----
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
     function handleOpenErrorSnackbar(){
-        setOpenErrorSnackbar(true)
+        setOpenSnackbar(true)
     }
 
     function handleCloseErrorSnackbar(){
-        setOpenErrorSnackbar(false)
+        setOpenSnackbar(false)
     }
 
 
@@ -367,7 +389,7 @@ function SearchEngine(){
     return (
         <div>
             <div className="container">
-                <h1 className={classes.title}>SEARCH ENGINE</h1>
+                <h2 className={classes.title}>SEARCH ENGINE</h2>
                 {/* Query search */}
                 <div className={classes.flex_center}>
                     <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
@@ -382,10 +404,10 @@ function SearchEngine(){
                             <TableChartIcon/>
                         </IconButton>
                     </Tooltip>
-                    <Snackbar open={openErrorSnackbar} autoHideDuration={6000} onClose={handleCloseErrorSnackbar}>
-                        <MuiAlert onClose={handleCloseErrorSnackbar} severity="error">
+                    <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseErrorSnackbar}>
+                        <Alert onClose={handleCloseErrorSnackbar} severity="error">
                             Harap Masukkan Query dan Tekan Tombol Search Terlebih Dahulu!
-                        </MuiAlert>
+                        </Alert>
                     </Snackbar>
                 </div>
                 {/* User file upload */}
@@ -394,11 +416,19 @@ function SearchEngine(){
                     onClose={handleCloseDialog}
                     aria-labelledby="responsive-dialog-title"
                     classes={{ paper: classes.paper}}
+                    maxWidth="sm"
+                    fullWidth
                 >
-                    <div style={{padding: "5%"}}>
+                    <div style={{padding: "3%"}}>
+                        <h3 style={{textAlign: "center"}}>UPLOAD DOKUMEN</h3>
                         <form onSubmit={(e) => {handleUpload(e)}}>  
-                            <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
-                            <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} class="btn-info" className={classes.uploadButton} size='medium'>Upload</Button>
+                            <div style={{display: "flex", justifyContent: "center"}}>
+                                <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
+                            </div>
+                            <div style={{display: "flex", justifyContent: "flex-end"}}>
+                                <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} className={classes.uploadButton} size='medium' variant="outlined">Upload</Button>
+                                <Button ref={uploadSubmitButton} startIcon={<CancelIcon/>} className={classes.cancelButton} size='medium' variant="outlined" onClick={handleCloseDialog}>Batal</Button>
+                            </div>
                             {/*<button type="submit" ref={uploadSubmitButton}>Upload</button>*/}
                         </form>
                     </div>
@@ -411,42 +441,43 @@ function SearchEngine(){
                     classes={{ paper: classes.paper}}
                 >
                     <div style={{padding: "5%"}}>
-                    <TableContainer component={Paper}>
-                        <Table className={classes.table} aria-label="simple table">
-                            <TableHead>
-                            <TableRow>
-                                <TableCell>Nama Dokumen</TableCell>
+                        <h3 style={{textAlign: "center", marginBottom: "2%"}}>TABEL TERMS</h3>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell style={{fontWeight: "bold"}}>Nama Dokumen</TableCell>
+                                        {(rankAndTermState !== null) ? 
+                                            Object.keys(rankAndTermState[0][4]).map((value,index) => (
+                                                <TableCell style={{fontWeight: "bold"}} scope="row">
+                                                    {value}
+                                                </TableCell>
+                                            )) : 
+                                            null
+                                        }
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
                                 {(rankAndTermState !== null) ? 
-                                    Object.keys(rankAndTermState[0][4]).map((value,index) => (
-                                        <TableCell component="th" scope="row">
-                                            {value}
-                                        </TableCell>
+                                    rankAndTermState.map((value,index) => (
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                {value[0]}
+                                            </TableCell>
+                                            {
+                                                Object.values(value[4]).map((value,index) => (
+                                                    <TableCell component="th" scope="row" align="right">
+                                                        {value}
+                                                    </TableCell>
+                                                ))
+                                            }
+                                        </TableRow>
                                     )) : 
                                     null
                                 }
-                            </TableRow>
-                            </TableHead>
-                            <TableBody>
-                            {(rankAndTermState !== null) ? 
-                                rankAndTermState.map((value,index) => (
-                                    <TableRow>
-                                        <TableCell component="th" scope="row">
-                                            {value[0]}
-                                        </TableCell>
-                                        {
-                                            Object.values(value[4]).map((value,index) => (
-                                                <TableCell component="th" scope="row">
-                                                    {value}
-                                                </TableCell>
-                                            ))
-                                        }
-                                    </TableRow>
-                                )) : 
-                                null
-                            }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                     </div>
                 </Dialog>
                 
