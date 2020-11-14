@@ -17,7 +17,7 @@ const Section = () =>{
   return(    
     <section>
       <Switch>
-        <Route exact path="/Home" component={Home}/>
+        <Route exact path="/" component={Home}/>
         <Route exact path="/About" component={About}/>
         <Route exact path="/How-to-Use" component={HowtoUse}/>
         <Route exact path="/Search-Engine" component={SearchEngine}/>
