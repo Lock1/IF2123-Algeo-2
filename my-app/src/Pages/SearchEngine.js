@@ -5,10 +5,13 @@ import Picture from '../Images/HomeBackground.jpg'
 import axios from 'axios'
 import sastrawijs from 'sastrawijs'
 import PublishIcon from '@material-ui/icons/Publish';
-import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton, Dialog, Tooltip } from "@material-ui/core";
+import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton,
+    Dialog, Tooltip, Snackbar, Table, TableRow, TableHead, TableBody, TableCell, TableContainer } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import TableChartIcon from '@material-ui/icons/TableChart';
+import CancelIcon from '@material-ui/icons/Cancel';
 import { Link } from "react-router-dom";
-// import crypto from 'crypto' // If using library
+import MuiAlert from '@material-ui/lab/Alert';
 
 const useStyles = makeStyles({
     root: {
@@ -21,7 +24,7 @@ const useStyles = makeStyles({
       padding: '0 30px',
     },
     title: {
-        marginTop: "2%",
+        marginTop: "3%",
         textAlign: "center"
     },
     flex_center: {
@@ -33,8 +36,11 @@ const useStyles = makeStyles({
     },
     uploadButton: {
         padding: "0.5%",
-        paddingLeft: "1%",
-        paddingRight: "1%",
+        paddingLeft: "2%",
+        paddingRight: "2%",
+        marginLeft: "2%",
+        marginTop: "5%",
+        minWidth: "20%",
         backgroundColor: "#3498db",
         color: "white",
         "&:focus, &:hover": {
@@ -43,8 +49,23 @@ const useStyles = makeStyles({
             borderColor: "#217dbb",
         },
     },
+    cancelButton: {
+        padding: "0.5%",
+        paddingLeft: "2%",
+        paddingRight: "2%",
+        marginLeft: "2%",
+        marginTop: "5%",
+        minWidth: "20%",
+        backgroundColor: "#e74c3c",
+        color: "white",
+        "&:focus, &:hover": {
+            color: "#fff",
+            backgroundColor: "#d62c1a",
+            borderColor: "#e74c3c",
+        },
+    },
     searchResultFlex: {
-        paddingLeft: "3%",   
+        paddingLeft: "3%",
     },
     heading: {
         color: "black",
@@ -69,21 +90,53 @@ function SearchEngine(){
     const [searchText, setSearchText] = React.useState("")
     const [databaseState, setDatabaseState] = React.useState(null)
     var database = {}, stopwords = {}
-    
+
     // -- React references --
     const uploadSubmitButton = React.createRef(null)
     const fileInput = React.createRef(null)
 
-    // ---- Dialog ----
+    // --- Dialog Variable and States initialization ---
     const [open, setOpen] = React.useState(false)
+    const [openTable, setOpenTable] = React.useState(false)
+    const [openSnackbar, setOpenSnackbar] = React.useState(false)
 
+    // ---- Dialog Upload ----
     function HandleOpenDialog(){
         setOpen(true)
     }
-      
+
     function handleCloseDialog(){
         setOpen(false)
     }
+
+    // ---- Dialog Tabel ----
+    function HandleOpenDialogTable(){
+        if(rankAndTermState !== null){
+            setOpenTable(true)
+        }
+        else {
+            handleOpenErrorSnackbar()
+        }
+    }
+
+    function handleCloseDialogTable(){
+        setOpenTable(false)
+    }
+
+    // ---- Snackbar Error Open Table ----
+    function Alert(props) {
+        return <MuiAlert elevation={6} variant="filled" {...props} />;
+    }
+
+    function handleOpenErrorSnackbar(){
+        setOpenSnackbar(true)
+    }
+
+    function handleCloseErrorSnackbar(){
+        setOpenSnackbar(false)
+    }
+
+
     // ----------------------------------------- Core functionality -----------------------------------------
     // Simple hash function, taking string and output a number
     function hash(str) {
@@ -95,8 +148,8 @@ function SearchEngine(){
             hash += (tpstr.charCodeAt(i) * 37 + 3) * tpstr.charCodeAt(i)
         // hash = crypto.createHash('sha256').update(tpstr).digest('hex') // Using library
         return hash
-    }    
-    
+    }
+
     // Removing stopwords from a hashtable
     function stripStopword(htable) {
         // stopwordKey must be configured properly
@@ -132,7 +185,7 @@ function SearchEngine(){
 
     // Taking string and output as hashtable with word count as entry
     function stringToHashTable(str) {
-        // Note : Due stripStopword() using database, 
+        // Note : Due stripStopword() using database,
         // every stringToHashTable() call need handler for null database
 
         // Replace non-alphanumeric
@@ -159,7 +212,7 @@ function SearchEngine(){
         hashTable = stripStopword(hashTable)
         return hashTable
     }
-    
+
     // Taking hashtable and output norm of hashtable
     function hashTableNorm(htable) {
         let quadraticSum = 0
@@ -168,7 +221,7 @@ function SearchEngine(){
                 quadraticSum += Math.pow(htable[i], 2)
         return Math.sqrt(quadraticSum)
     }
-    
+
     // Get from firebase and return it
     function getDocumentDatabase() {
         return new Promise(function (rs) { axios.get(firebaseDocumentLink).then((response) => { rs(response.data) }) })
@@ -178,14 +231,14 @@ function SearchEngine(){
     function getStopwordsDatabase() {
         return new Promise(function (rs) { axios.get(firebaseStopwordLink).then((response) => { rs(response.data) }) })
     }
-    
+
     // Upload user document to firebase
     async function uploadFileToFirebase(docTitle, docValue, wCount, firstSentence,  hashTable) {
-        
+
         // Upload to firebase
         const newDocument = {
             // First 12 char on fileUpload are placeholder for security reasons
-            title: docTitle, 
+            title: docTitle,
             value: docValue,
             wordcount: wCount,
             description: firstSentence,
@@ -194,7 +247,7 @@ function SearchEngine(){
 
         await axios.post(firebaseDocumentLink, newDocument)
     }
-    
+
     // Query search from database
     async function querySearch() {
         // Draw query text
@@ -221,7 +274,7 @@ function SearchEngine(){
             for (let qHash in queryHashTable) // && (doc.term.count !== doc.term[qHash])
                 if ((doc.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
                     dotProduct += doc.term[qHash]*queryHashTable[qHash]
-            
+
             // Calculating similiarity with dot(Q,D) / (||Q||*||D||)
             if (queryNorm && docNorm)
                 queryResult.push([doc.title, doc.wordcount, 100 * dotProduct / (queryNorm * docNorm), doc.description, hashTableToString(doc.term, querystr), String(key)])
@@ -234,18 +287,18 @@ function SearchEngine(){
         return queryResult
     }
     // ------------------------------------------------------------------------------------------------------
-    
-    
+
+
 
     // -------------------------------------- Additional functionality --------------------------------------
 
     // -> Specification requirement
     /* -- Hash table to string function --
     Take input hashtable and string array,
-    process and convert hash indexes 
+    process and convert hash indexes
     into original non-hashed string then
     return as string indexed object     */
-    
+
     function hashTableToString(htable, strorigin) {
         let strtable = {}
         let strstem = stemString(strorigin.join(" "))
@@ -270,7 +323,7 @@ function SearchEngine(){
         event.preventDefault()
         database = await getDocumentDatabase()
         stopwords = await getStopwordsDatabase()
-        
+
         for (let i = 0; i < fileInput.current.files.length; i++) {
             let textFile, titleFile, hashTable, wCount, firstSentence
             // HTML file branch
@@ -306,7 +359,7 @@ function SearchEngine(){
     function setSearchTextBox(event) {
         setSearchText(event.target.value)
     }
-    
+
     // --- Stopword uploader ---
     // DEBUG Purpose
     // async function dbupload() {
@@ -336,7 +389,7 @@ function SearchEngine(){
     return (
         <div>
             <div className="container">
-                <h1 className={classes.title}>SEARCH ENGINE</h1>
+                <h2 className={classes.title}>SEARCH ENGINE</h2>
                 {/* Query search */}
                 <div className={classes.flex_center}>
                     <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
@@ -346,6 +399,16 @@ function SearchEngine(){
                             <PublishIcon/>
                         </IconButton>
                     </Tooltip>
+                    <Tooltip title="Lihat Tabel Terms">
+                        <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialogTable}>
+                            <TableChartIcon/>
+                        </IconButton>
+                    </Tooltip>
+                    <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseErrorSnackbar}>
+                        <Alert onClose={handleCloseErrorSnackbar} severity="error">
+                            Harap Masukkan Query dan Tekan Tombol Search Terlebih Dahulu!
+                        </Alert>
+                    </Snackbar>
                 </div>
                 {/* User file upload */}
                 <Dialog
@@ -353,16 +416,71 @@ function SearchEngine(){
                     onClose={handleCloseDialog}
                     aria-labelledby="responsive-dialog-title"
                     classes={{ paper: classes.paper}}
+                    maxWidth="sm"
+                    fullWidth
                 >
-                    <div style={{padding: "5%"}}>
-                        <form onSubmit={(e) => {handleUpload(e)}}>  
-                            <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
-                            <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} class="btn-info" className={classes.uploadButton} size='medium'>Upload</Button>
+                    <div style={{padding: "3%"}}>
+                        <h3 style={{textAlign: "center"}}>UPLOAD DOKUMEN</h3>
+                        <form onSubmit={(e) => {handleUpload(e)}}>
+                            <div style={{display: "flex", justifyContent: "center"}}>
+                                <input type="file" id="fileUpload" ref={fileInput} accept=".txt,.html" multiple/>
+                            </div>
+                            <div style={{display: "flex", justifyContent: "flex-end"}}>
+                                <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} className={classes.uploadButton} size='medium' variant="outlined">Upload</Button>
+                                <Button ref={uploadSubmitButton} startIcon={<CancelIcon/>} className={classes.cancelButton} size='medium' variant="outlined" onClick={handleCloseDialog}>Batal</Button>
+                            </div>
                             {/*<button type="submit" ref={uploadSubmitButton}>Upload</button>*/}
                         </form>
                     </div>
                 </Dialog>
-                
+                {/* Table Terms */}
+                <Dialog
+                    open={openTable}
+                    onClose={handleCloseDialogTable}
+                    aria-labelledby="responsive-dialog-title"
+                    classes={{ paper: classes.paper}}
+                >
+                    <div style={{padding: "5%"}}>
+                        <h3 style={{textAlign: "center", marginBottom: "2%"}}>TABEL TERMS</h3>
+                        <TableContainer component={Paper}>
+                            <Table className={classes.table} aria-label="simple table">
+                                <TableHead>
+                                    <TableRow>
+                                        <TableCell style={{fontWeight: "bold"}}>Nama Dokumen</TableCell>
+                                        {(rankAndTermState !== null) ?
+                                            Object.keys(rankAndTermState[0][4]).map((value,index) => (
+                                                <TableCell style={{fontWeight: "bold"}} scope="row">
+                                                    {value}
+                                                </TableCell>
+                                            )) :
+                                            null
+                                        }
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                {(rankAndTermState !== null) ?
+                                    rankAndTermState.map((value,index) => (
+                                        <TableRow>
+                                            <TableCell component="th" scope="row">
+                                                {value[0]}
+                                            </TableCell>
+                                            {
+                                                Object.values(value[4]).map((value,index) => (
+                                                    <TableCell component="th" scope="row" align="right">
+                                                        {value}
+                                                    </TableCell>
+                                                ))
+                                            }
+                                        </TableRow>
+                                    )) :
+                                    null
+                                }
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                </Dialog>
+
                 {(rankAndTermState !== null) ?
                     rankAndTermState.map((value,index) => {
                         return(
@@ -371,17 +489,17 @@ function SearchEngine(){
                                     <AccordionSummary
                                         expandIcon={<ExpandMoreIcon />}
                                         aria-controls="panel1a-content"
-                                        id="panel1a-header"   
+                                        id="panel1a-header"
                                     >
                                         <Link to={{
                                             pathname:"/Display-Dokumen",
                                             state: {
-                                                document: databaseState,
+                                                document: databaseState[value[5]],
                                                 title: value[0]
                                             }
                                         }}>
                                             <Typography variant="h6" className={classes.heading}>{value[0].toUpperCase()}</Typography>
-                                        </Link>   
+                                        </Link>
                                     </AccordionSummary>
                                     <AccordionDetails>
                                         <div>

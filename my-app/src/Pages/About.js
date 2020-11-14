@@ -3,6 +3,7 @@ import "../Styles/bootstrap.min.css"
 import { makeStyles } from '@material-ui/core/styles';
 import DimasPicture from '../Images/Dimas.jpg'
 import FadelPicture from '../Images/Fadel.jpg'
+import TanurPicture from '../Images/Tanur.jpg'
 import { Button, Dialog, Grid, Typography } from "@material-ui/core";
 
 const useStyles = makeStyles({
@@ -48,9 +49,9 @@ function About(){
             jurusan: "Teknik Informatika",
             institusi: "Institut Teknologi Bandung",
             hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz & ITB Student Orchestra",
-            kesibukan: "Web Development Intern Startup",
-            image: FadelPicture
+            unit: "Percama ITB",
+            kesibukan: "Bermain OSU (Wibu)",
+            image: TanurPicture
         },
         dimas: {
             nama: "Gregorius Dimas Baskara",

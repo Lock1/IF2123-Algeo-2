@@ -1,156 +1,261 @@
 import React from 'react';
 import "../Styles/bootstrap.min.css"
-import { makeStyles } from '@material-ui/core/styles';
-import DimasPicture from '../Images/Dimas.jpg'
-import { Button, Dialog, Grid, Typography } from "@material-ui/core";
-import { Carousel } from 'react-responsive-carousel';
-
-const useStyles = makeStyles({
-    root: {
-      background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { Button, Typography, Paper } from "@material-ui/core";
+import PropTypes from 'prop-types';
+import clsx from 'clsx';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import SettingsIcon from '@material-ui/icons/Settings';
+import StepConnector from '@material-ui/core/StepConnector';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import PublishIcon from '@material-ui/icons/Publish';
+import SearchIcon from '@material-ui/icons/Search';
+import FindInPageIcon from '@material-ui/icons/FindInPage';
+import TableChartIcon from '@material-ui/icons/TableChart';
+import Instruction_1 from '../Images/Instruction_1.JPG';
+import Instruction_2 from '../Images/Instruction_2.JPG';
+import Instruction_3 from '../Images/Instruction_3.JPG';
+import Instruction_4 from '../Images/Instruction_4.JPG';
+import Instruction_5 from '../Images/Instruction_5.JPG';
+import Instruction_6 from '../Images/Instruction_6.JPG';
+  
+  const ColorlibConnector = withStyles({
+    alternativeLabel: {
+      top: 22,
+    },
+    active: {
+      '& $line': {
+        backgroundImage:
+          'linear-gradient( 95deg,rgb(44, 62, 80) 0%,rgb(24, 188, 156) 50%,rgb(52, 152, 219) 100%)',
+      },
+    },
+    completed: {
+      '& $line': {
+        backgroundImage:
+          'linear-gradient( 95deg,rgb(44, 62, 80) 0%,rgb(24, 188, 156) 50%,rgb(52, 152, 219) 100%)',
+      },
+    },
+    line: {
+      height: 3,
       border: 0,
-      borderRadius: 3,
-      boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
-      color: 'white',
-      height: 48,
-      padding: '0 30px',
+      backgroundColor: '#eaeaf0',
+      borderRadius: 1,
     },
-    title: {
-        marginTop: "2%",
-        textAlign: "center"
+  })(StepConnector);
+  
+  const useColorlibStepIconStyles = makeStyles({
+    root: {
+      backgroundColor: '#ccc',
+      zIndex: 1,
+      color: '#fff',
+      width: 50,
+      height: 50,
+      display: 'flex',
+      borderRadius: '50%',
+      justifyContent: 'center',
+      alignItems: 'center',
     },
-    descButton: {
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "center"
+    active: {
+      backgroundImage:
+        'linear-gradient( 136deg, rgb(44, 62, 80) 0%, rgb(24, 188, 156) 50%, rgb(52, 152, 219) 100%)',
+      boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
     },
-    dialogText: {
-        color: "white",
-        marginLeft: "5%"
+    completed: {
+      backgroundImage:
+        'linear-gradient( 136deg, rgb(44, 62, 80) 0%, rgb(24, 188, 156) 50%, rgb(52, 152, 219) 100%)',
     },
-    dialogTitle: {
-        color: "white",
-    },
-    dialogTextTitle: {
-        color: "#18bc9c",
-        fontSize: "1.1em"
-    },
-    paper: { minWidth: "38%" },
   });
+  
+  function ColorlibStepIcon(props) {
+    const classes = useColorlibStepIconStyles();
+    const { active, completed } = props;
+  
+    const icons = {
+      1: <SettingsIcon />,
+      2: <PublishIcon />,
+      3: <SearchIcon />,
+      4: <TableChartIcon/>,
+      5: <ExpandMoreIcon />,
+      6: <FindInPageIcon />
+    };
+  
+    return (
+      <div
+        className={clsx(classes.root, {
+          [classes.active]: active,
+          [classes.completed]: completed,
+        })}
+      >
+        {icons[String(props.icon)]}
+      </div>
+    );
+  }
+  
+  ColorlibStepIcon.propTypes = {
+    /**
+     * Whether this step is active.
+     */
+    active: PropTypes.bool,
+    /**
+     * Mark the step as completed. Is passed to child components.
+     */
+    completed: PropTypes.bool,
+    /**
+     * The label displayed in the step icon.
+     */
+    icon: PropTypes.node,
+  };
+  
+  const useStyles = makeStyles((theme) => ({
+    root: {
+      width: '100%',
+    },
+    button: {
+      marginRight: theme.spacing(1),
+    },
+    instructions: {
+      marginTop: theme.spacing(1),
+      marginBottom: theme.spacing(3),
+    },
+    link: {
+        "&:focus, &:hover": {
+            textDecoration: "none"
+        }, 
+    }
+  }));
+  
+  function getSteps() {
+    return ['Klik Search Engine', 'Upload File txt/html (Opsional)', 'Masukkan Query dan Tekan Search', 'Tekan Tombol Table Untuk Melihat Tabel Terms', 'Klik Dropdown Untuk Melihat Detail', 'Klik Nama Dokumen Untuk Melihat Isi Dokumen'];
+  }
+  
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return (
+            <div>
+                <Paper variant="outlined" style={{display: "flex", justifyContent: "center", padding: "2%"}}>
+                    <img src={Instruction_1} alt="error"/>
+                </Paper>
+                <Typography style={{marginTop: "2%"}}>Klik 'Search Engine' Pada Navigation Bar yang Terletak di Bagian Atas Web</Typography>
+            </div>
+        )
+      case 1:
+        return (
+            <div>
+                <Paper variant="outlined" style={{display: "flex", justifyContent: "center", padding: "2%"}}>
+                    <img src={Instruction_2} alt="error"/>
+                </Paper>
+                <Typography style={{marginTop: "2%"}}>Lakukan Upload Dokumen dalam format .txt atau .html</Typography>
+            </div>
+        )
+      case 2:
+        return (
+            <div>
+                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
+                    <img src={Instruction_3} alt="error"/>
+                </Paper>
+                <Typography style={{marginTop: "2%"}}>Masukkan Query Pada Kotak yang Tersedia, kemudian Tekan 'Search'</Typography>
+            </div>
+        )
+      case 3:
+        return (
+            <div>
+                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
+                    <img src={Instruction_4} alt="error"/>
+                </Paper>
+                <Typography style={{marginTop: "2%"}}>Setelah Memasukkan Query dan Menekan 'Search', Maka Tabel Terms Dapat Dilihat Dengan Menekan Tombol Di atas</Typography>
+            </div>
+        )
+      case 4:
+        return (
+            <div>
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
+                    <img src={Instruction_5} alt="error"/>
+                </div>
+                <Typography style={{marginTop: "2%"}}>Tekan Tombol Dropdown Untuk Melihat Detail/Rincian Dokumen dan Algoritma Search</Typography>
+            </div>
+        )
+      case 5:
+        return (
+            <div>
+                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                    <img src={Instruction_6} alt="error"/>
+                </Paper>
+                <Typography style={{marginTop: "2%", textAlign: "center"}}>Tekan Nama Dokumen Untuk Melihat Isi Dokumen</Typography>
+            </div>
+        )
+      default:
+        return 'Unknown step';
+    }
+  }
 
 function HowtoUse(){
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false)
-    const [nama, setNama] = React.useState(null) // Me-set data diri yang akan ditampilkan pada Dialog
-    const data = {
-        tanur: {
-            nama: "Tanur Rizaldi Rahardjo",
-            jurusan: "Teknik Informatika",
-            institusi: "Institut Teknologi Bandung",
-            hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz & ITB Student Orchestra",
-            kesibukan: "Web Development Intern Startup",
-            image: DimasPicture
-        },
-        dimas: {
-            nama: "Gregorius Dimas Baskara",
-            jurusan: "Teknik Informatika",
-            institusi: "Institut Teknologi Bandung",
-            hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz & ITB Student Orchestra",
-            kesibukan: "Web Development Intern Startup",
-            image: DimasPicture
-        },
-        fadel: {
-            nama: "Fadel Ananda Dotty",
-            jurusan: "Teknik Informatika",
-            institusi: "Institut Teknologi Bandung",
-            hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz & ITB Student Orchestra",
-            kesibukan: "Web Development Intern Startup",
-            image: DimasPicture
-        },
-    }
+    const [activeStep, setActiveStep] = React.useState(0);
+    const steps = getSteps();
 
-    function HandleOpenDialog(nama){
-        setNama(nama)
-        setOpen(true)
-    }
-      
-    function handleCloseDialog(){
-        setOpen(false)
-    }
-    
+    const handleNext = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+    };
+
+    const handleBack = () => {
+        setActiveStep((prevActiveStep) => prevActiveStep - 1);
+    };
+
+    const handleReset = () => {
+        setActiveStep(0);
+    };
+
         return (
             <div>
                 <div className="container">
-                    <div style={{height:"30em"}}>
-                        <Carousel showThumbs={false} showStatus={false}>
-                            <div className={classes.coba}>
-                                <div class="site-wrapper-howtouse">
-                                    <div class="site-wrapper-inner-howtouse">
-                                        <div class="container" style={{color: "white", textAlign: "center"}}>    
-                                            {/*<div class="masthead clearfix">
-                                                <div class="container-inner">
-                                                    {/*<nav>
-                                                        <ul class="nav masthead-nav">
-                                                            <li class="active"><a href="/">Home</a></li>
-                                                            <li><a href="/">Features</a></li>
-                                                            <li><a href="/">Contact</a></li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                            </div>*/}
-                                            <div style={{marginTop: "50%"}}>
-                                                <div class="blurred-box">
-                                                    <div class="elevated">
-                                                        <h1 class="cover-heading">Panduan Penggunaan Aplikasi</h1>
-                                                        <p class="lead">(Application Manual / How To Use)</p>
-                                                        <p class="lead" style={{fontSize: "1em"}}>
-                                                            Scroll Untuk Melihat Lebih Lanjut
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={classes.coba}>
-                                <div class="site-wrapper">
-                                    <div class="site-wrapper-inner">
-                                        <div class="container" style={{color: "white", textAlign: "center"}}>    
-                                            {/*<div class="masthead clearfix">
-                                                <div class="container-inner">
-                                                    {/*<nav>
-                                                        <ul class="nav masthead-nav">
-                                                            <li class="active"><a href="/">Home</a></li>
-                                                            <li><a href="/">Features</a></li>
-                                                            <li><a href="/">Contact</a></li>
-                                                        </ul>
-                                                    </nav>
-                                                </div>
-                                            </div>*/}
-                                            <div class="inner cover">
-                                                <div class="blurred-box">
-                                                    <div class="elevated">
-                                                        <h1 class="cover-heading">Tugas Besar 2 Aljabar Linear dan Geometri</h1>
-                                                        <p class="lead">Aplikasi Dot Product pada Sistem Temu-balik Informasi</p>
-                                                        <p class="lead">
-                                                            <a href="/About" class="btn btn-lg hover-button">Tentang Kami</a>
-                                                        </p>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <h2 style={{marginTop: "3%", textAlign: "center", marginBottom: "2%"}}>PANDUAN PENGGUNAAN APLIKASI</h2>
+                    <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
+                        {steps.map((label) => (
+                        <Step key={label}>
+                            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                        </Step>
+                        ))}
+                    </Stepper>
+                    <div>
+                        {activeStep === steps.length ? (
+                        <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                            <Typography className={classes.instructions}>
+                            Semua Langkah Telah Terselesaikan! Selamat Menggunakan!
+                            </Typography>
                             <div>
-                                <img src="http://bit.ly/2gPLxZ4" alt="error"/>
-                                <p className="legend">Legend 3</p>
+                                <Button onClick={handleReset} className={classes.button}>
+                                Reset
+                                </Button>
+                                <Button
+                                    variant="contained"
+                                    color="primary"
+                                    className={classes.button}
+                                >
+                                    <a href="/Search-Engine" className={classes.link}>Search Engine</a>
+                                </Button>
                             </div>
-                        </Carousel>
+                        </div>
+                        ) : (
+                        <div style={{display: "flex", alignItems: "center", flexDirection: "column"}}>
+                            <div className={classes.instructions}>{getStepContent(activeStep)}</div>
+                            <div>
+                            <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+                                Back
+                            </Button>
+                            <Button
+                                variant="contained"
+                                color="primary"
+                                onClick={handleNext}
+                                className={classes.button}
+                            >
+                                {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                            </Button>
+                            </div>
+                        </div>
+                        )}
                     </div>
                 </div>
             </div>
