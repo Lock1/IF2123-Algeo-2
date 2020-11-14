@@ -76,8 +76,6 @@ const useStyles = makeStyles({
 });
 
 function SearchEngine(){
-    // TODO : Bugfix
-    // TODO : Fetch from URL
     // ------------ Configuration constant ------------
     const stopwordKey = "-MLonniE4V-PfxvTHTHi"
     const firebaseLink = "https://tubes-algeo-02.firebaseio.com/"
@@ -109,7 +107,7 @@ function SearchEngine(){
         setOpen(false)
     }
 
-    // ---- Dialog Tabel ----
+    // ---- Dialog Table ----
     function HandleOpenDialogTable(){
         if(rankAndTermState !== null){
             setOpenTable(true)
@@ -269,7 +267,7 @@ function SearchEngine(){
             // Q & D Norm calculation
             let queryNorm = hashTableNorm(queryHashTable)
             let docNorm = hashTableNorm(doc.term)
-            console.log(queryHashTable, doc.term)
+
             // Dot product
             for (let qHash in queryHashTable) // && (doc.term.count !== doc.term[qHash])
                 if ((doc.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
@@ -361,7 +359,7 @@ function SearchEngine(){
     }
 
     // --- Stopword uploader ---
-    // DEBUG Purpose
+    // For debug purpose only
     // async function dbupload() {
     //     let textha = await fileInput.current.files[0].text()
     //     let tpstr = String(textha).replace(/[\W_]/gim, " ").split(" ")
