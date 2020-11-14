@@ -162,7 +162,7 @@ import Instruction_5 from '../Images/Instruction_5.JPG';
       case 3:
         return (
             <div>
-                <div style={{display: "flex", justifyContent: "center"}}>
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
                     <img src={Instruction_4} alt="error"/>
                 </div>
                 <Typography style={{marginTop: "2%"}}>Tekan Tombol Dropdown Untuk Melihat Detail/Rincian Dokumen dan Algoritma Search</Typography>
@@ -171,10 +171,10 @@ import Instruction_5 from '../Images/Instruction_5.JPG';
       case 4:
         return (
             <div>
-                <Paper variant="outlined" style={{display: "flex", justifyContent: "center"}}>
+                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
                     <img src={Instruction_5} alt="error"/>
                 </Paper>
-                <Typography style={{marginTop: "2%"}}>Tekan Nama Dokumen Untuk Melihat Isi Dokumen</Typography>
+                <Typography style={{marginTop: "2%", textAlign: "center"}}>Tekan Nama Dokumen Untuk Melihat Isi Dokumen</Typography>
             </div>
         )
       default:
