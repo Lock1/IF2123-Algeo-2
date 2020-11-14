@@ -8,6 +8,7 @@ import PublishIcon from '@material-ui/icons/Publish';
 import { Button, Paper, Accordion, AccordionSummary, AccordionDetails, Typography, IconButton, Dialog, Tooltip } from "@material-ui/core";
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Link } from "react-router-dom";
+// import crypto from 'crypto' // If using library
 
 const useStyles = makeStyles({
     root: {
@@ -64,7 +65,7 @@ function SearchEngine(){
     // ------------------------------------------------
 
     // ----- Variable and constant initialization -----
-    const [rankAndTermState, setRankAndTermState] = React.useState(null) // DEBUG
+    const [rankAndTermState, setRankAndTermState] = React.useState(null)
     const [searchText, setSearchText] = React.useState("")
     const [databaseState, setDatabaseState] = React.useState(null)
     var database = {}, stopwords = {}
@@ -91,7 +92,8 @@ function SearchEngine(){
         Get ASCII code on every char in string, and calculate with
         Hash = Sigma (ASCII * 37 + 3)*ASCII                     */
         for (let i = 0; i < tpstr.length; i++)
-        hash += (tpstr.charCodeAt(i) * 37 + 3) * tpstr.charCodeAt(i)
+            hash += (tpstr.charCodeAt(i) * 37 + 3) * tpstr.charCodeAt(i)
+        // hash = crypto.createHash('sha256').update(tpstr).digest('hex') // Using library
         return hash
     }    
     
@@ -141,7 +143,7 @@ function SearchEngine(){
         // Delete whitespace on array
         tpstr = tpstr.filter(function(str) {return /\S+/.test(str)})
 
-        var hashTable = {count:0}
+        var hashTable = {cnt:undefined}
         /* -- Hashtable counting loop --
         Check whether hashTable["index"] exist,
         if not exist then set hashTable["index"] = 1,
@@ -151,9 +153,8 @@ function SearchEngine(){
                 hashTable[hash(tpstr[i])] = 1
             else
                 hashTable[hash(tpstr[i])]++
-            hashTable.count++;
         }
-        
+
         // Strip any stopword in hashtable
         hashTable = stripStopword(hashTable)
         return hashTable
@@ -201,7 +202,7 @@ function SearchEngine(){
         database = await getDocumentDatabase()
         stopwords = await getStopwordsDatabase()
         let queryHashTable = stringToHashTable(searchText)
-        
+        // FIXME : Query
 
         // -> Specification requirement
         let querystr = String(searchText).replace(/[\W_]/gim, " ").split(" ")
@@ -215,9 +216,9 @@ function SearchEngine(){
             // Q & D Norm calculation
             let queryNorm = hashTableNorm(queryHashTable)
             let docNorm = hashTableNorm(doc.term)
-            
+            console.log(queryHashTable, doc.term)
             // Dot product
-            for (let qHash in queryHashTable)
+            for (let qHash in queryHashTable) // && (doc.term.count !== doc.term[qHash])
                 if ((doc.term[qHash] !== undefined) && (queryHashTable[qHash] !== undefined))
                     dotProduct += doc.term[qHash]*queryHashTable[qHash]
             
