@@ -1,26 +1,25 @@
 import React from 'react';
 import "../Styles/bootstrap.min.css"
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Button, Dialog, Grid, Typography, Paper } from "@material-ui/core";
+import { Button, Typography, Paper } from "@material-ui/core";
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Check from '@material-ui/icons/Check';
 import SettingsIcon from '@material-ui/icons/Settings';
-import GroupAddIcon from '@material-ui/icons/GroupAdd';
-import VideoLabelIcon from '@material-ui/icons/VideoLabel';
 import StepConnector from '@material-ui/core/StepConnector';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import PublishIcon from '@material-ui/icons/Publish';
 import SearchIcon from '@material-ui/icons/Search';
 import FindInPageIcon from '@material-ui/icons/FindInPage';
+import TableChartIcon from '@material-ui/icons/TableChart';
 import Instruction_1 from '../Images/Instruction_1.JPG';
 import Instruction_2 from '../Images/Instruction_2.JPG';
 import Instruction_3 from '../Images/Instruction_3.JPG';
 import Instruction_4 from '../Images/Instruction_4.JPG';
 import Instruction_5 from '../Images/Instruction_5.JPG';
+import Instruction_6 from '../Images/Instruction_6.JPG';
   
   const ColorlibConnector = withStyles({
     alternativeLabel: {
@@ -77,8 +76,9 @@ import Instruction_5 from '../Images/Instruction_5.JPG';
       1: <SettingsIcon />,
       2: <PublishIcon />,
       3: <SearchIcon />,
-      4: <ExpandMoreIcon />,
-      5: <FindInPageIcon />
+      4: <TableChartIcon/>,
+      5: <ExpandMoreIcon />,
+      6: <FindInPageIcon />
     };
   
     return (
@@ -127,7 +127,7 @@ import Instruction_5 from '../Images/Instruction_5.JPG';
   }));
   
   function getSteps() {
-    return ['Klik Search Engine', 'Upload File txt/html (Opsional)', 'Masukkan Query dan Tekan Search', 'Klik Dropdown Untuk Melihat Detail', 'Klik Nama Dokumen Untuk Melihat Isi Dokumen'];
+    return ['Klik Search Engine', 'Upload File txt/html (Opsional)', 'Masukkan Query dan Tekan Search', 'Tekan Tombol Table Untuk Melihat Tabel Terms', 'Klik Dropdown Untuk Melihat Detail', 'Klik Nama Dokumen Untuk Melihat Isi Dokumen'];
   }
   
   function getStepContent(step) {
@@ -162,17 +162,26 @@ import Instruction_5 from '../Images/Instruction_5.JPG';
       case 3:
         return (
             <div>
-                <div style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
+                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
                     <img src={Instruction_4} alt="error"/>
-                </div>
-                <Typography style={{marginTop: "2%"}}>Tekan Tombol Dropdown Untuk Melihat Detail/Rincian Dokumen dan Algoritma Search</Typography>
+                </Paper>
+                <Typography style={{marginTop: "2%"}}>Setelah Memasukkan Query dan Menekan 'Search', Maka Tabel Terms Dapat Dilihat Dengan Menekan Tombol Di atas</Typography>
             </div>
         )
       case 4:
         return (
             <div>
-                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                <div style={{display: "flex", flexDirection: "row", justifyContent: "center", padding: "2%"}}>
                     <img src={Instruction_5} alt="error"/>
+                </div>
+                <Typography style={{marginTop: "2%"}}>Tekan Tombol Dropdown Untuk Melihat Detail/Rincian Dokumen dan Algoritma Search</Typography>
+            </div>
+        )
+      case 5:
+        return (
+            <div>
+                <Paper variant="outlined" style={{display: "flex", flexDirection: "row", justifyContent: "center"}}>
+                    <img src={Instruction_6} alt="error"/>
                 </Paper>
                 <Typography style={{marginTop: "2%", textAlign: "center"}}>Tekan Nama Dokumen Untuk Melihat Isi Dokumen</Typography>
             </div>
@@ -214,7 +223,7 @@ function HowtoUse(){
                         {activeStep === steps.length ? (
                         <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
                             <Typography className={classes.instructions}>
-                            Semua Langkah Telah Terselesaikan! Selamat Mencari!
+                            Semua Langkah Telah Terselesaikan! Selamat Menggunakan!
                             </Typography>
                             <div>
                                 <Button onClick={handleReset} className={classes.button}>
