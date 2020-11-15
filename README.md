@@ -1,5 +1,6 @@
 # Tugas Besar 2 - Aljabar Linear dan Geometri
 **TBA**
+<!-- FAQ Link https://docs.google.com/spreadsheets/d/1HUuvwsRg7ARmZ0JoVR4R62c6nwABsGKIa6LFDxjXADA/edit#gid=1332824491 -->
 
 ### Release
 **TBA**
@@ -8,7 +9,7 @@
 
 ### Tentang Program
 **TBA**
-<!-- - Untuk guideline dan spesifikasi tentang tugas besar, terdapat pada folder "other/rule and guidelines/"
+<!-- TODO Installation Package - Untuk guideline dan spesifikasi tentang tugas besar, terdapat pada folder "other/rule and guidelines/"
 - Release versi **1.0** menandai bahwa release tersebut adalah **program yang dikumpulkan** ketika deadline, tanpa perubahan.
 - Class utama bernama **Core**.
 - Program dapat dijalankan dengan command line pada folder /bin/ atau menggunakan jar.
@@ -16,14 +17,18 @@
 - Untuk GUI, kode GUI belum selesai terimplementasikan.
 - Secara default, program dijalankan dengan argument "**-CLI**", untuk mencoba GUI, dapat digunakan launch argument "**-GUI**". -->
 
-### Style kode
+<!-- ### Style kode
 **TBA**
-<!-- - Karena belum terbiasa dengan OO beberapa kode ditulis ulang yang berakibat menambah clutter pada kode.
+- Karena belum terbiasa dengan OO beberapa kode ditulis ulang yang berakibat menambah clutter pada kode.
 - Deklarasi variabel diusahakan untuk selalu dekat dengan penggunaanya untuk mengurangi scope.
 - Indentasi dan penempatan bracket dijaga konsisten. -->
 
 ## Snapshot
-**TBA**
+**Search** \
+![Search Query](/other/img/search-query.gif) \
+
+**How to Use** \
+![How to Use](/other/img/how-to-use.gif)
 <!-- **Main Menu** \
 ![Main Menu](/src/readme/mainmenu.gif) \
 
@@ -36,7 +41,7 @@ Data                 | Isi
 ----                 | ---
 Tahun Ajaran         | 2021
 Tanggal Mulai        | 31 Oktober 2020
-Tanggal Selesai      | **TBA**
+Tanggal Selesai      | 15 November 2020
 Tanggal Pengumpulan  | 16 November 2020
 Kelas                | 2
 Dosen                | Rinaldi Munir
@@ -53,49 +58,52 @@ NIM      | Nama
 
 
 **Tools yang digunakan**
-**TBA**
-<!-- Komponen      | Menggunakan
+Komponen      | Menggunakan
 --------      | -----------
-JDK           | 14.01
-Eclipse IDE   | 2020-06 (4.16)
-WindowBuilder | 1.9.4 -->
-
-
+Node.js       | 15.0.1
+Firebase      | Cloud Database   
 
 
 **Dependencies**
 Komponen    | Menggunakan
 --------    | -----------
-**TBA**
-<!-- NodeJs 15.1
-React ???
-Sastrawi ??? -->
+React       | 17.0.1
+Bootstrap   | 4.5.3
+Material-UI | 4.11
+SastrawiJS  | 1.0.3
 
 
 ## Spesifikasi
-**TBA**
-<!-- **Status : Done** :white_check_mark: \
+**Status : Done** :green_square: \
 **9 / 9**
-Spesifikasi                       | Status
------------                       | ------ -->
-<!-- SPL - Eliminasi Gauss             | :white_check_mark:
-SPL - Eliminasi Gauss-Jordan      | :white_check_mark:
-SPL - Matriks Invers              | :white_check_mark:
-SPL - Metode Cramer               | :white_check_mark:
-Determinan - Kofaktor             | :white_check_mark:
-Determinan - Reduksi Baris        | :white_check_mark:
-Invers - Matriks Invers           | :white_check_mark:
-Interpolasi - Polinom Interpolasi | :white_check_mark:
-Regresi - Regresi Linear Ganda    | :white_check_mark: -->
+Spesifikasi               | Status
+-----------               | ------
+File I/O                  | :green_square:
+Firebase GET POST Request | :green_square:
+Database processing       | :green_square:
+Stemming                  | :green_square:
+Stopwords stripping       | :green_square:
+String processing         | :green_square:
+Query processing          | :green_square:
+Front-end                 | :green_square:
+Front-end integration     | :green_square:
+
+
+**Bonus** \
+**Status : Done** :green_square:
+Spesifikasi   | Status
+-----------   | ------
+HTML Scrapper | :green_square:
+
 
 ## Laporan
-**TBA**
-<!-- **Status : Done** :white_check_mark: \ -->
-<!-- **5 / 5**
+**Status : Done** :green_square: \
+**6 / 6**
 Bab                   | Status
 ---                   | ------
-Deskripsi Masalah     | :white_check_mark:
-Teori Singkat         | :white_check_mark:
-Implementasi Program  | :white_check_mark:
-Eksperimen            | :white_check_mark:
-Kesimpulan            | :white_check_mark: -->
+Deskripsi Masalah     | :green_square:
+Landasan Teori        | :green_square:
+Implementasi Program  | :green_square:
+Eksperimen            | :green_square:
+Kesimpulan            | :green_square: 
+Daftar Pustaka        | :green_square:
