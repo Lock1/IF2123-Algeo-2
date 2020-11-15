@@ -1,0 +1,195 @@
+Facebook merupakan platform media sosial dengan 2,23 miliar pengguna aktif per bulannya. Hal ini tentunya merupakan peluang emas bagi para marketer untuk mempromosikan bisnis di Facebook. Pada artikel ini kamu akan mempelajari secara LENGKAP bagaimana cara membuat iklan di Facebook menggunakan Facebook Ads.
+Daftar Isi hide
+1 Apa itu Facebook Ads?
+2 Keuntungan Menggunakan Facebook Ads
+2.1 Budget Dapat Disesuaikan
+2.2 Penargetan yang Efektif
+2.3 Jangkauan Target yang Luas
+2.4 Analisa Lanjutan
+2.5 Meningkatkan Brand Awareness
+3 Cara Membuat Iklan di Facebook
+3.1 Langkah 1: Membuat Halaman Facebook
+3.2 Langkah 2: Login ke Facebook Ads
+3.3 Langkah 3: Buat dan Tentukan Kampanye Iklan
+3.3.1 Kampanye/Campaign
+3.3.1.1 Kesadaran/Awareness
+3.3.1.2 Pertimbangan/Consideration
+3.3.1.3 Konversi/Conversion
+3.3.2 Ad Set/Set Iklan.
+3.3.2.1 Tips dan Trik
+3.3.3 Ads/Iklan
+3.4 Langkah 4: Pembayaran
+4 Simpulan
+
+Team Dewaweb juga sudah membuatkan video tutorial khusus cara membuat iklan di facebook berikut ini:
+
+Lebih suka membaca? Tidak masalah, ayo kita mulai pelajari cara beriklan di facebook ads.
+Apa itu Facebook Ads?
+
+Facebook Ads adalah fitur beriklan yang ditawarkan oleh Facebook dengan jangkauan audiens para pengguna Facebook.
+Keuntungan Menggunakan Facebook Ads
+
+    Budget Dapat Disesuaikan
+
+Budget merupakan salah satu faktor penting untuk bisnismu. Melalui Facebook Ads, kamu dapat mengatur budget yang sesuai untuk iklanmu. Facebook Ads maupun iklan digital lainnya pada umumnya juga cenderung lebih murah dibandingkan iklan konvensional.
+
+    Penargetan yang Efektif
+
+Iklan yang kamu buat di Facebook dapat disesuaikan dengan target bisnis kamu. Mulai dari data usia, jenis kelamin, lokasi, ketertarikan dan lain-lain dapat kamu tentukan. Hal ini akan membuat iklanmu lebih efektif karena sesuai dengan pasar yang lebih spesifik.
+
+    Jangkauan Target yang Luas
+
+Lebih dari 150 juta pengguna di Facebook di Indonesia per Januari 2020 setidaknya dapat kamu jangkau dari iklan. Lupakan batasan lokasi untuk mengembangkan bisnismu. Dengan beriklan secara digital, kamu berpeluang untuk menjangkau semua lokasi, bahkan seluruh dunia.
+
+    Analisa Lanjutan
+
+Data is the new gold. Artinya, data yang didapatkan dari hasil iklan itu penting. Mulai dari impresi, jangkauan, CTR, conversion rate, dan lain-lain tersedia untuk kamu analisa lebih lanjut. Kamu juga dapat mengukur keberhasilan dari kampanye iklanmu. Tentukan cara yang efektif dan tidak untuk kampanye iklanmu berikutnya.
+
+    Meningkatkan Brand Awareness
+
+Pengguna Facebook memeriksa news feed mereka beberapa kali sehari. Inilah peluang agar target pasarmu bisa berulang kali menerima paparan atau exposure iklan yang sudah kamu pasang. Bahkan jika audiensmu tidak tertarik di awal, iklan tersebut bisa berpotensi membantumu membangun kepercayaan dengan membiarkan iklan tersebut selalu tayang dalam jangka waktu yang lebih lama.
+
+Lima poin di atas adalah sebagian dari banyak keuntungan lainnya. Jika kamu sudah yakin untuk menggunakan Facebook Ads, pelajari cara membuat iklan di Facebook pada topik berikut. Mari kita mulai!
+
+Cara Membuat Iklan di Facebook
+
+Ada 4 langkah untuk cara membuat iklan di Facebook:
+
+    Membuat halaman Facebook. Halaman yang memuat informasi dan keterangan bisnismu.
+    Login ke Facebook Ads. Masuk ke halaman iklan Facebook untuk bisnis.
+    Buat dan tentukan Kampanye iklan. Mulai dari anggaran, jadwal tayang iklan, sampai target audience.
+    Lakukan pembayaran.
+
+Langkah 1: Membuat Halaman Facebook
+
+Login ke Facebook, lalu pilih menu halaman dan buat halaman baru. Pilih jenis halaman yang sesuai dengan bisnismu.
+
+cara membuat iklan di facebook buat halaman
+
+cara membuat iklan di facebook buat halaman 2
+
+Lengkapi informasi yang dibutuhkan. Usai membuat halaman di Facebook, kamu sudah bisa mulai membuat Facebook Ads.
+Langkah 2: Login ke Facebook Ads
+
+Mari kita lanjutkan cara membuat iklan di Facebook, masuk ke laman Facebook Ads Manager lalu login dengan akun Facebook yang nantinya akan digunakan untuk mengelola iklan.
+Langkah 3: Buat dan Tentukan Kampanye Iklan
+
+cara membuat iklan di facebook structure campaign
+
+Pada dasarnya terdapat 3 alur dasar untuk mempraktikkan cara membuat iklan di Facebook. Mulai dari campaign, ad set, dan ad.
+
+Campaign (Kampanye) dengan satu tujuan (objective) yang spesifik. Contoh: Kamu dapat memilih lalu lintas kunjungan (drive website traffic) untuk menuntun orang-orang agar mengunjungi website-mu. Setiap campaign akan memuat satu atau beberapa ad sets.
+
+Ad Set (Set Iklan) dapat terdiri dari satu atau beberapa target audiens yang kamu tuju. Contoh: Ad set 1 memuat orang-orang yang berada di Jakarta. Ad set 2 memuat orang-orang yang berada di Bandung.
+
+Ad (Iklan), masing-masing ad dapat berisi gambar, tautan maupun teks yang berbeda.
+Kampanye/Campaign
+
+Selanjutnya, buka tab Kampanye dan klik +Buat.
+cara membuat iklan di facebook campaign buat
+
+Setelah itu kamu akan melihat halaman berikut:
+
+cara membuat iklan di facebook campaign tujuan
+
+Tentukan tujuan iklan yang ingin kamu capai. Tujuan iklan Facebook dibagi menjadi 3 kategori berbeda. Kesadaran, Pertimbangan, dan Konversi.
+Kesadaran/Awareness
+
+    Kesadaran merek: Bertujuan untuk meningkatkan awareness merek bisnismu dan menjangkau orang-orang yang mungkin tertarik dengan produkmu.
+    Jangkauan (reach): Menampilkan iklan ke sebanyak mungkin pengguna sesuai target yang telah ditentukan.
+
+Pertimbangan/Consideration
+
+    Lalu Lintas Kunjungan: Bertujuan untuk mengirim orang-orang/traffic menuju website atau aplikasi.
+    Interaksi: Bertujuan untuk mendapatkan interaksi pada suatu post. Contoh: Likes, komentar, atau tanggapan.
+    Pemasangan aplikasi: Mengajak orang-orang memasang/menginstal aplikasimu.
+    Penayangan video: Mengajak orang-orang menonton video yang kamu promosikan.
+    Pembuatan prospek: Mendapatkan leads seperti alamat email, untuk orang-orang yang tertarik dengan bisnismu.
+    Pesan: Mengajak orang-orang untuk mengirim pesan.
+
+Konversi/Conversion
+
+    Konversi: Bertujuan untuk menghasilkan konversi/penjualan pada website-mu (Untuk melakukan tracking konversi kamu perlu memasang Facebook Pixel yang dibahas pada poin di bawah).
+    Penjualan Katalog: Menampilkan iklan mengenai katalog produkmu.
+    Kunjungan Toko: Bertujuan untuk mengajak orang-orang mengunjungi toko offline-mu.
+
+Beberapa hal di atas merupakan penjelasan dari masing-masing tujuan kampanye iklan. Pilihlah yang sesuai dengan tujuanmu. Contoh: jika kamu ingin membuat iklan dalam format video ada baiknya kamu memilih opsi penayangan video. Jika kamu ingin membuat iklan dengan fokus utama untuk meningkatkan penjualan, kamu dapat memilih opsi konversi.
+
+Pada tutorial ini kita akan memilih tujuan dengan opsi Lalu Lintas Kunjungan.
+Ad Set/Set Iklan.
+
+cara membuat iklan di facebook set iklan nama
+
+Anggaran dan Jadwal. Tentukan jumlah anggaran. Kamu bisa memilih antara Anggaran Harian atau Anggaran Sepanjang Masa Promosi. Tentukan juga tanggal mulai dan berakhir.
+
+cara membuat iklan di facebook set iklan anggaran
+
+Pemirsa/Audience. Tentukan target audiens yang kamu tuju berdasarkan lokasi, usia, jenis kelamin, dan penargetan terperinci lain seperti demografi, ketertarikan, atau behavior mereka di media sosial.
+
+cara membuat iklan di facebook set iklan pemirsa
+
+Pemirsa Khusus. Gunakan pemirsa khusus untuk menjangkau orang-orang yang sudah pernah berinteraksi dengan bisnismu. Contoh: orang-orang yang sudah pernah mengunjungi website-mu. Teknik ini dapat disebut strategi remarketing, yaitu ketika kamu menargetkan iklan kepada orang-orang yang sudah memiliki ketertarikan pada bisnismu dan berpotensi memiliki nilai konversi yang lebih tinggi.
+
+Tombol Kecualikan. Opsi ini dapat kamu gunakan untuk mengecualikan pengguna tertentu. Contoh: orang-orang yang sudah menjadi pelanggan atau orang-orang yang sudah pernah melakukan pembelian.
+
+Lokasi. Pilih lokasi yang kamu inginkan. Dapat berupa negara maupun kota. Kamu dapat memilih orang-orang di kotamu terlebih dulu atau pilih kota yang paling berpotensi untuk membeli produkmu.
+
+Umur & Jenis Kelamin. Sesuaikan dengan keinginanmu. Contoh: Jika kamu menjual produk make-up kamu dapat memilih jenis kelamin wanita dan umur yang lebih spesifik, misalnya 18-60 tahun.
+
+Penargetan Terperinci. Target iklan yang lebih terperinci, seperti minat dan perilaku audiens yang ingin kamu jangkau.
+Tips dan Trik
+
+Berikut ini tips dan trik spesial dari Dewaweb untuk membuat Pemirsa Khusus.
+
+Klik tombol Buat Baru dan pilih Pemirsa Khusus.
+
+cara membuat iklan di facebook set iklan tips khusus
+
+Situs Web
+Sumber informasi dari website merupakan data penting yang mujarab untuk meningkatkan konversi pada bisnismu. Ada 2 hal penting yang harus kamu miliki terlebih dulu, yaitu website dan Facebook Pixel.
+
+    Jika belum memiliki website, jangan khawatir. Pelajari tutorial lengkap dan mudah untuk membuat website kamu dari cara membuat website.
+    Pasang Facebook Pixel pada website-mu. Pelajari di cara memasang Facebook Pixel.
+
+Setelah kedua poin di atas terpenuhi. Sekarang saatnya kamu membuat pemirsa khusus untuk target iklanmu. Terapkan pengaturan pada gambar di bawah ini, pengunjung website dalam kurun waktu 60 hari terakhir. Klik Buat Pemirsa dan masukkan dalam bar Pemirsa Khusus.
+
+cara membuat iklan di facebook set iklan tips khusus2
+
+Dengan begini, kamu dapat menargetkan iklan pada orang-orang yang sudah pernah berkunjung ke website-mu dalam kurun waktu 60 hari terakhir. Orang-orang tersebut memiliki potensi konversi yang lebih tinggi karena sudah memiliki ketertarikan pada website-mu.
+
+ 
+
+Penempatan. Ada beberapa platform untuk penempatan (placing) iklan, yaitu: Facebook, Instagram, Audience Network, dan Messenger. Sebaiknya kamu memilih Penempatan Otomatis untuk memaksimalkan anggaran dan efektivitas iklanmu.
+
+cara membuat iklan di facebook penempatan
+
+Optimasi dan Pengiriman. Pilih pengoptimalan yang sesuai dengan iklanmu. Pilihan ini akan memengaruhi siapa yang akan melihat iklanmu untuk mendapatkan hasil yang diinginkan. Contoh: Jika kamu menginginkan target untuk mengklik link atau tautanmu pilih Klik Tautan dan iklanmu akan ditampilkan pada mereka yang berkemungkinan lebih besar untuk mengklik link. Contoh 2: Jika kamu memilih Impresi, Facebook Ads akan menyajikan iklanmu pada sebanyak mungkin audiens.
+Ads/Iklan
+
+Isi Nama Iklan dan Identitas Halaman Facebook dan Akun Instagram.
+
+cara membuat iklan di facebook ads iklan nama
+
+Penyiapan Iklan. Pilih Buat Iklan dan format yang diinginkan. Pada tutorial ini kita akan memilih Gambar Tunggal.
+
+cara membuat iklan di facebook penyiapan iklan
+
+Materi Iklan. Pilih gambar atau video yang diinginkan. Jangan lupa perhatikan rekomendasi spesifikasi gambar yang sesuai dari Facebook. Gambar yang mengandung terlalu banyak teks dapat mengalami penurunan penayangan atau bahkan tidak dapat ditampilkan sama sekali. Kamu dapat mengecek terlebih dulu, gambar seperti apa yang akan kamu gunakan di pemeriksaan teks gambar Facebook.
+
+Tentukan juga destinasi yang dituju, dapat berupa website atau Facebook Event, lalu pilih tombol Call-to-Action (CTA) yang sesuai. Contoh: Selengkapnya, Beli Sekarang, dan lain-lain.
+
+cara membuat iklan di facebook materi iklan
+
+Selesai! Sekarang iklanmu siap untuk diterbitkan. Klik tombol Terbitkan.
+Langkah 4: Pembayaran
+
+Langkah terakhir untuk cara membuat iklan di Facebook adalah pembayaran. Kamu dapat memasukkan data kartu kredit atau debitmu seperti pada gambar berikut.
+
+cara membuat iklan di facebook bayar
+
+Kamu hanya perlu mengikuti langkah pembayaran yang tersedia dan selesai!
+Simpulan
+
+Ternyata, tidak sulit ‘kan memahami cara membuat iklan di Facebook? Penggunaan iklan pada Facebook Ads tentunya akan maksimal jika kamu memiliki website dengan cloud hosting yang aman, cepat, dan selalu dapat diandalkan! Cek cara membuat website dengan mudah di: Cara Membuat Website.
+
+Dewaweb siap membantu kamu memiliki website yang cepat, aman dan selalu dapat diandalkan dengan berbagai layanan hosting dan support 24/7 dari Ninja Support legendari Dewaweb. Semoga kamu dapat mengembangkan bisnis kamu dengan panduan cara membuat iklan di Facebook. Selamat mencoba, salam sukses online!

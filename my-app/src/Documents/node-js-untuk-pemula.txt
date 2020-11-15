@@ -1,0 +1,377 @@
+Airbnb, LinkedIn, Walmart, Uber, dan bahkan NASA telah menggunakan Node.js dalam produksi mereka. Banyak perusahaan kecil dan pemula mengikuti jejak mereka dan memanfaatkan teknologi dalam membangun aplikasi. Manfaat Node.js tidak terhitung jumlahnya, namun Anda juga harus menyadari kendalanya
+Apa itu Node.js?
+
+Node.js adalah server-side JavaScript . Akhir-akhir ini mungkin Anda sudah mulai sering mendengar kata tersebut di dunia programming. Tapi mengapa sebenarnya kita membutuhkan JavaScript di server?
+
+Untuk membuat konsep Node.js jelas kita bisa membandingkannya dengan bahasa server-side biasa seperti PHP. Node.js menggunakan prosedur eksekusi server berbasis event dan bukan eksekusi multithread di PHP.
+
+Untuk menjelaskannya lebih lanjut, kita akan membicarakan terlebih dahulu apa itu Node.JS.
+
+Pertimbangkan sebuah situs web di mana Anda perlu memuat konten secara dinamis dari server web lain yang lambat. Di PHP Anda bisa melakukannya dengan 2 cara – mengkodekannya dalam file sederhana dan mengkodekannya sebagai skrip lain, kemudian mengeksekusinya secara multithread.
+
+PHP Server
+
+Pada metode pertama walaupun kodenya sederhana, eksekusi akan berhenti sebentar pada saat server web lambat diakses. Metode kedua lebih dioptimalkan jika terjadi kinerja namun sulit untuk dikodekan dan memiliki overhead pengelolaan multithread. Kasus ini serupa untuk sebagian besar bahasa pemrograman web selain JavaScript sisi server, yaitu, Node.js.
+
+Apa bedanya Node.js? Untuk memahami Node.js, Anda harus mengingat pemrograman berbasis JavaScript di browser. Kami menggunakan teknologi yang sama di sini. Alih-alih menggunakan thread terpisah, sebuah function dilampirkan pada acara akhir dari “akses server web lambat” yang disebutkan di atas, sehingga Anda mendapatkan fungsionalitas penuh pada opsi kedua yang dioptimalkan yang disebutkan di atas tanpa overhead multithread.
+Perbedaan dengan JavaScript
+
+Tidak ada perbedaan antara web JavaScript dan Node.js dalam hal bahasa yang digunakan. JavaScript digunakan di browser dan di Node.js hampir persis sama. Yang membuat Node.js istimewa adalah kumpulan API yang berbeda. Di browser, Anda memiliki berbagai API DOM / Web yang terbuka yang membantu Anda berinteraksi dengan UI dan memungkinkan Anda mengakses hardware sampai batas tertentu.
+
+Untuk membandingkan, Node.js dilengkapi dengan banyak API yang sesuai untuk pengembangan backend, mis. dukungan untuk sistem file, permintaan http, arus, proses anak, dll. Browser menawarkan beberapa dukungan dasar untuk sistem file atau permintaan http, namun biasanya dibatasi karena masalah keamanan.
+Keunggulan Node.js
+
+Berikut adalah beberapa keunggulan node.js:
+Mudah untuk dipelajari
+
+Menurut Node.js’s 2016 User Survey Javascript adalah salah satu bahasa pemrograman terpopuler untuk pengembangan front-end. Hampir setiap pengembang front-end terbiasa dengan bahasa universal ini. Oleh karena itu, lebih mudah bagi mereka untuk beralih menggunakan Node.js di back-end. Hal ini membutuhkan sedikit usaha dan sedikit waktu untuk belajar dan bekerja sama, bahkan untuk programmer Javascript junior.
+Kebebasan dalam Membangun Apps
+
+Sementara Ruby on Rails adalah kerangka kerja yang menerapkan peraturan dan pedoman pengembangan perangkat lunak dengan cara tertentu, Node.js memberi Anda lebih banyak ruang dan kebebasan untuk melakukannya dengan cara Anda sendiri. Node.js benar-benar tidak terbagi, artinya Anda mulai membangun semuanya dari nol. Ini bisa menjalankan tugas dasar, tapi hanya memberi Anda sedikit keterlambatan dari pemasangan baru, sehingga tidak terbatas.
+Fullstack JS
+
+Sebelum Node.js, Javascript hanya digunakan untuk pengembangan sisi klien. Itu perlu menggunakan bahasa pemrograman sisi server yang berbeda. Dalam prakteknya, Anda harus mempekerjakan devs terpisah untuk backend dan untuk frontend. Dengan semakin populernya Node.js fullstack JavaScript menjadi kenyataan. Saat ini adalah mungkin untuk menulis kedua front-end dan back-end aplikasi web di Javascript, membuat penerapan aplikasi menjadi lebih mudah dan lebih efisien.
+Komunitas yang Aktif
+
+Komunitas pengembang Node.js adalah grup pengembang yang sangat aktif dan dinamis yang berkontribusi terhadap peningkatan Node.js. Berkat kerja sama pemrogram JavaScript dan masukan mereka kepada masyarakat, Anda bisa mendapatkan akses ke satu ton solusi siap pakai, kode di Github dan banyak kemungkinan lainnya. Meskipun, masih pada tahap pengembangan yang relatif dini, masyarakat secara dinamis berkembang dan anggotanya bekerja ekstra untuk memberikan solusi terbaik dan andal kepada orang lain.
+Penanganan Permintaan Serentak
+
+Node.js menyediakan sistem IO non-blocking yang memungkinkan Anda memproses banyak permintaan secara bersamaan. Sistem ini membuat penanganan permintaan secara simultan jauh lebih baik daripada bahasa lain seperti Ruby atau Python. Permintaan masuk diantrikan dan dijalankan secara berurutan dengan cepat. Akibatnya aplikasi Anda akan memakan RAM sistem yang jauh lebih sedikit, mencapai tingkat skalabilitas tinggi dan hasilnya akan lebih cepat.
+Kekurangan Node.Js
+
+Dengan segala keunggulannya, Node.js tetap memiliki beberapa kekurangan. Berikut adalah beberapa kekurangan dari Node.js
+API tidak stabil
+
+Salah satu kelemahan terbesar Node.js adalah kurangnya konsistensi. API Node.js sering berubah, dan perubahannya seringkali tidak sesuai. Bila ini terjadi, programmer dipaksa untuk membuat perubahan pada basis kode yang ada agar kompatibel dengan versi terbaru API Node.js.
+Lebih banyak waktu pengembangan
+
+Fakta bahwa Node.js tidak terbagi juga dapat dilihat sebagai kelemahan oleh beberapa pengembang. Sebagai perbandingan, Ruby on Rails memberi Anda banyak petunjuk dari pemasangan yang baru dan membimbing Anda ke dalam cara mereka melakukan sesuatu, namun dengan Node.js, pada dasarnya Anda perlu menulis semuanya dari nol. Ini bisa mengakibatkan penurunan produktivitas, memperlambat pekerjaan Anda. Namun, jika Anda bekerja sama dengan tim pemrogram berpengalaman yang telah mengembangkan proses yang baik untuk mengembangkan dan merawat kode, Anda tidak perlu khawatir tentang efisiensi.
+Tidak Cocok untuk Aplikasi Heavy-Computing
+
+Node.js belum mendukung pemrograman multi-threaded. Hal ini mampu melayani aplikasi yang lebih rumit daripada Ruby, tapi tidak sesuai untuk melakukan perhitungan lama. Perhitungan berat memblokir permintaan masuk dan ini dapat menyebabkan penurunan kinerja. Sementara Node.js sangat cocok untuk aplikasi yang kompleks, dalam kasus perangkat lunak yang memerlukan beberapa komputasi berat, kinerjanya kurang efektif.
+Tools yang kurang matang
+
+Meskipun Node.js inti stabil, banyak paket di registri npm (manajer paket node pra-instal yang mengatur pemasangan dan pengelolaan program Node.js pihak ketiga) masih berkualitas buruk atau belum terdokumentasi dengan benar. . Karena sebagian besar merupakan ekosistem open source, banyak alat belum diawasi dan mungkin tidak berkualitas dan gagal dalam memenuhi standar pengkodean. Struktur npm membuat lebih sulit untuk menemukan paket yang dapat diandalkan. Karena itu, Anda mungkin perlu pengembang yang lebih berpengalaman yang bisa menemukan alat yang bisa dipercaya.
+Mulai Menggunakan Node.JS
+
+Hal pertama yang perlu diingat adalah Node.JS adalah JavaScript. Mengapa kita tidak dapat memanfaatkan fungsionalitas berbasis acara JavaScript di klien ke server? Pikiran inilah yang mungkin mendorong pengembangan Node.js.
+
+Node Js Server
+
+Sorotan utama Node.js adalah fungsi asynchronous berbasis event. Node.js. menggunakan event loop alih-alih menunggu operasi I/O (mengakses layanan web eksternal, mengakses hardware).
+
+Node.js masih bisa memanfaatkan kekuatan pemrosesannya saat server menunggu operasi lainnya. Hal ini membuat Node.js terukur hingga jutaan koneksi konkuren.
+Bagaimana JavaScript Bekerja Pada Server?
+
+Node.js bekerja pada environment v8 yang merupakan sebuah mesin virtual atau mesin JavaScript yang menjalankan kode JavaScript, jadi untuk hosting Anda tidak bisa menggunakan host web biasa. Anda akan memerlukan hosting yang memiliki environment v8.
+Menginstall Node.js
+
+Node akan bekerja dengan baik dengan sistem operasi Linux, Macintoh, dan Solaris. Jika Anda mau menggunakannya di windows, Anda bisa menginstallnya dengan menggunakan Cygwin Emulation Layer . Tak satu pun yang ada di Windows memuaskan tapi kemungkinan besar mereka masih bisa berjalan.
+Pilihan 1: Membangun Node dari source
+
+Gunakan make untuk membangun dan menginstal node.js. Masukkan kode-kode berikut ini di command line. Untuk melakukan ini Anda akan memerlukan Git.
+
+ git clone --depth 1 git://github.com/joyent/node.git  
+
+ cd node  
+
+ git checkout v0.4.11  
+
+ export JOBS=2  
+
+ mkdir ~/local  
+
+ ./configure --prefix=$HOME/local/node  
+
+ make  
+
+ make install  
+
+ echo 'export PATH=$HOME/local/node/bin:$PATH'    >> ~/.profile  
+
+ echo 'export NODE_PATH=$HOME/local/node:$HOME/local/node/lib/node_modules'    >> ~/.profile  
+
+ source ~/.profile
+
+Pilihan 2: Menginstal Node.js dari package
+
+Untuk pengguna Mac, Anda bisa menginstal Node.js sebagai sebuah package melalui https://sites.google.com/site/nodejsmacosx/ .
+Mengetes Instalasi Node
+
+Untuk melihat apakan instalasi Node Anda berjalan dengan baik, Anda bisa mencoba melakukan program ‘Hello World’. Buat sebuah file dengan nama test.js dan masukkan kode berikut:
+
+ var    sys = require("sys");  
+
+ sys.puts("Hello World");
+
+Penjelasan kode
+
+Ini memuat kelas sys ke dalam variabel sys . Kemudian mereka akan menggunakan objek sys untuk melakukan tugas konsol. The sys.puts adalah perintah yang mirip dengan cout di C ++, jadi untuk menjalankan skrip di atas, Anda harus masuk ke command prompt dan menjalankannya dengan perintah di bawah ini:
+
+ node test.js
+
+Jika instalasi Anda sukses, Anda akan mendapat output hello world di layar Anda.
+Membuat server HTTP
+
+Sekarang saatnya membuat “Hello World” melalui server web menggunakan Node.js. Inilah yang akan kita lakukan – kita membuat server yang mengeluarkan “Hello World” ke localhost di port 8080 tidak peduli apa URLnya untuk memberi Anda gambaran tentang eventnya.
+
+Kode yang digunakan:
+
+ var    sys = require("sys"),  
+
+ my_http = require("http");  
+
+ my_http.createServer(function(request,response){  
+
+   sys.puts("I got kicked");  
+
+   response.writeHeader(200, {"Content-Type": "text/plain"});  
+
+   response.write("Hello World");  
+
+   response.end();  
+
+ }).listen(8080);  
+
+ sys.puts("Server Running on 8080");
+
+Penjelasan kode:
+
+Bagian yang paling menarik di Node.js adalah pemrograman berbasis event. Untuk membuat server HTTP kita memerlukan library HTTP, jadi kita maju dan menambahkannya menggunakan my_http. Anda bisa membuat server dengan menggunakan function di bawah ini:
+
+my_http.createServer(function(request,response){}).listen(8080);
+
+Function yang diberikan sebagai argumen pertama dijalankan setiap kali sebuah peristiwa dipicu di port 8080, jadi fungsinya sendiri menyarankan node untuk mendengarkan sebuah event di port 8080.
+
+Objek request berisi semua informasi tentang permintaan yang telah dilakukan ke server. Misalnya berisi string URL. Objek response adalah objek yang menangani respon dari server. Pertama kita atur header respon sebagai konten text/plain , lalu outputkan “Hello World”, lalu akhiri stream output. 200 adalah respon status.
+
+Nah, yang di atas adalah contoh yang sangat sederhana tapi kita bisa melihat bahwa apapun URL yang kita berikan di browser untuk server yang sama kita mendapatkan output yang sama seperti “Hello World”.
+Membuat server file statis yang simpel
+
+Di tutorial yang ini, kita akan mencoba membuat file statis yang simpel.
+
+Kode:
+
+ var    sys = require("sys"),  
+
+ my_http = require("http"),  
+
+ path = require("path"),  
+
+ url = require("url"),  
+
+ filesys = require("fs");  
+
+ my_http.createServer(function(request,response){  
+
+   var    my_path = url.parse(request.url).pathname;  
+
+   var    full_path = path.join(process.cwd(),my_path);  
+
+   path.exists(full_path,function(exists){  
+
+     if(!exists){  
+
+       response.writeHeader(404, {"Content-Type": "text/plain"});    
+
+       response.write("404 Not Found\n");    
+
+       response.end();  
+
+     }  
+
+     else{  
+
+       filesys.readFile(full_path, "binary", function(err, file) {    
+
+            if(err) {    
+
+                response.writeHeader(500, {"Content-Type": "text/plain"});    
+
+                response.write(err + "\n");    
+
+                response.end();    
+
+                
+
+            }    
+
+          else{  
+
+           response.writeHeader(200);    
+
+               response.write(file, "binary");    
+
+               response.end();  
+
+         }  
+
+                  
+
+       });  
+
+     }  
+
+   });  
+
+ }).listen(8080);  
+
+ sys.puts("Server Running on 8080");
+
+Penjelasan kode:
+
+Kode yang diberikan di atas dapat dijelaskan dari blok ke blok
+
+ var    sys = require("sys"),  
+
+ my_http = require("http"),  
+
+ path = require("path"),  
+
+ url = require("url"),  
+
+ filesys = require("fs");
+
+Semua library ini diperlukan untuk program ini. Penggunaannya akan jelas dalam kode berikut.
+
+ var    my_path = url.parse(request.url).pathname;  
+
+ var    full_path = path.join(process.cwd(),my_path);
+
+Objek request memiliki rincian permintaan seperti yang telah kita bahas sebelumnya. Kami menggunakan function parse dari kelas URL yang telah disertakan untuk mendapatkan nama path dari URL permintaan. Setelah mendapatkan nama path kita menggabungkannya dengan jalur direktori kerja saat ini untuk mendapatkan path lengkap dari file tersebut.
+
+Untuk menggabungkan dengan URL kita memiliki function yang disebut join di path library.
+
+ path.exists(full_path,function(exists){
+
+Setelah mendapatkan path lengkap kita periksa apakah jalan dengan function exist . Setelah cek dilakukan, fungsi callback dipanggil dan dilewatkan sebagai argumen kedua.
+
+ if(!exists){  
+
+   response.writeHeader(404, {"Content-Type": "text/plain"});    
+
+   response.write("404 Not Found\n");    
+
+   response.end();  
+
+ }  
+
+ else{  
+
+   filesys.readFile(full_path, "binary", function(err, file) {    
+
+      if(err) {    
+
+        response.writeHeader(500, {"Content-Type": "text/plain"});    
+
+        response.write(err + "\n");    
+
+        response.end();    
+
+            
+
+      }    
+
+      else{  
+
+       response.writeHeader(200);    
+
+       response.write(file, "binary");    
+
+       response.end();  
+
+     }  
+
+              
+
+   });  
+
+ }
+
+Sekarang dalam fungsi callback jika file tidak ada kita mengirim error “404 Page Not Found”.
+
+Jika halaman ditemukan maka kita membaca file dengan function readFile di sistem data. Kita juga bisa melihat function callback untuk function readFile yang didefinisikan di sana sendiri. Jika tidak ada kesalahan dalam membaca file maka akan ditampilkan. Jika terjadi kesalahan maka status 500 dikembalikan dengan teks error.
+
+Selain itu, banyak juga orang yang merekomendasikan kode wrapping tutorial sebelumnya ke dalam sebuah function sehingga Anda bisa menggunakannya di tutorial berikutnya atau untuk penggunaan masa depan.
+
+ var    sys = require("sys"),  
+
+ my_http = require("http"),  
+
+ path = require("path"),  
+
+ url = require("url"),  
+
+ filesys = require("fs");  
+
+ my_http.createServer(function(request,response){  
+
+   var    my_path = url.parse(request.url).pathname;  
+
+   var    full_path = path.join(process.cwd(),my_path);  
+
+   path.exists(full_path,function(exists){  
+
+     if(!exists){  
+
+       response.writeHeader(404, {"Content-Type": "text/plain"});    
+
+       response.write("404 Not Found\n");    
+
+       response.end();  
+
+     }  
+
+     else{  
+
+       filesys.readFile(full_path, "binary", function(err, file) {    
+
+            if(err) {    
+
+                response.writeHeader(500, {"Content-Type": "text/plain"});    
+
+                response.write(err + "\n");    
+
+                response.end();    
+
+                
+
+            }    
+
+          else{  
+
+           response.writeHeader(200);    
+
+               response.write(file, "binary");    
+
+               response.end();  
+
+         }  
+
+                  
+
+       });  
+
+     }  
+
+   });  
+
+ }  
+
+ my_http.createServer(function(request,response){  
+
+   var    my_path = url.parse(request.url).pathname;  
+
+   load_file(my_path,response);  
+
+ }).listen(8080);  
+
+ sys.puts("Server Running on 8080");
+
+Simpulan
+
+Kepopuleran Node.js memang tidak dapat dipungkiri. Sudah banyak perusahaan-perusahaan besar yang menggunakan Node.js dalam produksi mereka.
+
+Node.js memang membutuhkan banyak sumber daya, namun timbangan lebih baik, bekerja hebat dengan tugas real-time dan lebih cepat secara keseluruhan. Mudah-mudahan, tips di atas akan membantu Anda memilih teknologi terbaik untuk proyek Anda!
+
+Jika Anda tertarik dengan artikel-artikel programming dan development, Anda bisa membaca artikel kami mengenai tutorial XAMPP atau bagaimana cara membuat halaman statis HTML pada WordPress . Semoga membantu!
