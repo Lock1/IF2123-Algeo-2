@@ -1,7 +1,6 @@
 import React from 'react';
 import "../Styles/bootstrap.min.css"
 import { makeStyles } from '@material-ui/core/styles';
-import Picture from '../Images/HomeBackground.jpg'
 import axios from 'axios'
 import sastrawijs from 'sastrawijs'
 import PublishIcon from '@material-ui/icons/Publish';
@@ -96,7 +95,8 @@ function SearchEngine(){
     // --- Dialog Variable and States initialization ---
     const [open, setOpen] = React.useState(false)
     const [openTable, setOpenTable] = React.useState(false)
-    const [openSnackbar, setOpenSnackbar] = React.useState(false)
+    const [openErrorSnackbar, setOpenErrorSnackbar] = React.useState(false)
+    const [openErrorUploadSnackbar, setOpenErrorUploadSnackbar] = React.useState(false)
 
     // ---- Dialog Upload ----
     function HandleOpenDialog(){
@@ -107,13 +107,15 @@ function SearchEngine(){
         setOpen(false)
     }
 
-    // ---- Dialog Table ----
-    function HandleOpenDialogTable(){
+    // ---- Dialog Tabel ----
+    const HandleOpenDialogTable = (event) => {
         if(rankAndTermState !== null){
             setOpenTable(true)
         }
         else {
-            handleOpenErrorSnackbar()
+            event.stopPropagation()    
+            HandleOpenErrorSnackbar()
+             
         }
     }
 
@@ -121,17 +123,27 @@ function SearchEngine(){
         setOpenTable(false)
     }
 
-    // ---- Snackbar Error Open Table ----
+    // --- Snackbar ---
     function Alert(props) {
         return <MuiAlert elevation={6} variant="filled" {...props} />;
     }
-
-    function handleOpenErrorSnackbar(){
-        setOpenSnackbar(true)
+    
+    // ---- Snackbar Error Open Table ----
+    function HandleOpenErrorSnackbar(){
+        setOpenErrorSnackbar(true)
     }
 
-    function handleCloseErrorSnackbar(){
-        setOpenSnackbar(false)
+    function HandleCloseErrorSnackbar(event, reason){
+        setOpenErrorSnackbar(false)
+    }
+
+    // ---- Snackbar Error Upload ----
+    function HandleOpenErrorUploadSnackbar(){
+        setOpenErrorUploadSnackbar(true)
+    }
+
+    function HandleCloseErrorUploadSnackbar(){
+        setOpenErrorUploadSnackbar(false)
     }
 
 
@@ -318,32 +330,37 @@ function SearchEngine(){
 
     // Handler for uploading file
     async function handleUpload(event) {
-        event.preventDefault()
-        database = await getDocumentDatabase()
-        stopwords = await getStopwordsDatabase()
+        console.log(fileInput.current.files.length)
+        if(fileInput.current.files.length !== 0){
+            event.preventDefault()
+            database = await getDocumentDatabase()
+            stopwords = await getStopwordsDatabase()
 
-        for (let i = 0; i < fileInput.current.files.length; i++) {
-            let textFile, titleFile, hashTable, wCount, firstSentence
-            // HTML file branch
-            if (await fileInput.current.files[i].name.match(/\.html/)){
-                [titleFile, textFile] = htmlScrapper(await fileInput.current.files[i].text())
-                hashTable = stringToHashTable(textFile)
-                wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
-                firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
-                // textFile = await fileInput.current.files[i].text() // Raw HTML String
-            }
-            // Text file branch
-            else {
-                textFile = await fileInput.current.files[i].text()
-                titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
-                hashTable = stringToHashTable(textFile)
-                wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
-                firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
-            }
-            await uploadFileToFirebase(titleFile, textFile, wCount, firstSentence, hashTable)
+            for (let i = 0; i < fileInput.current.files.length; i++) {
+                let textFile, titleFile, hashTable, wCount, firstSentence
+                // HTML file branch
+                if (await fileInput.current.files[i].name.match(/\.html/)){
+                    [titleFile, textFile] = htmlScrapper(await fileInput.current.files[i].text())
+                    hashTable = stringToHashTable(textFile)
+                    wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
+                    firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
+                    // textFile = await fileInput.current.files[i].text() // Raw HTML String
+                }
+                // Text file branch
+                else {
+                    textFile = await fileInput.current.files[i].text()
+                    titleFile = await fileInput.current.files[i].name.replace(/(\.txt|\.html)/, "")
+                    hashTable = stringToHashTable(textFile)
+                    wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
+                    firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
+                }
+                await uploadFileToFirebase(titleFile, textFile, wCount, firstSentence, hashTable)
+            }  
         }
-
-        window.location.reload()
+        else{
+            event.preventDefault()
+            HandleOpenErrorUploadSnackbar()
+        }
     }
 
     // Handler for search
@@ -398,16 +415,16 @@ function SearchEngine(){
                         </IconButton>
                     </Tooltip>
                     <Tooltip title="Lihat Tabel Terms">
-                        <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialogTable}>
+                        <IconButton size="small" style={{marginLeft: "1%"}} onClick={(event) => HandleOpenDialogTable(event)}>
                             <TableChartIcon/>
                         </IconButton>
                     </Tooltip>
-                    <Snackbar open={openSnackbar} autoHideDuration={6000} onClose={handleCloseErrorSnackbar}>
-                        <Alert onClose={handleCloseErrorSnackbar} severity="error">
-                            Harap Masukkan Query dan Tekan Tombol Search Terlebih Dahulu!
-                        </Alert>
-                    </Snackbar>
                 </div>
+                <Snackbar open={openErrorSnackbar} autoHideDuration={6000} onClose={(event) => HandleCloseErrorSnackbar(event)}>
+                    <Alert onClose={(event) => HandleCloseErrorSnackbar(event)} severity="error">
+                        Harap Masukkan Query dan Tekan Tombol Search Terlebih Dahulu!
+                    </Alert>
+                </Snackbar>
                 {/* User file upload */}
                 <Dialog
                     open={open}
@@ -425,10 +442,14 @@ function SearchEngine(){
                             </div>
                             <div style={{display: "flex", justifyContent: "flex-end"}}>
                                 <Button type="submit" ref={uploadSubmitButton} startIcon={<PublishIcon/>} className={classes.uploadButton} size='medium' variant="outlined">Upload</Button>
-                                <Button ref={uploadSubmitButton} startIcon={<CancelIcon/>} className={classes.cancelButton} size='medium' variant="outlined" onClick={handleCloseDialog}>Batal</Button>
+                                <Button startIcon={<CancelIcon/>} className={classes.cancelButton} size='medium' variant="outlined" onClick={handleCloseDialog}>Batal</Button>
                             </div>
-                            {/*<button type="submit" ref={uploadSubmitButton}>Upload</button>*/}
                         </form>
+                        <Snackbar open={openErrorUploadSnackbar} autoHideDuration={6000} onClose={HandleCloseErrorUploadSnackbar}>
+                            <Alert onClose={HandleCloseErrorUploadSnackbar} severity="error">
+                                Harap Pilih File Terlebih Dahulu!
+                            </Alert>
+                        </Snackbar>
                     </div>
                 </Dialog>
                 {/* Table Terms */}
@@ -502,9 +523,8 @@ function SearchEngine(){
                                     <AccordionDetails>
                                         <div>
                                             <Typography>Jumlah Kata : {value[1]}</Typography>
-                                            <Typography>Tingkat Kemiripan : {value[2].toPrecision(4)} %</Typography>
+                                            <Typography>Tingkat Kemiripan / Similiarity : {value[2].toPrecision(4)} %</Typography>
                                             <Typography>Kalimat Pertama : {value[3]}</Typography>
-                                            {/*<Typography>Jumlah Kemunculan Terms Query Pada Dokumen : {value[4]}</Typography>*/}
                                         </div>
                                     </AccordionDetails>
                                 </Accordion>

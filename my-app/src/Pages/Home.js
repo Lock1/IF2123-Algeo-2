@@ -1,7 +1,6 @@
 import React from 'react';
 import "../Styles/bootstrap.min.css"
 import { makeStyles } from '@material-ui/core/styles';
-import Picture from '../Images/atlantis_nebula_14-wallpaper-2560x1440.jpg'
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from 'react-responsive-carousel';
 

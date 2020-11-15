@@ -134,7 +134,7 @@ function About(){
                     </Dialog>                  
                     <div style={{display: "flex", justifyContent: "space-between", marginTop: "3%"}}>
                     <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
-                    <div class="card-header bg-primary">BackEnd Developer</div>
+                    <div class="card-header bg-primary">Web Developer</div>
                     <div class="card-body">
                         <h4 class="card-title" style={{color: "black"}}>Fadel Ananda Dotty</h4>
                         <p class="card-text" style={{color: "black"}}>K-02 / 13519146</p>
@@ -145,7 +145,7 @@ function About(){
                     </div>
                     </div>
                     <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
-                    <div class="card-header bg-primary">FrontEnd Developer</div>
+                    <div class="card-header bg-primary">Web Developer</div>
                     <div class="card-body">
                         {/*<div style={{display: "flex", justifyContent: "center"}}>
                             <img src={Picture} style={{width: "10rem", height: "11rem", marginBottom: "6%"}} alt="tes"/>
@@ -159,7 +159,7 @@ function About(){
                     </div>
                     </div>
                     <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
-                    <div class="card-header bg-primary">BackEnd Developer</div>
+                    <div class="card-header bg-primary">Web Developer</div>
                     <div class="card-body">
                         <h4 class="card-title" style={{color: "black"}}>Tanur Rizaldi Rahardjo</h4>
                         <p class="card-text" style={{color: "black"}}>K-02 / 13519214</p>
