@@ -151,6 +151,21 @@ filter: blur(10px);
   z-index: 4;
 }
 
+.site-wrapper-concept {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top;
+  background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcSsmF0UnHr2xKQJlnPGzkk_bITVZymnR3MQCA&usqp=CAU);
+  font-family: Arial, Helvetica;
+  letter-spacing: 0.02em;
+   font-weight: 400;
+  -webkit-font-smoothing: antialiased; 
+  display: table;
+  width: 100%;
+  height: 80rem;
+  z-index: 4;
+}
+
 .site-wrapper-howtouse {
   background-repeat: no-repeat;
   background-size: cover;
@@ -178,6 +193,13 @@ filter: blur(10px);
 }
 
 .site-wrapper-inner-aboutus {
+  display: table-cell;
+  vertical-align: center;
+  object-fit: contain;
+  background: linear-gradient(180deg, rgba(9, 32, 63, 0.9),rgba(41, 50, 60, 0.9));
+}
+
+.site-wrapper-inner-concept {
   display: table-cell;
   vertical-align: center;
   object-fit: contain;

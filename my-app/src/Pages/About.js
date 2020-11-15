@@ -17,7 +17,6 @@ const useStyles = makeStyles({
       padding: '0 30px',
     },
     title: {
-        marginTop: "2%",
         textAlign: "center"
     },
     descButton: {
@@ -27,16 +26,15 @@ const useStyles = makeStyles({
     },
     dialogText: {
         color: "white",
-        marginLeft: "5%"
+        marginBottom: "5%"
     },
     dialogTitle: {
         color: "white",
     },
     dialogTextTitle: {
         color: "#18bc9c",
-        fontSize: "1.1em"
+        paddingTop: "20%"
     },
-    paper: { minWidth: "37%" },
   });
 
 function About(){
@@ -49,8 +47,7 @@ function About(){
             jurusan: "Teknik Informatika",
             institusi: "Institut Teknologi Bandung",
             hobi: "Bermain Musik dan Rebahan",
-            unit: "Percama ITB",
-            kesibukan: "Bermain OSU (Wibu)",
+            unit: "Percama ITB, Bermain OSU (Wibu)",
             image: TanurPicture
         },
         dimas: {
@@ -58,8 +55,7 @@ function About(){
             jurusan: "Teknik Informatika",
             institusi: "Institut Teknologi Bandung",
             hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz & ITB Student Orchestra",
-            kesibukan: "Web Development Intern Startup",
+            unit: "ITB Jazz & ITB Student Orchestra, Web Development Intern Startup",
             image: DimasPicture
         },
         fadel: {
@@ -67,8 +63,7 @@ function About(){
             jurusan: "Teknik Informatika",
             institusi: "Institut Teknologi Bandung",
             hobi: "Bermain Musik dan Rebahan",
-            unit: "ITB Jazz",
-            kesibukan: "Intern Eksternal KM ITB",
+            unit: "ITB Jazz, Intern Eksternal KM ITB",
             image: FadelPicture
         },
     }
@@ -90,85 +85,85 @@ function About(){
                         onClose={handleCloseDialog}
                         aria-labelledby="responsive-dialog-title"
                         classes={{ paper: classes.paper}}
+                        maxWidth="xs"
+                        fullWidth
                     >
                         <div style={{backgroundColor: "black"}}>
                             <div class="card mb-3" style={{backgroundColor: "#1b1e21"}}>
-                                <div style={{display: "flex", alignItems: "flex-start", flexDirection:"row", margin: "2%"}}>
-                                    <Grid container direction="row" spacing={2}>
-                                        <Grid item md={4}>
+                                <div >
+                                    <div style={{display: "flex", flexDirection: "column"}}>
+                                        <div style={{marginTop: "5%"}}>
                                             {(nama !== null) ?
-                                                <div style={{backgroundColor: "#2c3e50", width: "80%"}}>
-                                                    <img src={data[nama].image} alt="error" style={{opacity: 0.8, width: "275px", height: "400px", objectFit: "cover"}}/>
+                                                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                                                    <img src={data[nama].image} alt="error" style={{opacity: 0.8, width: "12em", height: "12em", objectFit: "cover", borderRadius: "100%"}}/>
                                                 </div>
                                                 :
                                                 null
                                             }
-                                        </Grid>
-                                        <Grid item md={7}>
-                                            <div style={{marginLeft: "19%", display: "flex", justifyContent: "space-between", flexDirection: "column"}}>
-                                                <div style={{display:"flex", justifyContent: "flex-end", flexDirection: "column"}}>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <div>
                                                     {(nama !== null) ?
-                                                        <div>
-                                                            <Typography variant="h5" className={classes.dialogTitle} style={{marginTop: '2%'}}>PROFILE DEVELOPER</Typography>
-                                                            <hr style={{backgroundColor: "white", marginBlockStart: "0.8em"}}></hr>
-                                                            <Typography variant="h6" className={classes.dialogTextTitle} style={{marginTop: '2%'}}>Nama</Typography>
+                                                        <div style={{marginLeft: "15%", marginRight: "15%"}}>
+                                                            <hr style={{backgroundColor: "white", marginBlockStart: "0.8em", marginTop: "10%"}}></hr>
+                                                            <Typography variant="subtitle-1" className={classes.dialogTextTitle}>Nama</Typography>
                                                             <Typography variant="h6" className={classes.dialogText}>{data[nama].nama}</Typography>
-                                                            <Typography variant="h6" className={classes.dialogTextTitle} style={{marginTop: '5%'}}>Jurusan</Typography>
+                                                            <Typography variant="subtitle-1" className={classes.dialogTextTitle}>Jurusan</Typography>
                                                             <Typography variant="h6" className={classes.dialogText}>{data[nama].jurusan}</Typography>
-                                                            <Typography variant="h6" className={classes.dialogTextTitle} style={{marginTop: '5%'}}>Institusi</Typography>
+                                                            <Typography variant="subtitle-1" className={classes.dialogTextTitle}>Institusi</Typography>
                                                             <Typography variant="h6" className={classes.dialogText}>{data[nama].institusi}</Typography>
-                                                            <Typography variant="h6" className={classes.dialogTextTitle} style={{marginTop: '5%'}}>Kesibukan</Typography>
+                                                            <Typography variant="subtitle-1" className={classes.dialogTextTitle}>Kesibukan</Typography>
                                                             <Typography variant="h6" className={classes.dialogText}>{data[nama].unit}</Typography>
-                                                            <Typography variant="h6" className={classes.dialogText}>{data[nama].kesibukan}</Typography>
                                                         </div>
                                                         :
                                                         null
                                                     }
                                                 </div>                                                       
                                             </div>
-                                        </Grid>
-                                    </Grid>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>                     
                     </Dialog>                  
                     <div style={{display: "flex", justifyContent: "space-between", marginTop: "3%"}}>
-                    <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
-                    <div class="card-header bg-primary">Web Developer</div>
-                    <div class="card-body">
-                        <h4 class="card-title" style={{color: "black"}}>Fadel Ananda Dotty</h4>
-                        <p class="card-text" style={{color: "black"}}>K-02 / 13519146</p>
-                        <p class="card-text" style={{color: "black"}}>Mahasiswa Teknik Informatika Semester 3 Institut Teknologi Bandung</p>
-                        <div className={classes.descButton}>
-                            <Button onClick={() => HandleOpenDialog("fadel")}>Deskripsi Lebih Lanjut</Button>
+                        <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
+                        <div class="card-header bg-primary">Web Developer</div>
+                        <div class="card-body">
+                            <h4 class="card-title" style={{color: "black"}}>Fadel Ananda Dotty</h4>
+                            <p class="card-text" style={{color: "black"}}>K-02 / 13519146</p>
+                            <p class="card-text" style={{color: "black"}}>Mahasiswa Teknik Informatika Semester 3 Institut Teknologi Bandung</p>
+                            <div className={classes.descButton}>
+                                <Button onClick={() => HandleOpenDialog("fadel")}>Deskripsi Lebih Lanjut</Button>
+                            </div>
                         </div>
                     </div>
-                    </div>
                     <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
-                    <div class="card-header bg-primary">Web Developer</div>
-                    <div class="card-body">
-                        {/*<div style={{display: "flex", justifyContent: "center"}}>
-                            <img src={Picture} style={{width: "10rem", height: "11rem", marginBottom: "6%"}} alt="tes"/>
-                        </div>*/}
-                        <h4 class="card-title" style={{color: "black"}}>Gregorius Dimas Baskara</h4>
-                        <p class="card-text" style={{color: "black"}}>K-02 / 13519190</p>
-                        <p class="card-text" style={{color: "black"}}>Mahasiswa Teknik Informatika Semester 3 Institut Teknologi Bandung</p>
-                        <div className={classes.descButton}>
-                            <Button onClick={() => HandleOpenDialog("dimas")}>Deskripsi Lebih Lanjut</Button>
+                        <div class="card-header bg-primary">Web Developer</div>
+                        <div class="card-body">
+                            {/*<div style={{display: "flex", justifyContent: "center"}}>
+                                <img src={Picture} style={{width: "10rem", height: "11rem", marginBottom: "6%"}} alt="tes"/>
+                            </div>*/}
+                            <h4 class="card-title" style={{color: "black"}}>Gregorius Dimas Baskara</h4>
+                            <p class="card-text" style={{color: "black"}}>K-02 / 13519190</p>
+                            <p class="card-text" style={{color: "black"}}>Mahasiswa Teknik Informatika Semester 3 Institut Teknologi Bandung</p>
+                            <div className={classes.descButton}>
+                                <Button onClick={() => HandleOpenDialog("dimas")}>Deskripsi Lebih Lanjut</Button>
+                            </div>
                         </div>
                     </div>
-                    </div>
                     <div class="card text-white mb-3" style={{maxWidth: "20rem"}}>
-                    <div class="card-header bg-primary">Web Developer</div>
-                    <div class="card-body">
-                        <h4 class="card-title" style={{color: "black"}}>Tanur Rizaldi Rahardjo</h4>
-                        <p class="card-text" style={{color: "black"}}>K-02 / 13519214</p>
-                        <p class="card-text" style={{color: "black"}}>Mahasiswa Teknik Informatika Semester 3 Institut Teknologi Bandung</p>
-                        <div className={classes.descButton}>
-                            <Button onClick={() => HandleOpenDialog("tanur")}>Deskripsi Lebih Lanjut</Button>
+                        <div class="card-header bg-primary">Web Developer</div>
+                        <div class="card-body">
+                            <h4 class="card-title" style={{color: "black"}}>Tanur Rizaldi Rahardjo</h4>
+                            <p class="card-text" style={{color: "black"}}>K-02 / 13519214</p>
+                            <p class="card-text" style={{color: "black"}}>Mahasiswa Teknik Informatika Semester 3 Institut Teknologi Bandung</p>
+                            <div className={classes.descButton}>
+                                <Button onClick={() => HandleOpenDialog("tanur")}>Deskripsi Lebih Lanjut</Button>
+                            </div>
                         </div>
-                    </div>
-                    </div>
+                        </div>
                     </div>
                 </div>
             </div>

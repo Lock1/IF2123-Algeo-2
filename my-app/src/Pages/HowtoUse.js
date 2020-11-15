@@ -21,7 +21,7 @@ import Instruction_4 from '../Images/Instruction_4.JPG';
 import Instruction_5 from '../Images/Instruction_5.JPG';
 import Instruction_6 from '../Images/Instruction_6.JPG';
   
-  const ColorlibConnector = withStyles({
+const ColorlibConnector = withStyles({
     alternativeLabel: {
       top: 22,
     },
@@ -43,9 +43,9 @@ import Instruction_6 from '../Images/Instruction_6.JPG';
       backgroundColor: '#eaeaf0',
       borderRadius: 1,
     },
-  })(StepConnector);
+})(StepConnector);
   
-  const useColorlibStepIconStyles = makeStyles({
+const useColorlibStepIconStyles = makeStyles({
     root: {
       backgroundColor: '#ccc',
       zIndex: 1,
@@ -66,9 +66,9 @@ import Instruction_6 from '../Images/Instruction_6.JPG';
       backgroundImage:
         'linear-gradient( 136deg, rgb(44, 62, 80) 0%, rgb(24, 188, 156) 50%, rgb(52, 152, 219) 100%)',
     },
-  });
+});
   
-  function ColorlibStepIcon(props) {
+function ColorlibStepIcon(props) {
     const classes = useColorlibStepIconStyles();
     const { active, completed } = props;
   
@@ -91,15 +91,15 @@ import Instruction_6 from '../Images/Instruction_6.JPG';
         {icons[String(props.icon)]}
       </div>
     );
-  }
+}
   
-  ColorlibStepIcon.propTypes = {
+ColorlibStepIcon.propTypes = {
     active: PropTypes.bool,
     completed: PropTypes.bool,
     icon: PropTypes.node,
-  };
+};
   
-  const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles((theme) => ({
     root: {
       width: '100%',
     },
@@ -115,13 +115,13 @@ import Instruction_6 from '../Images/Instruction_6.JPG';
             textDecoration: "none"
         }, 
     }
-  }));
+}));
   
-  function getSteps() {
+function getSteps() {
     return ['Klik Search Engine', 'Upload File txt/html (Opsional)', 'Masukkan Query dan Tekan Search', 'Tekan Tombol Table Untuk Melihat Tabel Terms', 'Klik Dropdown Untuk Melihat Detail', 'Klik Nama Dokumen Untuk Melihat Isi Dokumen'];
-  }
+}
   
-  function getStepContent(step) {
+function getStepContent(step) {
     switch (step) {
       case 0:
         return (
@@ -180,7 +180,7 @@ import Instruction_6 from '../Images/Instruction_6.JPG';
       default:
         return 'Unknown step';
     }
-  }
+}
 
 function HowtoUse(){
     const classes = useStyles();
