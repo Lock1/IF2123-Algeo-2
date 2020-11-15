@@ -191,6 +191,8 @@ function SearchEngine(){
         var content = String(stringHTML).match(/<\s*p[^>]*>([^<]*)<\s*\/\s*p\s*>/gi)
         if (content && HTMLtitle)
             return [HTMLtitle[0].replace(/<\s*\/*title[^>]*>/gi, " "), content.join("").replace(/\s+/gi, " ").replace(/<\s*\/*p[^>]*>/gi, " ")]
+        else
+            return [undefined, undefined]
     }
 
     // Taking string and output as hashtable with word count as entry
@@ -206,7 +208,7 @@ function SearchEngine(){
         // Delete whitespace on array
         tpstr = tpstr.filter(function(str) {return /\S+/.test(str)})
 
-        var hashTable = {cnt:undefined}
+        var hashTable = {}
         /* -- Hashtable counting loop --
         Check whether hashTable["index"] exist,
         if not exist then set hashTable["index"] = 1,
@@ -276,6 +278,9 @@ function SearchEngine(){
         let queryResult = []
         for (var key in database) {
             let dotProduct = 0, doc = database[key]
+            // Case when theres no term
+            if (doc.term === undefined)
+                continue
             // Q & D Norm calculation
             let queryNorm = hashTableNorm(queryHashTable)
             let docNorm = hashTableNorm(doc.term)
@@ -330,8 +335,7 @@ function SearchEngine(){
 
     // Handler for uploading file
     async function handleUpload(event) {
-        console.log(fileInput.current.files.length)
-        if(fileInput.current.files.length !== 0){
+        if (fileInput.current.files.length !== 0){
             event.preventDefault()
             database = await getDocumentDatabase()
             stopwords = await getStopwordsDatabase()
@@ -341,10 +345,14 @@ function SearchEngine(){
                 // HTML file branch
                 if (await fileInput.current.files[i].name.match(/\.html/)){
                     [titleFile, textFile] = htmlScrapper(await fileInput.current.files[i].text())
-                    hashTable = stringToHashTable(textFile)
-                    wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
-                    firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
-                    // textFile = await fileInput.current.files[i].text() // Raw HTML String
+                    if (titleFile && textFile) {
+                        hashTable = stringToHashTable(textFile)
+                        wCount = textFile.split(" ").filter(function (str) { return /\S+/.test(str) }).length
+                        firstSentence = textFile.replace(/(\.com|\.co\.id|\n|\r)/gi, " ").replace(/\s+/g, " ").split(".")[0]
+                        // textFile = await fileInput.current.files[i].text() // Raw HTML String
+                    }
+                    else
+                        continue
                 }
                 // Text file branch
                 else {
@@ -356,8 +364,9 @@ function SearchEngine(){
                 }
                 await uploadFileToFirebase(titleFile, textFile, wCount, firstSentence, hashTable)
             }  
+            window.location.reload()
         }
-        else{
+        else {
             event.preventDefault()
             HandleOpenErrorUploadSnackbar()
         }
