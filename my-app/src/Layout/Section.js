@@ -2,7 +2,7 @@ import React from "react";
 import {
   Switch,
   Route,
-  Redirect
+  // Redirect
 } from "react-router-dom";
 
 import Home from "../Pages/Home";
@@ -14,7 +14,7 @@ import Display from "../Pages/DisplayDocument"
 
 const Section = () =>{
 
-  return(    
+  return(
     <section>
       <Switch>
         <Route exact path="/" component={Home}/>
