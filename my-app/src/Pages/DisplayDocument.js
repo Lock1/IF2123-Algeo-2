@@ -7,9 +7,11 @@ import { useLocation } from "react-router-dom";
 const useStyles = makeStyles({
     link: {
         "&:focus, &:hover": {
-            textDecoration: "none"
-        }, 
-    }
+            textDecoration: "none",
+            color: "white"
+        },
+        color: "white" 
+      },
   });
 
 function Display(){

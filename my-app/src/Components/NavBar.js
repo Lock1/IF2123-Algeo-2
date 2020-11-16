@@ -1,15 +1,22 @@
+import React from 'react';
 import "../Styles/bootstrap.min.css"
-function navBar(){
+function NavBar(){
+
+    const [showNav, setShowNav] = React.useState(true)
+
+    function toggleNav() {
+        setShowNav(!showNav)
+    }
     return (
         <div>
             <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
                 <div>
                     <a className="navbar-brand" href="/">JONG JAVA</a>
                 </div>
-                <button className="navbar-toggler collapsed" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <button className="navbar-toggler collapsed" type="button" onClick={toggleNav}>
                     <span className="navbar-toggler-icon"></span>
                 </button>
-                <div className="collapse navbar-collapse" id="navbarColor01">
+                <div className={(showNav ? 'show' : '') + ' collapse navbar-collapse'}>
                     <ul className="navbar-nav mr-auto">
                         <li className="nav-item active">
                             <a className="nav-link" href="/">Home</a>
@@ -32,4 +39,4 @@ function navBar(){
         </div>
     )
 }
-export default navBar;
+export default NavBar;

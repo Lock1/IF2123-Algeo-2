@@ -111,10 +111,12 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: theme.spacing(3),
     },
     link: {
-        "&:focus, &:hover": {
-            textDecoration: "none"
-        }, 
-    }
+      "&:focus, &:hover": {
+          textDecoration: "none",
+          color: "white"
+      },
+      color: "white" 
+    },
 }));
   
 function getSteps() {
