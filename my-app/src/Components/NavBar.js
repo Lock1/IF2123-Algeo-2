@@ -2,7 +2,7 @@ import React from 'react';
 import "../Styles/bootstrap.min.css"
 function NavBar(){
 
-    const [showNav, setShowNav] = React.useState(true)
+    const [showNav, setShowNav] = React.useState(false)
 
     function toggleNav() {
         setShowNav(!showNav)
