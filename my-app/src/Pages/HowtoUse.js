@@ -1,7 +1,7 @@
 import React from 'react';
 import "../Styles/bootstrap.min.css"
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Button, Typography, Paper } from "@material-ui/core";
+import { Button, Typography, Paper, Hidden } from "@material-ui/core";
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import Stepper from '@material-ui/core/Stepper';
@@ -202,11 +202,16 @@ function HowtoUse(){
         return (
             <div>
                 <div className="container">
-                    <h2 style={{marginTop: "3%", textAlign: "center", marginBottom: "2%"}}>PANDUAN PENGGUNAAN APLIKASI</h2>
+                    <Hidden smDown>
+                      <h2 style={{marginTop: "3%", textAlign: "center", marginBottom: "2%"}}>PANDUAN PENGGUNAAN APLIKASI</h2>
+                    </Hidden>
+                    <Hidden mdUp>
+                      <h2 style={{marginTop: "3%", textAlign: "center", marginBottom: "2%"}}>PANDUAN APLIKASI</h2>
+                    </Hidden>
                     <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
                         {steps.map((label) => (
                         <Step key={label}>
-                            <StepLabel StepIconComponent={ColorlibStepIcon}>{label}</StepLabel>
+                            <StepLabel StepIconComponent={ColorlibStepIcon}><Hidden smDown>{label}</Hidden></StepLabel>
                         </Step>
                         ))}
                     </Stepper>

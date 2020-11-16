@@ -6,8 +6,10 @@ import { Button, Typography } from "@material-ui/core";
 const useStyles = makeStyles({
     link: {
         "&:focus, &:hover": {
-            textDecoration: "none"
-        }, 
+            textDecoration: "none",
+            color: "white"
+        },
+        color: "white" 
     },
     button: {
         marginTop:"2%", 
@@ -54,8 +56,11 @@ function Concept(){
                         <div>
                             <Typography variant="h2" align="center">{content[subject].title}</Typography>
                             <Typography style={{marginTop: "2%"}}>{content[subject].description}</Typography>
+                            <Button variant="contained" color="primary" style={{marginTop:"2%"}}><a href="/Concept" className={classes.link}>Kembali Ke Konsep Utama</a></Button>
                         </div>
-                    : <Typography align="center">Tekan Salah Satu SubKonsep yang Ingin Dipelajari Lebih Lanjut!</Typography>
+                    : <div><Typography align="center">Search Engine merupakan sebuah mesin yang dapat membantu pengguna untuk mencari dokumen yang dicari berdasarkan Query yang dimaksudkan. Pada Aplikasi ini, pengguna dapat melakukan searching dokumen yang sudah ada, dokumen yang di-upload terlebih dahulu, maupun dokumen dari Web yang kemudian diupload dalam ekstensi .html. Proses pencarian tersebut merupakan aplikasi dari tiga materi yang dipelajari pada Aljabar Linear dan Geometri. Seperti yang telah disebutkan sebelumnya, aplikasi ini juga mampu melakukan Web Scrapping dengan membaca dokumen html.</Typography>
+                    <Typography align="center" style={{marginTop: "3%"}}>Tekan Salah Satu SubKonsep Di atas yang Ingin Dipelajari Lebih Lanjut!</Typography>
+                    </div>
                     }
                 </div>
             </div>

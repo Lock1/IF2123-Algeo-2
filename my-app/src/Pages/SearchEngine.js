@@ -417,7 +417,7 @@ function SearchEngine(){
                 {/* Query search */}
                 <div className={classes.flex_center}>
                     <input type="text" id="textBox" onKeyDown={(e) => {if (e.key === 'Enter') handleSearch()}} onChange={(e) => setSearchTextBox(e)}/>
-                    <button type="button" id="searchButton" class="btn-success" onClick={() => {handleSearch()}}>Search</button>
+                    <button type="button" id="searchButton" className="btn-success" onClick={() => {handleSearch()}}>Search</button>
                     <Tooltip title="Upload Dokumen">
                         <IconButton size="small" style={{marginLeft: "1%"}} onClick={HandleOpenDialog}>
                             <PublishIcon/>
