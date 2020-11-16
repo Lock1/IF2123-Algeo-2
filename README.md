@@ -2,8 +2,7 @@
 <!-- FAQ Link https://docs.google.com/spreadsheets/d/1HUuvwsRg7ARmZ0JoVR4R62c6nwABsGKIa6LFDxjXADA/edit#gid=1332824491 -->
 
 ### Release
-**TBA**
-<!-- [v1.0](https://github.com/Lock1/Algeo01-19129/releases/tag/v1.0) -->
+[v1.0](https://github.com/Lock1/Algeo02-19146/releases/tag/v1.0)
 
 
 ### Tentang Program
