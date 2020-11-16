@@ -1,5 +1,4 @@
 # Tugas Besar 2 - Aljabar Linear dan Geometri
-**TBA**
 <!-- FAQ Link https://docs.google.com/spreadsheets/d/1HUuvwsRg7ARmZ0JoVR4R62c6nwABsGKIa6LFDxjXADA/edit#gid=1332824491 -->
 
 ### Release
@@ -8,20 +7,21 @@
 
 
 ### Tentang Program
-**TBA**
-<!-- TODO Installation Package - Untuk guideline dan spesifikasi tentang tugas besar, terdapat pada folder "other/rule and guidelines/"
 - Release versi **1.0** menandai bahwa release tersebut adalah **program yang dikumpulkan** ketika deadline, tanpa perubahan.
-- Class utama bernama **Core**.
-- Program dapat dijalankan dengan command line pada folder /bin/ atau menggunakan jar.
-- Direkomendasikan untuk menjalankan program dari direktori utama repositori, gunakan "java -cp bin Core" atau "java -jar Alin1.jar"
-- Untuk GUI, kode GUI belum selesai terimplementasikan.
-- Secara default, program dijalankan dengan argument "**-CLI**", untuk mencoba GUI, dapat digunakan launch argument "**-GUI**". -->
+- Direkomendasikan untuk menggunakan versi Node.js yang sama dengan Node.js yang digunakan pada proses development.
+- Aplikasi terletak pada folder **my-app**.
 
-<!-- ### Style kode
-**TBA**
-- Karena belum terbiasa dengan OO beberapa kode ditulis ulang yang berakibat menambah clutter pada kode.
-- Deklarasi variabel diusahakan untuk selalu dekat dengan penggunaanya untuk mengurangi scope.
-- Indentasi dan penempatan bracket dijaga konsisten. -->
+
+### Instalasi dan Menjalankan Aplikasi
+- Aplikasi dapat diinstall secara manual dengan mengetikkan command **npm install** diterminal windows pada folder **my-app**
+- Setelah terinstall, dapat digunakan command **npm start** untuk dev-build atau **serve -s build** untuk production-build.
+- Atau dapat menjalankan **install.bat** dan **run.bat**
+
+
+### Style kode
+- Untuk backend karena tidak terbiasa dengan syntax umum javascript, digunakan style code yang mirip dengan java.
+- Seluruh kode
+- Indentasi dan penempatan bracket dijaga konsisten.
 
 ## Snapshot
 **Search** \
