@@ -1,2 +1,3 @@
 cd my-app
-serve -s build
+REM serve -s build
+npm start
